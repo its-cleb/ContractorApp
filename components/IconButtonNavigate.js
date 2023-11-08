@@ -9,10 +9,10 @@ const IconButtonNavigate = props => {
 
   return (
     <TouchableOpacity 
-      style={[globalStyles.touchableOpacityButton, {backgroundColor: `${props.bgcolor}` }]}
+      style={[globalStyles.touchableOpacityButton, { backgroundColor: `${props.bgcolor}` }]}
       onPress={() => {navigation.navigate(`${props.navpage}`);}}
     > 
-        <FontAwesome5 style={globalStyles.buttonIcon} name={props.icon} size={40} color="white" />
+        <FontAwesome5 style={globalStyles.buttonIcon} name={props.icon} size={34} color="white" />
         <Text style={globalStyles.textButton}>{props.title}</Text>
     </TouchableOpacity>
   )

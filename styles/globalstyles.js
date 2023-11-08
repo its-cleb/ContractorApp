@@ -21,16 +21,16 @@ export const globalStyles = StyleSheet.create({
     color: '#333'
   },
   textButton: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'white'
   },
   touchableOpacityButton: {
-    width: "100%",
+    // width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: "steelblue",
     borderRadius: 5,
-    margin: 10,
+    margin: 5,
     padding: 10
   },
   buttonIcon: {

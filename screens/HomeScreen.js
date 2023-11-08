@@ -7,17 +7,36 @@ import IconButtonNavigate from '../components/IconButtonNavigate'
 
 const HomeScreen = props => {
   return (
-    <View style={globalStyles.containerHCentered}>
-      <ActiveProjects />
+    <>
+      <View>
+        <ActiveProjects />
+      </View>
 
-      <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
-      <IconButtonNavigate navpage="Projects" title="Projects" icon="tools" bgcolor="steelblue" /> 
-      <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
-      
-    </View>
+      <View style={styles.flexBox}>
+        <View style={styles.flexItem}>
+          <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
+        </View>
+        <View style={styles.flexItem}>
+          <IconButtonNavigate navpage="Projects" title="Projects" icon="tools" bgcolor="steelblue" /> 
+        </View>
+        <View style={styles.flexItem}>
+         <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
+        </View>
+        
+     </View>
+
+    </>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  flexBox: {
+    flexDirection: 'row',
+    padding: 5
+  },
+  flexItem: {
+    flex: 1
+  }
+})
 
 export default HomeScreen
