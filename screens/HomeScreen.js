@@ -10,15 +10,9 @@ const HomeScreen = props => {
     <View style={globalStyles.containerHCentered}>
       <ActiveProjects />
 
-      <TouchableOpacity 
-        style={globalStyles.touchableOpacityButton}
-        onPress={() => {props.navigation.navigate('Estimator');}}
-      >
-          <FontAwesome style={globalStyles.buttonIcon} name="calculator" size={40} color="white" />
-          <Text style={globalStyles.textButton}>Estimates</Text>
-      </TouchableOpacity>
-
-      {/* <IconButtonNavigate /> */}
+      <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
+      <IconButtonNavigate navpage="Projects" title="Projects" icon="tools" bgcolor="steelblue" /> 
+      <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
       
     </View>
   )

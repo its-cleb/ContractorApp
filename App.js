@@ -48,7 +48,7 @@ export default function App() {
             name="Company" 
             component={CompanyScreen} 
             options={{ 
-              drawerIcon: () => (<MaterialCommunityIcons name="briefcase-account" size={22} color="#222" />),
+              drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" />),
               headerTitle: "Company Details"
             }} 
           />
