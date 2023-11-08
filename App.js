@@ -21,22 +21,34 @@ export default function App() {
           <Drawer.Screen 
             name="Home" 
             component={HomeScreen} 
-            options={{ drawerIcon: () => (<FontAwesome name="home" size={22} color="#222" />) }} 
+            options={{ 
+              drawerIcon: () => (<FontAwesome name="home" size={22} color="#222" />),
+              headerTitle: "Get Started"
+            }} 
           />
           <Drawer.Screen 
             name="Estimator" 
             component={EstimatorScreen} 
-            options={{ drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />) }} 
+            options={{ 
+              drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />),
+              headerTitle: "Quotes & Estimates"
+            }} 
           />
           <Drawer.Screen 
             name="Projects" 
             component={ProjectsScreen} 
-            options={{ drawerIcon: () => (<FontAwesome5 name="tools" size={24} color="black" />) }} 
+            options={{ 
+              drawerIcon: () => (<FontAwesome5 name="tools" size={24} color="black" />),
+              headerTitle: "Your Projects"
+            }} 
           />
           <Drawer.Screen 
             name="Company" 
             component={CompanyScreen} 
-            options={{ drawerIcon: () => (<MaterialCommunityIcons name="briefcase-account" size={22} color="#222" />) }} 
+            options={{ 
+              drawerIcon: () => (<MaterialCommunityIcons name="briefcase-account" size={22} color="#222" />),
+              headerTitle: "Company Details"
+            }} 
           />
         </Drawer.Navigator>
     </NavigationContainer>

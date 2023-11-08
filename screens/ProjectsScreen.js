@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { globalStyles } from '../styles/globalstyles'
 
 const ProjectsScreen = () => {
   return (
-    <View>
-      <Text>Projects Screen</Text>
+    <View style={globalStyles.containerHCentered}>
+      <Text style={globalStyles.textTitle}>Projects</Text>
     </View>
   )
 }

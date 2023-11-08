@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import ActiveProjects from '../components/ActiveProjects'
+import { globalStyles } from '../styles/globalstyles'
 
 const HomeScreen = () => {
   return (
-    <View>
-      <Text>Home Screen</Text>
+    <View style={globalStyles.containerHCentered}>
+      <ActiveProjects />
     </View>
   )
 }

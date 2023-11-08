@@ -2,14 +2,14 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 
-const EstimatorScreen = () => {
+const ActiveProjects = () => {
   return (
-    <View style={globalStyles.containerHCentered}>
-      <Text style={globalStyles.textTitle}>Quotes & Estimates</Text>
+    <View>
+      <Text style={globalStyles.textTitle}>Active Projects</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({})
 
-export default EstimatorScreen
+export default ActiveProjects
