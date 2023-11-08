@@ -19,6 +19,22 @@ export const globalStyles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333'
+  },
+  textButton: {
+    fontSize: 18,
+    color: 'white'
+  },
+  touchableOpacityButton: {
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "steelblue",
+    borderRadius: 5,
+    margin: 10,
+    padding: 10
+  },
+  buttonIcon: {
+    margin: 10,
   }
 
 })
