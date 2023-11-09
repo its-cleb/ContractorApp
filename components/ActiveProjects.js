@@ -4,17 +4,15 @@ import { globalStyles } from '../styles/globalstyles'
 
 const ActiveProjects = () => {
   
-  
-
-  const [activeProjects, setActiveProjects] = useState(initialProjects)
-
-  const initialProjects = [
+  let initialProjects = [
     { name: 'Project 1' },
     { name: 'Project 2' },
     { name: 'Project 3' },
     { name: 'Project 4' }
   ]
-  
+
+  const [activeProjects, setActiveProjects] = useState(initialProjects)
+
   return (
     <>
     <View style={globalStyles.containerHCentered}>
