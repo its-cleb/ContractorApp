@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native'
 
 export const globalStyles = StyleSheet.create({
+  mainNavigationContainer: {
+    padding: 10
+  },
   container: {
     flex: 1
   },
   containerHCentered: {
-    flex: 1,
     alignItems: 'center',
     padding: 20,
   },
@@ -25,7 +27,6 @@ export const globalStyles = StyleSheet.create({
     color: 'white'
   },
   touchableOpacityButton: {
-    // width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: "steelblue",

@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import EstimatorScreen from './screens/EstimatorScreen';
 import CompanyScreen from './screens/CompanyScreen';
 import ProjectsScreen from './screens/ProjectsScreen';
+import { globalStyles } from './styles/globalstyles';
 
 const Drawer = createDrawerNavigator();
 
@@ -52,7 +53,7 @@ export default function App() {
               headerTitle: "Company Details"
             }} 
           />
-        </Drawer.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
