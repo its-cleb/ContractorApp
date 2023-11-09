@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { SimpleLineIcons, MaterialIcons, MaterialCommunityIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import ActiveProjects from '../components/ActiveProjects'
+import ActiveProjectsDB from '../components/ActiveProjectsDB'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonNavigate from '../components/IconButtonNavigate'
 
@@ -9,7 +9,7 @@ const HomeScreen = props => {
   return (
     <>
       <View>
-        <ActiveProjects />
+        <ActiveProjectsDB />
       </View>
 
       <View style={styles.flexBox}>

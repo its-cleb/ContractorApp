@@ -7,7 +7,6 @@ import HomeScreen from './screens/HomeScreen';
 import EstimatorScreen from './screens/EstimatorScreen';
 import CompanyScreen from './screens/CompanyScreen';
 import ProjectsScreen from './screens/ProjectsScreen';
-import { globalStyles } from './styles/globalstyles';
 
 const Drawer = createDrawerNavigator();
 
