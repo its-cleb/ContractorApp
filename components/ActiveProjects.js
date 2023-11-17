@@ -23,7 +23,7 @@ const ActiveProjects = () => {
       <FlatList 
       data={activeProjects} 
       renderItem={({ item }) => {
-          return <View style={styles.projectContainer}><Text style={styles.projectText}>{item.name}</Text></View>
+          return <View style={[styles.projectContainer, {backgroundColor: randomRGB() }]}><Text style={styles.projectText}>{item.name}</Text></View>
         }}
       />
     </View>
@@ -41,10 +41,18 @@ const ActiveProjects = () => {
   )
 }
 
+const randomRGB = () => {
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 64);
+  const blue = Math.floor(Math.random() * 64);
+
+  return `rgb(${red}, ${green}, ${blue})`;
+}
+
 const styles = StyleSheet.create({
   projectContainer: {
     flex: 1,
-    backgroundColor: 'maroon',
+    // backgroundColor: 'maroon',
     borderRadius: 5,
     marginVertical: 5,
     marginHorizontal: 10,
