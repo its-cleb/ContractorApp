@@ -9,7 +9,7 @@ const ActiveProjects = () => {
   ]
 
   const [activeProjects, setActiveProjects] = useState(initialProjects)
-
+  
   return (
     <>
     <View style={globalStyles.containerHCentered}>
@@ -28,7 +28,7 @@ const ActiveProjects = () => {
     <TouchableOpacity 
       style={[globalStyles.touchableOpacityButton, { backgroundColor: "steelblue", margin: 10 }]}
       onPress={() => {
-        setActiveProjects([...activeProjects, {name: 'Project #'}])
+        setActiveProjects([...activeProjects, { name: projectNumber() }])
         console.log(activeProjects)
       }}
     > 
@@ -44,6 +44,12 @@ const randomRGB = () => {
   const blue = Math.floor(Math.random() * 64);
 
   return `rgb(${red}, ${green}, ${blue})`;
+}
+
+const projectNumber = () => {
+  const newProjectNumber = 1
+  
+  return `Project ${newProjectNumber+1}`
 }
 
 const styles = StyleSheet.create({
