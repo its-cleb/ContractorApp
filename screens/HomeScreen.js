@@ -20,7 +20,6 @@ const HomeScreen = props => {
         <View style={styles.flexItem}>
          <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
         </View>
-        
      </View>
 
     </>
@@ -30,7 +29,7 @@ const HomeScreen = props => {
 const styles = StyleSheet.create({
   flexBox: {
     flexDirection: 'row',
-    padding: 5
+    padding: 5,
   },
   flexItem: {
     flex: 1
