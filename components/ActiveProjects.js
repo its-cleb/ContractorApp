@@ -5,10 +5,11 @@ import { globalStyles } from '../styles/globalstyles'
 const ActiveProjects = () => {
   
   let initialProjects = [
-    { name: 'Project 1' }
+    { name: 'Project 1', color: 'rgb(200, 0, 0)'  }
   ]
 
   const [activeProjects, setActiveProjects] = useState(initialProjects)
+  const [projectNumber, setProjectNumber] = useState(2)
   
   return (
     <>
@@ -20,7 +21,7 @@ const ActiveProjects = () => {
       <FlatList 
       data={activeProjects} 
       renderItem={({ item }) => {
-          return <View style={[styles.projectContainer, {backgroundColor: randomRGB() }]}><Text style={styles.projectText}>{item.name}</Text></View>
+          return <View style={[styles.projectContainer, {backgroundColor: item.color }]}><Text style={styles.projectText}>{item.name}</Text></View>
         }}
       />
     </View>
@@ -28,7 +29,8 @@ const ActiveProjects = () => {
     <TouchableOpacity 
       style={[globalStyles.touchableOpacityButton, { backgroundColor: "steelblue", margin: 10 }]}
       onPress={() => {
-        setActiveProjects([...activeProjects, { name: projectNumber() }])
+        setProjectNumber(projectNumber + 1)
+        setActiveProjects([...activeProjects, { name: newProjectNumber(projectNumber), color: randomRGB() }])
         console.log(activeProjects)
       }}
     > 
@@ -46,10 +48,8 @@ const randomRGB = () => {
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
-const projectNumber = () => {
-  const newProjectNumber = 1
-  
-  return `Project ${newProjectNumber+1}`
+const newProjectNumber = (incrementProjectNumber) => {
+  return `Project ${incrementProjectNumber}`
 }
 
 const styles = StyleSheet.create({
