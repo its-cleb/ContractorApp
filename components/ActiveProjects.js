@@ -3,13 +3,10 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { globalStyles } from '../styles/globalstyles'
 
 const ActiveProjects = () => {
-  
-  let initialProjects = [
-    { name: 'Project 1', color: 'rgb(200, 0, 0)'  }
-  ]
 
-  const [activeProjects, setActiveProjects] = useState(initialProjects)
-  const [projectNumber, setProjectNumber] = useState(2)
+  // Active Projects array & Project Number variable
+  const [activeProjects, setActiveProjects] = useState([])
+  const [projectNumber, setProjectNumber] = useState(1)
   
   return (
     <>
@@ -17,6 +14,7 @@ const ActiveProjects = () => {
       <Text style={globalStyles.textTitle}>Active Projects</Text>
     </View>
 
+    {/* item.color destructured in render item as background color */}
     <View style={styles.flatlist}>
       <FlatList 
       data={activeProjects} 
@@ -26,12 +24,12 @@ const ActiveProjects = () => {
       />
     </View>
 
+    {/* Incrememnt Project Number, insert new Project Number and RBG background color into Projects Array */}
     <TouchableOpacity 
       style={[globalStyles.touchableOpacityButton, { backgroundColor: "steelblue", margin: 10 }]}
       onPress={() => {
         setProjectNumber(projectNumber + 1)
         setActiveProjects([...activeProjects, { name: newProjectNumber(projectNumber), color: randomRGB() }])
-        console.log(activeProjects)
       }}
     > 
         <Text style={globalStyles.textButton}>Add Project</Text>
@@ -40,6 +38,7 @@ const ActiveProjects = () => {
   )
 }
 
+// Generate 3 random RGB values and interpolate as text, colors skewed towards red hue
 const randomRGB = () => {
   const red = Math.floor(Math.random() * 256);
   const green = Math.floor(Math.random() * 64);
@@ -48,14 +47,13 @@ const randomRGB = () => {
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
+// Takes Project Number variable and interpolates as text 
 const newProjectNumber = (incrementProjectNumber) => {
   return `Project ${incrementProjectNumber}`
 }
 
 const styles = StyleSheet.create({
   projectContainer: {
-    //flex: 1,
-    // backgroundColor: 'maroon',
     borderRadius: 5,
     marginVertical: 5,
     marginHorizontal: 10,
