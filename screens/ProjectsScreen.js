@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { SimpleLineIcons, MaterialIcons, MaterialCommunityIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
-import IconButtonBorderless from '../components/IconButtonBorderless'
+import IconButtonHContent from '../components/IconButtonHContent'
 import ActiveProjects from '../components/ActiveProjects'
 
 
@@ -16,9 +16,16 @@ const ProjectsScreen = () => {
 
     <ActiveProjects />
 
-    <IconButtonBorderless title="Add Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
+    <TouchableOpacity onPress={() => test() }>
+      <IconButtonHContent title="Add Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
+    </TouchableOpacity>
     </>
   )
+  
+}
+
+const test = () => {
+  console.log("test")
 }
 
 const styles = StyleSheet.create({})
