@@ -6,7 +6,7 @@ import { globalStyles } from '../styles/globalstyles'
 const ModalCloseButton = props => {
 
   return (
-  <TouchableOpacity onPress={props.pressFunction} style={globalStyles.modalClose}> 
+  <TouchableOpacity onPress={props.pressFunction}> 
     <MaterialIcons style={globalStyles.modalCloseButton} name="close" size={30} color="black" />
   </TouchableOpacity>
   )

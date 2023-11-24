@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, Pressable } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Pressable } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 import IconButtonHContent from '../components/IconButtonHContent'
@@ -39,8 +39,48 @@ const closeModal = () => {
       <ModalCloseButton pressFunction={closeModal} />
 
       <View style={globalStyles.modal}>
-        <Text> Test </Text>
-        <TextButton pressFunction={closeModal} bgcolor="steelblue" text="text"/>
+
+        <Text style={[globalStyles.textTitle, { marginBottom: 20 }]}> Add New Project </Text>
+
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>Project Name</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>Project Name</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+        </View>
+
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 2 }]}>
+            <Text style={globalStyles.formFieldCaption}>Address</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>City</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>ZIP</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+
+        </View>
+        
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>Project Description</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+        </View>
+
+        <TextButton pressFunction={closeModal} bgcolor="steelblue" text="Add Project"/>
+
       </View>
     </Modal>
     </>
