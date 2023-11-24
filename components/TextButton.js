@@ -6,7 +6,7 @@ const TextButton = props => {
 
   return (
     <TouchableOpacity 
-      style={[globalStyles.touchableOpacityButton, { backgroundColor: `${props.bgcolor}`}]}
+      style={[globalStyles.TextButton, { backgroundColor: `${props.bgcolor}`}]}
       onPress={props.pressFunction}
     > 
       <Text style={globalStyles.textButton}>{props.text}</Text>

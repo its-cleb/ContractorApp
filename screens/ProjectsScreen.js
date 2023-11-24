@@ -1,15 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, Pressable } from 'react-native'
-import { SimpleLineIcons, MaterialIcons, MaterialCommunityIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 import IconButtonHContent from '../components/IconButtonHContent'
-import ActiveProjects from '../components/ActiveProjects'
 import TextButton from '../components/TextButton'
+import ModalCloseButton from '../components/ModalCloseButton'
 
 
 const ProjectsScreen = () => {
+
+// Modal Control
 const [modalVisible, setModalVisible] = useState(false);
 
 const openModal = () => {
@@ -35,7 +36,9 @@ const closeModal = () => {
         setModalVisible(!modalVisible);
       }}>
 
-      <View>
+      <ModalCloseButton pressFunction={closeModal} />
+
+      <View style={globalStyles.modal}>
         <Text> Test </Text>
         <TextButton pressFunction={closeModal} bgcolor="steelblue" text="text"/>
       </View>

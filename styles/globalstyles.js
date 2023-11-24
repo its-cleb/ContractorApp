@@ -36,6 +36,25 @@ export const globalStyles = StyleSheet.create({
   },
   buttonIcon: {
     margin: 10,
-  }
+  },
+  modal: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    flex: 1,
+  },
+  modalClose: {
+    alignContent: 'right',
+    alignSelf: 'flex-end',
+    margin: 10
+  },
+  TextButton: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    backgroundColor: "steelblue",
+    borderRadius: 5,
+    margin: 5,
+    padding: 10
+  },
 
 })
