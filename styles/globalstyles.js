@@ -68,12 +68,14 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 5,
     padding: 10
   },
-
+  pressableBox: {
+    flex: 1,
+  },
   // Form Styling
   formRow: {
     flexDirection: 'row',
     gap: 10,
-    paddingBottom: 10
+    paddingBottom: 8
   },
   formColumn: {
   },
@@ -88,7 +90,7 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
-    paddingVertical: Platform.OS === 'ios' ? 10: 6,
+    paddingVertical: Platform.OS === 'ios' ? 10 : 6,
     paddingHorizontal: 16
   },
   formFieldInputMultiline: {
@@ -97,17 +99,24 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
-    paddingVertical: 8,
+    paddingTop: Platform.OS === 'ios' ? 10 : 16,
     paddingHorizontal: 16,
-    minHeight: 100,
+    minHeight: 80,
     textAlignVertical: 'top'
   },
   // Date Picker Styles
   datePickerBoxIOS: {
-    paddingBottom: 40
+    backgroundColor: '#eeeeff',
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderColor: '#999999',
   },
   datePicker: {
-    height: 120,
-    marginTop: -10
+    height: 140,
+    marginTop: -10,
+    marginBottom: -20
   },
+  datePickerButtonsIOS: {
+    paddingBottom: 40
+  }
 })
