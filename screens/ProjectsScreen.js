@@ -37,7 +37,7 @@ const onChange = ({ type }, selectedDate) => {
 }
 
 const confirmIOSDate = () => {
-  setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
+  setContactDate(Intl.DateTimeFormat('en-US').format(date))
   toggleDatePicker()
 }
 
@@ -81,18 +81,16 @@ const closeModal = () => {
           </View>
           
           <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              {!showPicker && (
-                <Pressable onPress={toggleDatePicker}>
-                <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
-                <TextInput 
-                  autoCorrect={false} 
-                  style={globalStyles.formFieldInput} 
-                  editable={false} 
-                  value={contactDate}
-                  onPressIn={toggleDatePicker}
-                ></TextInput>
-              </Pressable>
-              )}
+            <Pressable onPress={toggleDatePicker}>
+              <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
+              <TextInput 
+                autoCorrect={false} 
+                style={globalStyles.formFieldInput} 
+                editable={false} 
+                value={contactDate}
+                onPressIn={toggleDatePicker}
+              ></TextInput>
+            </Pressable>
           </View>
         </View>
 
@@ -135,25 +133,28 @@ const closeModal = () => {
 
         <TextButton pressFunction={closeModal} bgcolor="steelblue" text="Add Project"/>
 
-        {/* --- Date Picker --- */}
-        {showPicker && (
-          <DateTimePicker 
-            mode='date'
-            display='spinner'
-            value={date}
-            onChange={onChange}
-            style={globalStyles.datePicker}
-          />
-          )}
-
-          {showPicker &&  Platform.OS === 'ios' && (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
-              <TextButton pressFunction={toggleDatePicker} bgcolor="maroon" text="Cancel"/>
-              <TextButton pressFunction={confirmIOSDate} bgcolor="steelblue" text="Submit"/>
-            </View>
-          )}
-
       </View>
+
+      {/* --- Date Picker --- */}
+      <View style={globalStyles.datePickerBoxIOS}>
+      {showPicker && (
+        <DateTimePicker 
+          mode='date'
+          display='spinner'
+          value={date}
+          onChange={onChange}
+          style={globalStyles.datePicker}
+          textColor='black'
+        />
+        )}
+
+        {showPicker &&  Platform.OS === 'ios' && (
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
+            <TextButton pressFunction={toggleDatePicker} bgcolor="maroon" text="Cancel"/>
+            <TextButton pressFunction={confirmIOSDate} bgcolor="steelblue" text="Submit"/>
+          </View>
+        )}
+        </View>
     </Modal>
     </>
   )

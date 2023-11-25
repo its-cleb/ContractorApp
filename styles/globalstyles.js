@@ -103,6 +103,9 @@ export const globalStyles = StyleSheet.create({
     textAlignVertical: 'top'
   },
   // Date Picker Styles
+  datePickerBoxIOS: {
+    paddingBottom: 40
+  },
   datePicker: {
     height: 120,
     marginTop: -10
