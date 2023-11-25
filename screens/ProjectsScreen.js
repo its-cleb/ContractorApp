@@ -23,6 +23,11 @@ const toggleDatePicker = () => {
   setShowPicker(!showPicker)
 }
 
+const closeDatePickerAndKeyboard = () => {
+  setShowPicker(false)
+  Keyboard.dismiss()
+}
+
 const onChange = ({ type }, selectedDate) => {
   if (type == 'set') {
     const currentDate = selectedDate
@@ -73,7 +78,7 @@ const closeModal = () => {
       onRequestClose={() => {
         setModalVisible(!modalVisible);
       }}>
-      <Pressable onPress={Keyboard.dismiss} style={globalStyles.pressableBox}>
+      <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
         <ModalCloseButton pressFunction={closeModal} />
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} style={globalStyles.modal}>
