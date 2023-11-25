@@ -8,59 +8,58 @@ import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
-
-
 const ProjectsScreen = () => {
 
-// Project Details
-const [contactDate, setContactDate] = useState("")
+  // Project Details
+  const [contactDate, setContactDate] = useState("")
 
-// Date Picker
-const [date, setDate] = useState(new Date())
-const [showPicker, setShowPicker] = useState(false)
+  // Date Picker
+  const [date, setDate] = useState(new Date())
+  const [showPicker, setShowPicker] = useState(false)
 
-const toggleDatePicker = () => {
-  setShowPicker(!showPicker)
-}
+  const toggleDatePicker = () => {
+    setShowPicker(!showPicker)
+  }
 
-const closeDatePickerAndKeyboard = () => {
-  setShowPicker(false)
-  Keyboard.dismiss()
-}
+  const closeDatePickerAndKeyboard = () => {
+    setShowPicker(false)
+    Keyboard.dismiss()
+  }
 
-const onChange = ({ type }, selectedDate) => {
-  if (type == 'set') {
-    const currentDate = selectedDate
-    setDate(currentDate)
+  const onChange = ({ type }, selectedDate) => {
+    if (type == 'set') {
+      const currentDate = selectedDate
+      setDate(currentDate)
 
-    if (Platform.OS === 'android') {
+      if (Platform.OS === 'android') {
+        toggleDatePicker()
+        setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
+      }
+    } else {
       toggleDatePicker()
-      setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
     }
-  } else {
+  }
+
+  const confirmIOSDate = () => {
+    setContactDate(Intl.DateTimeFormat('en-US').format(date))
     toggleDatePicker()
   }
-}
 
-const confirmIOSDate = () => {
-  setContactDate(Intl.DateTimeFormat('en-US').format(date))
-  toggleDatePicker()
-}
+  const dateKeyboardDismiss = () => {
+    toggleDatePicker()
+    Keyboard.dismiss()
+  }
 
-const dateKeyboardDismiss = () => {
-  toggleDatePicker()
-  Keyboard.dismiss()
-}
-// Modal Control
-const [modalVisible, setModalVisible] = useState(false);
+  // Modal Control
+  const [modalVisible, setModalVisible] = useState(false);
 
-const openModal = () => {
-  setModalVisible(true)
-  setShowPicker(false)
-}
-const closeModal = () => {
-  setModalVisible(false)
-}
+  const openModal = () => {
+    setModalVisible(true)
+    setShowPicker(false)
+  }
+  const closeModal = () => {
+    setModalVisible(false)
+  }
 
   return (
     <>
@@ -88,7 +87,7 @@ const closeModal = () => {
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Client Name</Text>
-              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="John Smith"></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
             
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
@@ -108,19 +107,19 @@ const closeModal = () => {
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
               <Text style={globalStyles.formFieldCaption}>Phone</Text>
-              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="Project 1" keyboardType="numeric"></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} keyboardType="numeric"></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Email</Text>
-              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="John Smith"></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
           </View>
 
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
               <Text style={globalStyles.formFieldCaption}>Address</Text>
-              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="Street Address"></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -185,7 +184,7 @@ const closeModal = () => {
     </Modal>
     </>
   ) 
-}
+  }
 
 const styles = StyleSheet.create({})
 
