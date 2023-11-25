@@ -79,7 +79,7 @@ export const globalStyles = StyleSheet.create({
   },
   formFieldCaption: {
     alignContent: 'flex-start',
-    marginBottom: 2,
+    marginBottom: 1,
     fontWeight: 'bold'
   },
   formFieldInput: {
@@ -88,7 +88,7 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
-    paddingVertical: 8,
+    paddingVertical: Platform.OS === 'ios' ? 10: 6,
     paddingHorizontal: 16
   },
   formFieldInputMultiline: {

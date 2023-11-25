@@ -41,6 +41,10 @@ const confirmIOSDate = () => {
   toggleDatePicker()
 }
 
+const dateKeyboardDismiss = () => {
+  toggleDatePicker()
+  Keyboard.dismiss()
+}
 // Modal Control
 const [modalVisible, setModalVisible] = useState(false);
 
@@ -60,7 +64,6 @@ const closeModal = () => {
 
     <IconButtonHContent pressFunction={openModal} title="Add Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
     
-
     {/* --- Project Details modal --- */}
     <Modal
       animationType="slide"
@@ -72,7 +75,7 @@ const closeModal = () => {
 
       <ModalCloseButton pressFunction={closeModal} />
 
-      <KeyboardAvoidingView behavior='padding' style={globalStyles.modal}>
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} style={globalStyles.modal}>
         <Text style={[globalStyles.textTitle, { marginBottom: 20 }]}> Add New Project </Text>
 
         <View style={globalStyles.formRow}>
@@ -82,14 +85,14 @@ const closeModal = () => {
           </View>
           
           <View style={[globalStyles.formColumn, { flex: 2 }]}>
-            <Pressable onPress={toggleDatePicker}>
+            <Pressable onPress={dateKeyboardDismiss}>
               <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput} 
                 editable={false} 
                 value={contactDate}
-                onPressIn={toggleDatePicker}
+                onPressIn={dateKeyboardDismiss}
               ></TextInput>
             </Pressable>
           </View>
@@ -122,7 +125,23 @@ const closeModal = () => {
             <Text style={globalStyles.formFieldCaption}>ZIP</Text>
             <TextInput autoCorrect={false} style={globalStyles.formFieldInput} keyboardType="numeric"></TextInput>
           </View>
+        </View>
 
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>City</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>State</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+          </View>
+
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>ZIP</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} keyboardType="numeric"></TextInput>
+          </View>
         </View>
         
         <View style={globalStyles.formRow}>
@@ -150,9 +169,13 @@ const closeModal = () => {
         )}
 
         {showPicker &&  Platform.OS === 'ios' && (
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
-            <TextButton pressFunction={toggleDatePicker} bgcolor="maroon" text="Cancel"/>
-            <TextButton pressFunction={confirmIOSDate} bgcolor="steelblue" text="Submit"/>
+          <View style={{ flexDirection: 'row', gap: 10, marginHorizontal: 20}}>
+            <View style={[globalStyles.formColumn, { flex: 1 }]}>
+              <TextButton   pressFunction={toggleDatePicker} bgcolor="maroon" text="Close Date Picker"/>
+            </View>
+            <View style={[globalStyles.formColumn, { flex: 1 }]}>
+              <TextButton  style={[globalStyles.formColumn, { flex: 1 }]} pressFunction={confirmIOSDate} bgcolor="steelblue" text="Add Date"/>
+            </View>
           </View>
         )}
         </View>
