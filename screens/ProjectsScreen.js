@@ -44,12 +44,12 @@ const closeModal = () => {
         <Text style={[globalStyles.textTitle, { marginBottom: 20 }]}> Add New Project </Text>
 
         <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+          <View style={[globalStyles.formColumn, { flex: 3 }]}>
             <Text style={globalStyles.formFieldCaption}>Client Name</Text>
             <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="John Smith"></TextInput>
           </View>
 
-          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+          <View style={[globalStyles.formColumn, { flex: 2 }]}>
             <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
             <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="10/1/2024"></TextInput>
           </View>
@@ -58,7 +58,7 @@ const closeModal = () => {
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 2 }]}>
             <Text style={globalStyles.formFieldCaption}>Phone</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="Project 1"></TextInput>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="Project 1" keyboardType="numeric"></TextInput>
           </View>
 
           <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -80,7 +80,7 @@ const closeModal = () => {
 
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
             <Text style={globalStyles.formFieldCaption}>ZIP</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} keyboardType="numeric"></TextInput>
           </View>
 
         </View>
