@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Pressable, Platform } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 import IconButtonHContent from '../components/IconButtonHContent'
@@ -46,6 +46,7 @@ const [modalVisible, setModalVisible] = useState(false);
 
 const openModal = () => {
   setModalVisible(true)
+  setShowPicker(false)
 }
 const closeModal = () => {
   setModalVisible(false)
@@ -71,7 +72,7 @@ const closeModal = () => {
 
       <ModalCloseButton pressFunction={closeModal} />
 
-      <View style={globalStyles.modal}>
+      <KeyboardAvoidingView behavior='padding' style={globalStyles.modal}>
         <Text style={[globalStyles.textTitle, { marginBottom: 20 }]}> Add New Project </Text>
 
         <View style={globalStyles.formRow}>
@@ -133,7 +134,7 @@ const closeModal = () => {
 
         <TextButton pressFunction={closeModal} bgcolor="steelblue" text="Add Project"/>
 
-      </View>
+      </KeyboardAvoidingView>
 
       {/* --- Date Picker --- */}
       <View style={globalStyles.datePickerBoxIOS}>
