@@ -89,6 +89,17 @@ export const globalStyles = StyleSheet.create({
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
     paddingVertical: 8,
-    paddingHorizontal: 12
+    paddingHorizontal: 16
+  },
+  formFieldInputMultiline: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#999999',
+    backgroundColor: '#eeeeee',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    minHeight: 100,
+    textAlignVertical: 'top'
   },
 })

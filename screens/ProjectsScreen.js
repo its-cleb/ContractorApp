@@ -28,6 +28,8 @@ const closeModal = () => {
 
     <IconButtonHContent pressFunction={openModal} title="Add Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
     
+
+    {/* --- Project Details modal --- */}
     <Modal
       animationType="slide"
       visible={modalVisible}
@@ -39,25 +41,36 @@ const closeModal = () => {
       <ModalCloseButton pressFunction={closeModal} />
 
       <View style={globalStyles.modal}>
-
         <Text style={[globalStyles.textTitle, { marginBottom: 20 }]}> Add New Project </Text>
 
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <Text style={globalStyles.formFieldCaption}>Project Name</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+            <Text style={globalStyles.formFieldCaption}>Client Name</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="John Smith"></TextInput>
           </View>
 
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <Text style={globalStyles.formFieldCaption}>Project Name</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+            <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="10/1/2024"></TextInput>
+          </View>
+        </View>
+
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 2 }]}>
+            <Text style={globalStyles.formFieldCaption}>Phone</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="Project 1"></TextInput>
+          </View>
+
+          <View style={[globalStyles.formColumn, { flex: 3 }]}>
+            <Text style={globalStyles.formFieldCaption}>Email</Text>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="John Smith"></TextInput>
           </View>
         </View>
 
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 2 }]}>
             <Text style={globalStyles.formFieldCaption}>Address</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="Street Address"></TextInput>
           </View>
 
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -75,7 +88,7 @@ const closeModal = () => {
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
             <Text style={globalStyles.formFieldCaption}>Project Description</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
+            <TextInput autoCorrect={false} style={globalStyles.formFieldInputMultiline} multiline></TextInput>
           </View>
         </View>
 
