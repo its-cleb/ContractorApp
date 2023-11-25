@@ -1,14 +1,45 @@
 import React from 'react'
 import { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Pressable } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Pressable, Platform } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 import IconButtonHContent from '../components/IconButtonHContent'
 import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 const ProjectsScreen = () => {
+
+// Project Details
+const [contactDate, setContactDate] = useState("")
+
+// Date Picker
+const [date, setDate] = useState(new Date())
+const [showPicker, setShowPicker] = useState(false)
+
+const toggleDatePicker = () => {
+  setShowPicker(!showPicker)
+}
+
+const onChange = ({ type }, selectedDate) => {
+  if (type == 'set') {
+    const currentDate = selectedDate
+    setDate(currentDate)
+
+    if (Platform.OS === 'android') {
+      toggleDatePicker()
+      setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
+    }
+  } else {
+    toggleDatePicker()
+  }
+}
+
+const confirmIOSDate = () => {
+  setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
+  toggleDatePicker()
+}
 
 // Modal Control
 const [modalVisible, setModalVisible] = useState(false);
@@ -48,10 +79,20 @@ const closeModal = () => {
             <Text style={globalStyles.formFieldCaption}>Client Name</Text>
             <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="John Smith"></TextInput>
           </View>
-
+          
           <View style={[globalStyles.formColumn, { flex: 2 }]}>
-            <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
-            <TextInput autoCorrect={false} style={globalStyles.formFieldInput} placeholder="10/1/2024"></TextInput>
+              {!showPicker && (
+                <Pressable onPress={toggleDatePicker}>
+                <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
+                <TextInput 
+                  autoCorrect={false} 
+                  style={globalStyles.formFieldInput} 
+                  editable={false} 
+                  value={contactDate}
+                  onPressIn={toggleDatePicker}
+                ></TextInput>
+              </Pressable>
+              )}
           </View>
         </View>
 
@@ -93,6 +134,24 @@ const closeModal = () => {
         </View>
 
         <TextButton pressFunction={closeModal} bgcolor="steelblue" text="Add Project"/>
+
+        {/* --- Date Picker --- */}
+        {showPicker && (
+          <DateTimePicker 
+            mode='date'
+            display='spinner'
+            value={date}
+            onChange={onChange}
+            style={globalStyles.datePicker}
+          />
+          )}
+
+          {showPicker &&  Platform.OS === 'ios' && (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
+              <TextButton pressFunction={toggleDatePicker} bgcolor="maroon" text="Cancel"/>
+              <TextButton pressFunction={confirmIOSDate} bgcolor="steelblue" text="Submit"/>
+            </View>
+          )}
 
       </View>
     </Modal>

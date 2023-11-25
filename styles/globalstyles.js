@@ -53,7 +53,7 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
   },
   modalCloseButton: {
-    alignContent: 'right',
+    alignContent: 'flex-end',
     alignSelf: 'flex-end',
     margin: 10
   },
@@ -101,5 +101,10 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 16,
     minHeight: 100,
     textAlignVertical: 'top'
+  },
+  // Date Picker Styles
+  datePicker: {
+    height: 120,
+    marginTop: -10
   },
 })
