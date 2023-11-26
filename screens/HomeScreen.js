@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
-import ProjectFlatlist from '../contentcomponents/ProjectsFlatlist'
+import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { globalStyles } from '../styles/globalstyles'
 
 const HomeScreen = () => {
