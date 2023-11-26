@@ -1,15 +1,18 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHContent from '../components/IconButtonHContent'
 import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
+import ProjectContext from '../context/ProjectContext'
 
 const ProjectsScreen = () => {
   
+  const { data, addProjects } = useContext(ProjectContext)
+
   // --- Project Details ---
 
 
@@ -60,6 +63,7 @@ const ProjectsScreen = () => {
   }
   const closeModal = () => {
     setModalVisible(false)
+    addProjects()
   }
 
   return (
@@ -70,7 +74,7 @@ const ProjectsScreen = () => {
 
       <ProjectFlatlist />
 
-    <IconButtonHContent pressFunction={openModal} title="Add Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
+    <IconButtonHContent pressFunction={openModal} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
     
     {/* --- Project Details modal --- */}
     <Modal

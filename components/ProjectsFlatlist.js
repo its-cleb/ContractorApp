@@ -1,41 +1,42 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import ProjectContext from '../context/ProjectContext'
 
 const ProjectFlatlist = () => {
-  const projectList = useContext(ProjectContext)
+  const { data, addProjects } = useContext(ProjectContext)
 
   return (
-    <View style={globalStyles.flatlist}>
+    <View style={styles.flatlist}>
       <FlatList 
-        data={projectList} 
-        keyExtractor={(projectList) => projectList.id}
+        data={data} 
+        keyExtractor={(projects) => projects.id}
         renderItem={({ item }) => {
             return (
               <>
-                  <View style={styles.projectContainer}>
-                    <View style={styles.projectRowTop}>
-                      <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                        <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}</Text>
-                      </View>
-                      <View style={[styles.projectColumnRight, { flex: 1 }]}>
-                        <Text style={styles.projectTextRight}>{item.contactDate}</Text>
-                      </View>
+                <View style={styles.projectContainer}>
+                  <View style={styles.projectRowTop}>
+                    <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}, {item.id}</Text>
                     </View>
-                    <View style={styles.projectRowBottom}>
-                      <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                        <Text style={styles.projectTextLeft}>{item.city}, {item.state}</Text>
-                      </View>
-                      <View style={[styles.projectColumnRight, { flex: 2 }]}>
-                        <Text style={styles.projectTextRight}>{item.description}</Text>
-                      </View>
+                    <View style={[styles.projectColumnRight, { flex: 1 }]}>
+                      <Text style={styles.projectTextRight}>{item.contactDate}</Text>
                     </View>
                   </View>
+                  <View style={styles.projectRowBottom}>
+                    <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                      <Text style={styles.projectTextLeft}>{item.city}, {item.state}</Text>
+                    </View>
+                    <View style={[styles.projectColumnRight, { flex: 2 }]}>
+                      <Text style={styles.projectTextRight}>{item.description}</Text>
+                    </View>
+                  </View>
+                </View>
+                
             </>
             )
           }}
       />
+
     </View>
   )
 }

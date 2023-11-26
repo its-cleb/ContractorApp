@@ -8,13 +8,7 @@ export const ProjectProvider = ({ children }) => {
 
   const addProjects = () => {
     setProjects([...projects, { 
-      id: `Block Post #${projects.length + 1}`,
-      
-    }])
-  }
-  
-  const projectList = [
-    { id: '0001', 
+      id: `Project #${projects.length + 1}`,
       clientName: 'John Smith', 
       contactDate: '10/10/2023', 
       phone:'123-456-7890', email:'test@gmail.com', 
@@ -22,8 +16,8 @@ export const ProjectProvider = ({ children }) => {
       state:'WA', 
       zip:'98231', 
       description: 'Install 2 planks on the forklift.'  
-    }, 
-  ]
+    }])
+  }
 
   return <ProjectContext.Provider value={{ data: projects, addProjects}}>{children}</ProjectContext.Provider>
 }
