@@ -1,16 +1,19 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import ActiveProjects from '../components/ActiveProjects'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
 import ProjectContext from '../context/ProjectContext'
+import ProjectFlatlist from '../components/ProjectsFlatlist'
+import { globalStyles } from '../styles/globalstyles'
 
 const HomeScreen = () => {
-  const Test = useContext(ProjectContext)
+
   return (
     <>
-      <View>
-        <ActiveProjects />
+      <View style={globalStyles.containerHCentered}>
+        <Text style={globalStyles.textTitle}>Active Projects</Text>
       </View>
+
+      <ProjectFlatlist />
 
       <View style={styles.flexBox}>
         <View style={styles.flexItem}>
@@ -23,11 +26,6 @@ const HomeScreen = () => {
          <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
         </View>
      </View>
-
-     <View>
-      <Text>{Test}</Text>
-     </View>
-
     </>
   )
 }

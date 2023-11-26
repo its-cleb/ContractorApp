@@ -46,6 +46,19 @@ export const globalStyles = StyleSheet.create({
   buttonIcon: {
     margin: 10,
   },
+
+  TextButton: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    backgroundColor: "steelblue",
+    borderRadius: 5,
+    marginVertical: 5,
+    padding: 10
+  },
+  pressableBox: {
+    flex: 1,
+  },
+  // Modal Styling
   modal: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,17 +72,6 @@ export const globalStyles = StyleSheet.create({
   },
   modalActionButton: {
     marginTop: 20
-  },
-  TextButton: {
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    backgroundColor: "steelblue",
-    borderRadius: 5,
-    marginVertical: 5,
-    padding: 10
-  },
-  pressableBox: {
-    flex: 1,
   },
   // Form Styling
   formRow: {

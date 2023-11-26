@@ -1,18 +1,20 @@
 import React from 'react'
-import { useState } from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { useState, useContext } from 'react'
+import { View, Text, StyleSheet, FlatList, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHContent from '../components/IconButtonHContent'
 import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import ProjectFlatlist from '../components/ProjectsFlatlist'
 
 const ProjectsScreen = () => {
+  
+  // --- Project Details ---
 
-  // Project Details
+
+  // --- Date Picker ---
   const [contactDate, setContactDate] = useState("")
-
-  // Date Picker
   const [date, setDate] = useState(new Date())
   const [showPicker, setShowPicker] = useState(false)
 
@@ -49,7 +51,7 @@ const ProjectsScreen = () => {
     Keyboard.dismiss()
   }
 
-  // Modal Control
+  // --- Modal Control ---
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -62,9 +64,11 @@ const ProjectsScreen = () => {
 
   return (
     <>
-    <View style={globalStyles.containerHCentered}>
-      <Text style={globalStyles.textTitle}>Projects</Text>
-    </View>
+      <View style={globalStyles.containerHCentered}>
+        <Text style={globalStyles.textTitle}>Active Projects</Text>
+      </View>
+
+      <ProjectFlatlist />
 
     <IconButtonHContent pressFunction={openModal} title="Add Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
     
@@ -185,6 +189,8 @@ const ProjectsScreen = () => {
   ) 
   }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})
 
 export default ProjectsScreen
