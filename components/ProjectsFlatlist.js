@@ -5,17 +5,34 @@ import ProjectContext from '../context/ProjectContext'
 
 const ProjectFlatlist = () => {
   const projectList = useContext(ProjectContext)
-  return (
 
+  return (
     <View style={globalStyles.flatlist}>
       <FlatList 
         data={projectList} 
         keyExtractor={(projectList) => projectList.id}
         renderItem={({ item }) => {
             return (
-              <View style={[styles.projectContainer, {backgroundColor: 'maroon' }]}>
-                <Text style={styles.projectText}>{item.projectName}</Text>
-              </View>
+              <>
+                  <View style={styles.projectContainer}>
+                    <View style={styles.projectRowTop}>
+                      <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                        <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}</Text>
+                      </View>
+                      <View style={[styles.projectColumnRight, { flex: 1 }]}>
+                        <Text style={styles.projectTextRight}>{item.contactDate}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.projectRowBottom}>
+                      <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                        <Text style={styles.projectTextLeft}>{item.city}, {item.state}</Text>
+                      </View>
+                      <View style={[styles.projectColumnRight, { flex: 2 }]}>
+                        <Text style={styles.projectTextRight}>{item.description}</Text>
+                      </View>
+                    </View>
+                  </View>
+            </>
             )
           }}
       />
@@ -28,13 +45,43 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 5,
     marginHorizontal: 10,
+    backgroundColor: 'maroon',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 8,
+    flex: 1
   },
-  projectText: {
+  projectRowTop: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eeeeee99',
+    paddingBottom: 3
+  },
+  projectRowBottom: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 10,
+    paddingTop: 5
+  },
+  projectColumnLeft: {
+    // backgroundColor: 'red'
+  },
+  projectColumnRight: {
+    // backgroundColor: 'blue'
+  },
+  projectTextLeft: {
     color: 'white',
+    textAlign: 'left',
     fontSize: 16,
+  },
+  projectTextRight: {
+    color: 'white',
+    textAlign: 'right',
+    fontSize: 16,
+    flexWrap: 'wrap'
   },
   flatlist: {
     maxHeight: 300,
