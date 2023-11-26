@@ -1,25 +1,22 @@
-import React, { useState } from 'react'
+import createDataContext from './createDataContext'
 
-const ProjectContext = React.createContext()
-
-export const ProjectProvider = ({ children }) => {
-
-  const [projects, setProjects] = useState([])
-
-  const addProjects = () => {
-    setProjects([...projects, { 
-      id: `Project #${projects.length + 1}`,
-      clientName: 'John Smith', 
-      contactDate: '10/10/2023', 
-      phone:'123-456-7890', email:'test@gmail.com', 
-      address: '1234 Admiral Way', unit:'1', city:'Seattle', 
-      state:'WA', 
-      zip:'98231', 
-      description: 'Install 2 planks on the forklift.'  
-    }])
+const projectReducer = (state, action) => {
+  switch (action.type) {
+    case 'add_project':
+      return [...state, { id: `Project #${state.length + 1}`}]
+    default:
+      return state
   }
-
-  return <ProjectContext.Provider value={{ data: projects, addProjects}}>{children}</ProjectContext.Provider>
 }
 
-export default ProjectContext
+const addProject = dispatch => {
+  return () => {
+    dispatch({type: 'add_project'})
+  }
+}
+
+export const { Context, Provider } = createDataContext(
+  projectReducer, 
+  {addProject},
+  []
+)

@@ -7,13 +7,13 @@ import HomeScreen from './screens/HomeScreen';
 import EstimatorScreen from './screens/EstimatorScreen';
 import CompanyScreen from './screens/CompanyScreen';
 import ProjectsScreen from './screens/ProjectsScreen';
-import { ProjectProvider } from './context/ProjectContext';
+import { Provider } from './context/ProjectContext';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <ProjectProvider>
+    <Provider>
       <NavigationContainer>
         <Drawer.Navigator 
           initialRouteName="Home"
@@ -56,7 +56,7 @@ export default function App() {
             />
         </Drawer.Navigator>
       </NavigationContainer>
-    </ProjectProvider>
+    </Provider>
   );
 }
 

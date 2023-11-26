@@ -7,11 +7,11 @@ import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
-import ProjectContext from '../context/ProjectContext'
+import { Context } from '../context/ProjectContext'
 
 const ProjectsScreen = () => {
   
-  const { data, addProjects } = useContext(ProjectContext)
+  const { data, addProject } = useContext(Context)
 
   // --- Project Details ---
 
@@ -63,7 +63,7 @@ const ProjectsScreen = () => {
   }
   const closeModal = () => {
     setModalVisible(false)
-    addProjects()
+    addProject()
   }
 
   return (

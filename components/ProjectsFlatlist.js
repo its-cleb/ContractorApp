@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
-import ProjectContext from '../context/ProjectContext'
+import { Context } from '../context/ProjectContext'
 
 const ProjectFlatlist = () => {
-  const { data, addProjects } = useContext(ProjectContext)
+  const { state, addProject } = useContext(Context)
 
   return (
     <View style={styles.flatlist}>
       <FlatList 
-        data={data} 
+        data={state} 
         keyExtractor={(projects) => projects.id}
         renderItem={({ item }) => {
             return (
