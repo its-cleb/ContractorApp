@@ -1,9 +1,11 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import ActiveProjects from '../components/ActiveProjects'
 import IconButtonNavigate from '../components/IconButtonNavigate'
+import ProjectContext from '../context/ProjectContext'
 
-const HomeScreen = props => {
+const HomeScreen = () => {
+  const Test = useContext(ProjectContext)
   return (
     <>
       <View>
@@ -20,6 +22,10 @@ const HomeScreen = props => {
         <View style={styles.flexItem}>
          <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
         </View>
+     </View>
+
+     <View>
+      <Text>{Test}</Text>
      </View>
 
     </>
