@@ -4,6 +4,15 @@ const ProjectContext = React.createContext()
 
 export const ProjectProvider = ({ children }) => {
 
+  const [projects, setProjects] = useState([])
+
+  const addProjects = () => {
+    setProjects([...projects, { 
+      id: `Block Post #${projects.length + 1}`,
+      
+    }])
+  }
+  
   const projectList = [
     { id: '0001', 
       clientName: 'John Smith', 
@@ -13,14 +22,10 @@ export const ProjectProvider = ({ children }) => {
       state:'WA', 
       zip:'98231', 
       description: 'Install 2 planks on the forklift.'  
-    },
-
+    }, 
   ]
-  const [projects, setProjects] = useState(['test'])
 
-  return <ProjectContext.Provider value={projectList}>
-    {children}
-  </ProjectContext.Provider>
+  return <ProjectContext.Provider value={{ data: projects, addProjects}}>{children}</ProjectContext.Provider>
 }
 
 export default ProjectContext
