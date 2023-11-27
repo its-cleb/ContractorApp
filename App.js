@@ -1,17 +1,37 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { StyleSheet, Text } from 'react-native'
-import HomeScreen from './screens/HomeScreen';
-import EstimatorScreen from './screens/EstimatorScreen';
-import CompanyScreen from './screens/CompanyScreen';
-import ProjectsScreen from './screens/ProjectsScreen';
+import HomeScreen from './navigation/HomeScreen';
+import EstimatorScreen from './navigation/EstimatorScreen';
+import CompanyScreen from './navigation/CompanyScreen';
+import AddProjectScreen from './screens/AddProjectScreen';
+import ViewProjectsScreen from './screens/ViewProjectsScreen';
 import { Provider } from './context/ProjectContext';
 
 const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
+function ProjectScreen() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ViewProjectsScreen"
+        component={ViewProjectsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddProjectScreen"
+        component={AddProjectScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+    )
+}
 export default function App() {
+  
   return (
     <Provider>
       <NavigationContainer>
@@ -23,35 +43,39 @@ export default function App() {
               drawerLabelStyle: { fontSize: 18 }
             }}>
             <Drawer.Screen 
-              name="Home" 
+              name="HomeScreen" 
               component={HomeScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="home" size={22} color="#222" />),
-                headerTitle: "Get Started"
+                headerTitle: "Get Started",
+                drawerLabel: "Home"
               }} 
             />
             <Drawer.Screen 
-              name="Estimator" 
+              name="EstimatorScreen" 
               component={EstimatorScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />),
-                headerTitle: "Quotes & Estimates"
+                headerTitle: "Quotes & Estimates",
+                drawerLabel: "Estimator"
               }} 
             />
             <Drawer.Screen 
-              name="Projects" 
-              component={ProjectsScreen} 
+              name="ProjectScreen" 
+              component={ProjectScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="tools" size={24} color="black" />),
-                headerTitle: "Your Projects"
+                headerTitle: "Your Projects",
+                drawerLabel: "Projects"
               }} 
             />
             <Drawer.Screen 
-              name="Company" 
+              name="CompanyScreen" 
               component={CompanyScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" />),
-                headerTitle: "Company Details"
+                headerTitle: "Company Details",
+                drawerLabel: "Company"
               }} 
             />
         </Drawer.Navigator>

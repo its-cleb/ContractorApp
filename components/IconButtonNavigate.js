@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { SimpleLineIcons, MaterialIcons, MaterialCommunityIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import { Text, TouchableOpacity } from 'react-native'
+import { FontAwesome5 } from '@expo/vector-icons'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 
 const IconButtonNavigate = props => {    
+  
   const navigation = useNavigation()
 
   return (

@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHContent from '../components/IconButtonHContent'
 import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
+
+// Version 1 not using Context 
 
 const ProjectsScreen = () => {
 

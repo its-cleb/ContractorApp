@@ -19,7 +19,7 @@ const HomeScreen = () => {
           <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
         </View>
         <View style={styles.flexItem}>
-          <IconButtonNavigate navpage="Projects" title="Projects" icon="tools" bgcolor="steelblue" /> 
+          <IconButtonNavigate navpage="ProjectScreen" title="Projects" icon="tools" bgcolor="steelblue" /> 
         </View>
         <View style={styles.flexItem}>
          <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
