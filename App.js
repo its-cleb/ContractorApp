@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
 import HomeScreen from './navigation/HomeScreen';
 import EstimatorScreen from './navigation/EstimatorScreen';
 import CompanyScreen from './navigation/CompanyScreen';
@@ -25,7 +25,7 @@ function ProjectScreen() {
       <Stack.Screen
         name="AddProject"
         component={AddProjectScreen}
-        options={{ }}
+        options={{ headerTitle: "Add New Project" }}
       />
     </Stack.Navigator>
     )
@@ -40,7 +40,8 @@ export default function App() {
           screenOptions={{
               drawerActiveBackgroundColor: "wheat",
               drawerActiveTintColor: "#222",
-              drawerLabelStyle: { fontSize: 18 }
+              drawerLabelStyle: { fontSize: 18 },
+              drawerIcon: () => (<Entypo name="menu" size={26} color="black" />),
             }}>
             <Drawer.Screen 
               name="Home" 
@@ -48,7 +49,8 @@ export default function App() {
               options={{ 
                 drawerIcon: () => (<FontAwesome name="home" size={22} color="#222" />),
                 headerTitle: "Get Started",
-                drawerLabel: "Home"
+                drawerLabel: "Home",
+                headerShown: false
               }} 
             />
             <Drawer.Screen 
@@ -57,7 +59,8 @@ export default function App() {
               options={{ 
                 drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />),
                 headerTitle: "Quotes & Estimates",
-                drawerLabel: "Estimator"
+                drawerLabel: "Estimator",
+                headerShown: false
               }} 
             />
             <Drawer.Screen 
@@ -76,7 +79,8 @@ export default function App() {
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" />),
                 headerTitle: "Company Details",
-                drawerLabel: "Company"
+                drawerLabel: "Company",
+                headerShown: false
               }} 
             />
         </Drawer.Navigator>

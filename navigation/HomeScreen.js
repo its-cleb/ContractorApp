@@ -1,13 +1,15 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { globalStyles } from '../styles/globalstyles'
+import DrawerHeader from '../components/DrawerHeader'
 
 const HomeScreen = () => {
 
   return (
     <>
+      <DrawerHeader title="Home" />
       <View style={globalStyles.containerHCentered}>
         <Text style={globalStyles.textTitle}>Active Projects</Text>
       </View>

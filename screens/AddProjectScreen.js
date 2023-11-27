@@ -60,8 +60,6 @@ const AddProjectsScreen = ({ navigation }) => {
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} style={globalStyles.modal}>
           
-          <Text style={[globalStyles.textTitle, { marginBottom: 20 }]}> Add New Project </Text>
-
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Client Name</Text>
