@@ -6,7 +6,6 @@ import IconButtonHContent from '../components/IconButtonHContent'
 import TextButton from '../components/TextButton'
 import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { Context } from '../context/ProjectContext'
 
 const AddProjectsScreen = () => {
