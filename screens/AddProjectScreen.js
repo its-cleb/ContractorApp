@@ -1,20 +1,14 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, StyleSheet, Modal, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
-import IconButtonHContent from '../components/IconButtonHContent'
 import TextButton from '../components/TextButton'
-import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { Context } from '../context/ProjectContext'
 
-const AddProjectsScreen = () => {
+const AddProjectsScreen = ({ navigation }) => {
   
   const { data, addProject } = useContext(Context)
-
-  // --- Project Details ---
-
 
   // --- Date Picker ---
   const [contactDate, setContactDate] = useState("")
@@ -54,35 +48,15 @@ const AddProjectsScreen = () => {
     Keyboard.dismiss()
   }
 
-  // --- Modal Control ---
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => {
-    setModalVisible(true)
-    setShowPicker(false)
-  }
-  const closeModal = () => {
-    setModalVisible(false)
-  }
-  const closeModalAddProject = () => {
-    setModalVisible(false)
+  const addProjectBackPage = () => {
     addProject()
+    navigation.pop()
   }
 
   return (
-    <>
-    <IconButtonHContent pressFunction={openModal} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> 
-    
-    {/* --- Project Details modal --- */}
-    <Modal
-      animationType="slide"
-      visible={modalVisible}
-      presentationStyle="formSheet"
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}>
+    <>    
+    {/* --- Project Details --- */}
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
-        <ModalCloseButton pressFunction={closeModal} />
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} style={globalStyles.modal}>
           
@@ -156,7 +130,7 @@ const AddProjectsScreen = () => {
             </View>
           </View>
 
-          <TextButton pressFunction={closeModalAddProject} bgcolor="steelblue" text="Add Project"/>
+          <TextButton pressFunction={addProjectBackPage} bgcolor="steelblue" text="Add Project"/>
           
         </KeyboardAvoidingView>
 
@@ -185,7 +159,6 @@ const AddProjectsScreen = () => {
           )}
         </View>
       </Pressable>
-    </Modal>
     </>
   ) 
   }

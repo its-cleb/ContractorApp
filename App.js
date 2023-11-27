@@ -18,14 +18,14 @@ function ProjectScreen() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="ViewProjectsScreen"
+        name="ViewProjects"
         component={ViewProjectsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AddProjectScreen"
+        name="AddProject"
         component={AddProjectScreen}
-        options={{ headerShown: false }}
+        options={{ }}
       />
     </Stack.Navigator>
     )
@@ -43,7 +43,7 @@ export default function App() {
               drawerLabelStyle: { fontSize: 18 }
             }}>
             <Drawer.Screen 
-              name="HomeScreen" 
+              name="Home" 
               component={HomeScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="home" size={22} color="#222" />),
@@ -52,7 +52,7 @@ export default function App() {
               }} 
             />
             <Drawer.Screen 
-              name="EstimatorScreen" 
+              name="Estimator" 
               component={EstimatorScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />),
@@ -61,16 +61,17 @@ export default function App() {
               }} 
             />
             <Drawer.Screen 
-              name="ProjectScreen" 
+              name="Projects" 
               component={ProjectScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="tools" size={24} color="black" />),
                 headerTitle: "Your Projects",
-                drawerLabel: "Projects"
+                drawerLabel: "Projects",
+                headerShown: false
               }} 
             />
             <Drawer.Screen 
-              name="CompanyScreen" 
+              name="Company" 
               component={CompanyScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" />),
