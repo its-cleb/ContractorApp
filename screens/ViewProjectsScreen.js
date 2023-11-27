@@ -18,6 +18,8 @@ const ViewProjectsScreen = ({ navigation }) => {
       <ProjectFlatlist />
       
       <IconButtonHContent pressFunction={() => navigation.navigate('AddProject')} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+
+      <IconButtonHContent pressFunction={() => navigation.navigate('ProjectDetails')} title="Project Details" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
     
     </>
   ) 

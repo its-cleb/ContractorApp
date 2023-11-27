@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { Context } from '../context/ProjectContext'
+import { useNavigation } from '@react-navigation/native';
+
 
 const ProjectFlatlist = () => {
   const { state, addProject } = useContext(Context)
+  const navigation = useNavigation()
 
   return (
     <View style={styles.flatlist}>
@@ -12,7 +15,7 @@ const ProjectFlatlist = () => {
         keyExtractor={(projects) => projects.id}
         renderItem={({ item }) => {
             return (
-              <>
+              <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails')}>
                 <View style={styles.projectContainer}>
                   <View style={styles.projectRowTop}>
                     <View style={[styles.projectColumnLeft, { flex: 1 }]}>
@@ -32,7 +35,7 @@ const ProjectFlatlist = () => {
                   </View>
                 </View>
                 
-            </>
+            </TouchableOpacity>
             )
           }}
       />

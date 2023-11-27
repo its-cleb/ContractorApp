@@ -8,6 +8,7 @@ import HomeScreen from './navigation/HomeScreen';
 import EstimatorScreen from './navigation/EstimatorScreen';
 import CompanyScreen from './navigation/CompanyScreen';
 import AddProjectScreen from './screens/AddProjectScreen';
+import ProjectDetails from './screens/ProjectDetails';
 import ViewProjectsScreen from './screens/ViewProjectsScreen';
 import { Provider } from './context/ProjectContext';
 
@@ -35,6 +36,11 @@ function ProjectScreen() {
         name="AddProject"
         component={AddProjectScreen}
         options={{ headerTitle: "Add New Project" }}
+      />
+      <Stack.Screen
+        name="ProjectDetails"
+        component={ProjectDetails}
+        options={{ headerTitle: "Project Details" }}
       />
     </Stack.Navigator>
     )

@@ -62,7 +62,7 @@ export const globalStyles = StyleSheet.create({
   modal: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 10,
     flex: 1,
   },
   modalCloseButton: {
@@ -71,7 +71,7 @@ export const globalStyles = StyleSheet.create({
     margin: 10
   },
   modalActionButton: {
-    marginTop: 20
+    marginTop: 10
   },
   // Form Styling
   formRow: {
