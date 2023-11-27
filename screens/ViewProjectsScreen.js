@@ -17,7 +17,13 @@ const ViewProjectsScreen = ({ navigation }) => {
 
       <ProjectFlatlist />
 
-      <IconButtonHContent pressFunction={() => navigation.navigate('AddProject')} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+      <Button
+        title="Go to Root, Profile"
+        onPress={() => navigation.navigate('HomeScreen')}
+      />
+      <IconButtonNavigate navpage="AddProjectScreen" title="Projects" icon="tools" bgcolor="steelblue" /> 
+
+      {/* <IconButtonHContent pressFunction={() => navigation.navigate('AddProjectScreen')} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/> */}
     
     </>
   ) 

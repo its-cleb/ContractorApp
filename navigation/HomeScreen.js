@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useContext } from 'react'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { globalStyles } from '../styles/globalstyles'
@@ -19,7 +19,7 @@ const HomeScreen = () => {
           <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
         </View>
         <View style={styles.flexItem}>
-          <IconButtonNavigate navpage="Project" title="Projects" icon="tools" bgcolor="steelblue" /> 
+          <IconButtonNavigate navpage="ProjectScreen" title="Projects" icon="tools" bgcolor="steelblue" /> 
         </View>
         <View style={styles.flexItem}>
          <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 

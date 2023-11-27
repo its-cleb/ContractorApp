@@ -14,9 +14,28 @@ import { Provider } from './context/ProjectContext';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-function HomeStack() {
+function ProjectScreen() {
   return (
-    <Drawer.Navigator 
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ViewProjectsScreen"
+        component={ViewProjectsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddProjectScreen"
+        component={AddProjectScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+    )
+}
+export default function App() {
+  
+  return (
+    <Provider>
+      <NavigationContainer>
+        <Drawer.Navigator 
           initialRouteName="Home"
           screenOptions={{
               drawerActiveBackgroundColor: "wheat",
@@ -24,7 +43,7 @@ function HomeStack() {
               drawerLabelStyle: { fontSize: 18 }
             }}>
             <Drawer.Screen 
-              name="Home" 
+              name="HomeScreen" 
               component={HomeScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="home" size={22} color="#222" />),
@@ -33,7 +52,7 @@ function HomeStack() {
               }} 
             />
             <Drawer.Screen 
-              name="Estimator" 
+              name="EstimatorScreen" 
               component={EstimatorScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />),
@@ -42,8 +61,8 @@ function HomeStack() {
               }} 
             />
             <Drawer.Screen 
-              name="Projects" 
-              component={App} 
+              name="ProjectScreen" 
+              component={ProjectScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="tools" size={24} color="black" />),
                 headerTitle: "Your Projects",
@@ -51,7 +70,7 @@ function HomeStack() {
               }} 
             />
             <Drawer.Screen 
-              name="Company" 
+              name="CompanyScreen" 
               component={CompanyScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" />),
@@ -60,29 +79,6 @@ function HomeStack() {
               }} 
             />
         </Drawer.Navigator>
-    )
-}
-export default function App() {
-  return (
-    <Provider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ }}
-          />
-          <Stack.Screen
-            name="ViewProjects"
-            component={ViewProjectsScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="AddProject"
-            component={AddProjectScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
