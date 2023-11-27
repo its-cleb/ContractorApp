@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { globalStyles } from '../styles/globalstyles'

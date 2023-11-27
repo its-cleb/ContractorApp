@@ -1,9 +1,9 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet } from 'react-native'
 import HomeScreen from './navigation/HomeScreen';
 import EstimatorScreen from './navigation/EstimatorScreen';
 import CompanyScreen from './navigation/CompanyScreen';
@@ -14,6 +14,15 @@ import { Provider } from './context/ProjectContext';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
+const MyTheme = { 
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#fafafa'
+  }
+}
+
+// Projects Pages
 function ProjectScreen() {
   return (
     <Stack.Navigator>
@@ -34,14 +43,13 @@ export default function App() {
   
   return (
     <Provider>
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <Drawer.Navigator 
           initialRouteName="Home"
           screenOptions={{
               drawerActiveBackgroundColor: "wheat",
               drawerActiveTintColor: "#222",
-              drawerLabelStyle: { fontSize: 18 },
-              drawerIcon: () => (<Entypo name="menu" size={26} color="black" />),
+              drawerLabelStyle: { fontSize: 18 }
             }}>
             <Drawer.Screen 
               name="Home" 
