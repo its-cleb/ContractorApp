@@ -15,7 +15,7 @@ const ProjectFlatlist = () => {
         keyExtractor={(projects) => projects.id}
         renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails')}>
+              <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {id: item.id})}>
                 <View style={styles.projectContainer}>
                   <View style={styles.projectRowTop}>
                     <View style={[styles.projectColumnLeft, { flex: 1 }]}>
