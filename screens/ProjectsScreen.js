@@ -8,6 +8,7 @@ import ModalCloseButton from '../components/ModalCloseButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
 import { Context } from '../context/ProjectContext'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const ProjectsScreen = () => {
   
