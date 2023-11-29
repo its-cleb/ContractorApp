@@ -13,8 +13,6 @@ const ProjectDetails = ({ route, navigation }) => {
   
   return (
     <>
-
-      <View><Text>Project Details</Text></View>
         <View style={styles.projectContainer}>
           <View style={styles.projectRowTop}>
             <View style={[styles.projectColumnLeft, { flex: 1 }]}>
