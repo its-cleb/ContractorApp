@@ -2,32 +2,51 @@ import React, { useContext } from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import { Context } from '../context/ProjectContext'
+import DeleteButton from '../components/DeleteButton'
 
 const ProjectDetails = ({ route, navigation }) => {
   
-  const { state, addProject } = useContext(Context)
+  const { state, deleteProject } = useContext(Context)
 
   const { id } = route.params
   
   const projects = state.find(projects => projects.id === id)
+
+  const clickFunction = () => {
+    deleteProject(projects.id)
+    navigation.pop()
+  }
   
   return (
     <>
         <View style={styles.projectContainer}>
-          <View style={styles.projectRowTop}>
-            <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-              <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{projects.id}</Text>
-            </View>
-            <View style={[styles.projectColumnRight, { flex: 1 }]}>
-              <Text style={styles.projectTextRight}>{projects.contactDate}</Text>
-            </View>
+          <View style={styles.projectHeader}>
+            <Text style={styles.projectTextHeader}>{projects.clientName}</Text>
+            <DeleteButton pressFunction={clickFunction}/>
           </View>
-          <View style={styles.projectRowBottom}>
-            <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-              <Text style={styles.projectTextLeft}>{projects.city}, {projects.state}</Text>
-            </View>
-            <View style={[styles.projectColumnRight, { flex: 2 }]}>
-              <Text style={styles.projectTextRight}>{projects.description}</Text>
+          <View style={styles.projectRow}>
+            <Text style={[styles.projectTextBold, styles.flexOne]}>First Contacted:</Text>
+            <Text style={styles.projectTextRight}>{projects.contactDate}</Text>
+          </View>
+          <View style={styles.projectRow}>
+            <Text style={[styles.projectTextBold, styles.flexOne]}>Phone:</Text>
+            <Text style={styles.projectTextRight}>{projects.phone}</Text>
+          </View>
+          <View style={styles.projectRow}>
+            <Text style={[styles.projectTextBold, styles.flexOne]}>Email:</Text>
+            <Text style={styles.projectTextRight}>{projects.email}</Text>
+          </View>
+          <View style={styles.projectRow}>
+            <Text style={[styles.projectTextBold]}>Address:</Text>
+            <View style={styles.flexOne}>
+              <Text style={styles.projectTextRight}>{projects.address}, {projects.unit}</Text>
+              <Text style={styles.projectTextRight}>{projects.city}, {projects.state} {projects.zip}</Text>
+            </View>  
+          </View>
+          <View style={styles.projectRow}>
+            <View style={styles.projectBox}>
+              <Text style={[styles.projectTextBold, {marginBottom: 10}]}>Project Description:</Text>
+              <Text style={[styles.projectText]}>{projects.description}</Text>
             </View>
           </View>
         </View>
@@ -38,54 +57,52 @@ const ProjectDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   projectContainer: {
     borderRadius: 5,
-    marginVertical: 5,
-    marginHorizontal: 10,
-    backgroundColor: 'maroon',
+    margin: 10,
     padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingBottom: 8,
   },
-  projectRowTop: {
+  projectHeader: {
     flexDirection: 'row',
     gap: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#eeeeee99',
-    paddingBottom: 3
+    borderBottomColor: '#666666',
+    paddingBottom: 3,
+    paddingTop: 10,
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
-  projectRowBottom: {
+  projectRow: {
     flexDirection: 'row',
-    gap: 10,
-    paddingTop: 5
+    padding: 10,
+    marginTop: 5,
+    backgroundColor: '#fff',
+    borderColor: '#eee',
+    borderRadius: 5,
+    borderWidth: 1,
   },
-  projectColumnLeft: {
-    // backgroundColor: 'red'
-  },
-  projectColumnRight: {
-    // backgroundColor: 'blue'
-  },
-  projectTextLeft: {
-    color: 'white',
-    textAlign: 'left',
+  projectText: {
+    color: 'black',
     fontSize: 16,
+  },
+  projectTextHeader: {
+    fontWeight: 'bold', 
+    fontSize: 24,
+    flex: 1
+  },
+  projectTextBold: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   projectTextRight: {
-    color: 'white',
+    color: 'black',
     textAlign: 'right',
     fontSize: 16,
-    flexWrap: 'wrap'
   },
-  flatlist: {
-    maxHeight: 300,
-    marginBottom: 20
-  },
-  flexBox: {
-    flexDirection: 'row',
-    padding: 5,
-  },
-  flexItem: {
-    flex: 1
+  flexOne: {
+    flex: 1,
   }
+
 })
 
 export default ProjectDetails
