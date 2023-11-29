@@ -6,13 +6,52 @@ import { Context } from '../context/ProjectContext'
 const ProjectDetails = ({ route, navigation }) => {
   console.log(route.params)
   
-  const { state } = useContext(Context)
-  console.log(state)
-//  const projects = state.find((projects) => projects.id === route.params)
+  const { state, addProject } = useContext(Context)
+  console.log('state=', state)
+  
+  //const projects = state.find(projects => projects.id === route.params)
+  console.log(projects)
 
+  // const stuff = state.map((id) => {console.log('stuff=', stuff)})
   return (
     <>
-      <View><Text>Project Details</Text></View>
+      <View>
+        <Text>Test: {projects}</Text>
+      </View>
+
+      {/* <View style={styles.flatlist}>
+      <FlatList 
+        data={projects} 
+        keyExtractor={(projects) => projects.id}
+        renderItem={({ item }) => {
+            return (
+              <View>
+                <View style={styles.projectContainer}>
+                  <View style={styles.projectRowTop}>
+                    <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}, {item.id}</Text>
+                    </View>
+                    <View style={[styles.projectColumnRight, { flex: 1 }]}>
+                      <Text style={styles.projectTextRight}>{item.contactDate}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.projectRowBottom}>
+                    <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                      <Text style={styles.projectTextLeft}>{item.city}, {item.state}</Text>
+                    </View>
+                    <View style={[styles.projectColumnRight, { flex: 2 }]}>
+                      <Text style={styles.projectTextRight}>{item.description}</Text>
+                    </View>
+                  </View>
+                </View>
+                
+            </View>
+            )
+          }}
+      /> */}
+
+
+      {/* <View><Text>Project Details</Text></View>
         <View style={styles.projectContainer}>
           <View style={styles.projectRowTop}>
             <View style={[styles.projectColumnLeft, { flex: 1 }]}>
@@ -30,7 +69,7 @@ const ProjectDetails = ({ route, navigation }) => {
               <Text style={styles.projectTextRight}>{projects.description}</Text>
             </View>
           </View>
-        </View>
+        </View> */}
     </>
   )
 }

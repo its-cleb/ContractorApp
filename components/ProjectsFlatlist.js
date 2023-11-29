@@ -12,7 +12,7 @@ const ProjectFlatlist = () => {
     <View style={styles.flatlist}>
       <FlatList 
         data={state} 
-        keyExtractor={(projects) => projects.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
             return (
               <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {id: item.id})}>
