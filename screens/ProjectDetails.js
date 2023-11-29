@@ -47,10 +47,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 8,
-    flex: 1
   },
   projectRowTop: {
-    flex: 1,
     flexDirection: 'row',
     gap: 10,
     borderBottomWidth: 1,
@@ -58,7 +56,6 @@ const styles = StyleSheet.create({
     paddingBottom: 3
   },
   projectRowBottom: {
-    flex: 1,
     flexDirection: 'row',
     gap: 10,
     paddingTop: 5
