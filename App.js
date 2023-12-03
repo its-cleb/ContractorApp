@@ -1,16 +1,17 @@
-import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import React from 'react'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
-import HomeScreen from './navigation/HomeScreen';
-import EstimatorScreen from './navigation/EstimatorScreen';
-import CompanyScreen from './navigation/CompanyScreen';
-import AddProjectScreen from './screens/AddProjectScreen';
-import ProjectDetails from './screens/ProjectDetails';
-import ViewProjectsScreen from './screens/ViewProjectsScreen';
-import { Provider } from './context/ProjectContext';
+import HomeScreen from './navigation/HomeScreen'
+import EstimatorScreen from './navigation/EstimatorScreen'
+import CompanyScreen from './navigation/CompanyScreen'
+import AddProjectScreen from './screens/AddProjectScreen'
+import EditProjectScreen from './screens/EditProjectScreen'
+import ProjectDetails from './screens/ProjectDetails'
+import ViewProjectsScreen from './screens/ViewProjectsScreen'
+import { Provider } from './context/ProjectContext'
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,11 @@ function ProjectScreen() {
         name="AddProject"
         component={AddProjectScreen}
         options={{ headerTitle: "Add New Project" }}
+      />
+      <Stack.Screen
+        name="EditProject"
+        component={EditProjectScreen}
+        options={{ headerTitle: "Edit Project" }}
       />
       <Stack.Screen
         name="ProjectDetails"

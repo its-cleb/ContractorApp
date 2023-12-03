@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Context } from '../context/ProjectContext'
 import DeleteButton from '../components/DeleteButton'
+import IconButtonHSmall from '../components/IconButtonHSmall'
 
 const ProjectDetails = ({ route, navigation }) => {
   
@@ -48,7 +49,11 @@ const ProjectDetails = ({ route, navigation }) => {
               <Text style={[styles.projectText]}>{projects.description}</Text>
             </View>
           </View>
-        </View>
+        
+          
+        </View><View style={styles.editprojectbutton}>
+            <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload: state.projectID})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
+          </View>
     </>
   )
 }
@@ -100,8 +105,7 @@ const styles = StyleSheet.create({
   },
   flexOne: {
     flex: 1,
-  }
-
+  },
 })
 
 export default ProjectDetails
