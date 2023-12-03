@@ -8,29 +8,10 @@ import { Context } from '../context/ProjectContext'
 
 const AddProjectsScreen = ({ navigation }) => {
   
-  const { addProject } = useContext(Context)
-
-  // --- Form Inputs ---
-  const [ clientName, setClientName ] = useState('')
-  const [ contactDate, setContactDate ] = useState('')
-  const [ phone, setPhone ] = useState('')
-  const [ email, setEmail ] = useState('')
-  const [ address, setAddress ] = useState('')
-  const [ unitNumber, setUnitNumber ] = useState('')
-  const [ city, setCity ] = useState('')
-  const [ usState, setUsState ] = useState('')
-  const [ zip, setZip ] = useState('')
-  const [ description, setDescription ] = useState('')
-
-
-  
-  const addProjectBackPage = () => {
-    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
-    navigation.pop()
-  }
+  const { data, addProject } = useContext(Context)
 
   // --- Date Picker ---
-
+  const [contactDate, setContactDate] = useState("")
   const [date, setDate] = useState(new Date())
   const [showPicker, setShowPicker] = useState(false)
 
@@ -67,6 +48,11 @@ const AddProjectsScreen = ({ navigation }) => {
     Keyboard.dismiss()
   }
 
+  const addProjectBackPage = () => {
+    addProject()
+    navigation.pop()
+  }
+
   return (
     <>    
     {/* --- Project Details --- */}
@@ -77,11 +63,7 @@ const AddProjectsScreen = ({ navigation }) => {
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Client Name</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={clientName}
-                onChangeText={text => setClientName(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
             
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
@@ -93,7 +75,6 @@ const AddProjectsScreen = ({ navigation }) => {
                   editable={false} 
                   value={contactDate}
                   onPressIn={dateKeyboardDismiss}
-                  onChangeText={text => setDate(text)}
                 ></TextInput>
               </Pressable>
             </View>
@@ -102,83 +83,48 @@ const AddProjectsScreen = ({ navigation }) => {
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
               <Text style={globalStyles.formFieldCaption}>Phone</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput} 
-                keyboardType="numeric"
-                value={phone}
-                onChangeText={text => setPhone(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} keyboardType="numeric"></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Email</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={email}
-                onChangeText={text => setEmail(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
           </View>
 
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
               <Text style={globalStyles.formFieldCaption}>Address</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={address}
-                onChangeText={text => setAddress(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
               <Text style={globalStyles.formFieldCaption}>Unit</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={unitNumber}
-                onChangeText={text => setUnitNumber(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
           </View>
 
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
               <Text style={globalStyles.formFieldCaption}>City</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={city}
-                onChangeText={text => setCity(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
               <Text style={globalStyles.formFieldCaption}>State</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={usState}
-                onChangeText={text => setUsState(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
               <Text style={globalStyles.formFieldCaption}>ZIP</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput} 
-                keyboardType="numeric"
-                value={zip}
-                onChangeText={text => setZip(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInput} keyboardType="numeric"></TextInput>
             </View>
           </View>
           
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
               <Text style={globalStyles.formFieldCaption}>Project Description</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInputMultiline} 
-                multiline
-                value={description}
-                onChangeText={text => setDescription(text)}></TextInput>
+              <TextInput autoCorrect={false} style={globalStyles.formFieldInputMultiline} multiline></TextInput>
             </View>
           </View>
 

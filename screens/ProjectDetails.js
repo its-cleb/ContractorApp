@@ -38,8 +38,8 @@ const ProjectDetails = ({ route, navigation }) => {
           <View style={styles.projectRow}>
             <Text style={[styles.projectTextBold]}>Address:</Text>
             <View style={styles.flexOne}>
-              <Text style={styles.projectTextRight}>{projects.address}, {projects.unit}</Text>
-              <Text style={styles.projectTextRight}>{projects.city}, {projects.state} {projects.zip}</Text>
+              <Text style={styles.projectTextRight}>{projects.address}, {projects.unitNumber}</Text>
+              <Text style={styles.projectTextRight}>{projects.city}, {projects.usState} {projects.zip}</Text>
             </View>  
           </View>
           <View style={styles.projectRow}>

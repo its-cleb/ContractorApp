@@ -27,7 +27,7 @@ const ProjectFlatlist = () => {
                   </View>
                   <View style={styles.projectRowBottom}>
                     <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                      <Text style={styles.projectTextLeft}>{item.city}, {item.state}</Text>
+                      <Text style={styles.projectTextLeft}>{item.city}, {item.usState}</Text>
                     </View>
                     <View style={[styles.projectColumnRight, { flex: 2 }]}>
                       <Text style={styles.projectTextRight}>{item.description}</Text>
