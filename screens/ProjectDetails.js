@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
+import { View, Text, StyleSheet } from 'react-native'
 import { Context } from '../context/ProjectContext'
 import DeleteButton from '../components/DeleteButton'
 
@@ -8,16 +7,12 @@ const ProjectDetails = ({ route, navigation }) => {
   
   const { state, deleteProject } = useContext(Context)
 
-  const { id } = route.params
+  const { payload } = route.params
   
-  const projects = state.find(projects => projects.id === id)
+  const projects = state.find(projects => projects.projectID === payload)
 
-  const currentProject = id
-
-  console.log('Current Project:', currentProject)
-
-  const clickFunction = () => {
-    deleteProject(currentProject)
+  const deleteProjectNavBack = () => {
+    deleteProject(payload)
     navigation.pop()
   }
   
@@ -26,7 +21,7 @@ const ProjectDetails = ({ route, navigation }) => {
         <View style={styles.projectContainer}>
           <View style={styles.projectHeader}>
             <Text style={styles.projectTextHeader}>{projects.clientName}</Text>
-            <DeleteButton pressFunction={clickFunction}/>
+            <DeleteButton pressFunction={deleteProjectNavBack}/>
           </View>
           <View style={styles.projectRow}>
             <Text style={[styles.projectTextBold, styles.flexOne]}>First Contacted:</Text>

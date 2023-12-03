@@ -1,8 +1,6 @@
-import React, { useContext } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
-import ProjectFlatlist from '../components/ProjectsFlatlist'
-import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
 
 const HomeScreen = () => {
@@ -10,11 +8,6 @@ const HomeScreen = () => {
   return (
     <>
       <DrawerHeader title="Home" />
-      <View style={globalStyles.containerHCentered}>
-        <Text style={globalStyles.textTitle}>Active Projects</Text>
-      </View>
-
-      <ProjectFlatlist />
 
       <View style={styles.flexBox}>
         <View style={styles.flexItem}>

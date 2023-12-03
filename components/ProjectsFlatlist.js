@@ -5,21 +5,21 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const ProjectFlatlist = () => {
-  const { state, addProject } = useContext(Context)
+  const { state } = useContext(Context)
   const navigation = useNavigation()
 
   return (
     <View style={styles.flatlist}>
       <FlatList 
         data={state} 
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => {
             return (
-              <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {id: item.id})}>
+              <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {payload: item.projectID})}>
                 <View style={styles.projectContainer}>
                   <View style={styles.projectRowTop}>
                     <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}, {item.id}</Text>
+                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}, {item.projectID}</Text>
                     </View>
                     <View style={[styles.projectColumnRight, { flex: 1 }]}>
                       <Text style={styles.projectTextRight}>{item.contactDate}</Text>

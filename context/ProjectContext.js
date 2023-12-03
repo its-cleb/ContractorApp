@@ -3,10 +3,10 @@ import createDataContext from './createDataContext'
 const projectReducer = (state, action) => {
   switch (action.type) {
     case 'delete_project':
-      return state.filter((projects) => projects.id !== action.payload)
+      return state.filter((projects) => projects.projectID !== action.payload)
     case 'add_project':
       return [...state, { 
-        id: `Project #${state.length + 1}`,
+        projectID: `Project #${state.length + 1}`,
         clientName: 'John Smith', 
         contactDate: '10/10/2023', 
         phone:'123-456-7890', email:'test@gmail.com', 
@@ -27,8 +27,8 @@ const addProject = dispatch => {
 }
 
 const deleteProject = dispatch => {
-  return () => {
-    dispatch({ type: 'delete_project', payload: id })
+  return projectID => {
+    dispatch({ type: 'delete_project', payload: projectID })
   }
 }
 
