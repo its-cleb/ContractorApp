@@ -12,8 +12,12 @@ const ProjectDetails = ({ route, navigation }) => {
   
   const projects = state.find(projects => projects.id === id)
 
+  const currentProject = id
+
+  console.log('Current Project:', currentProject)
+
   const clickFunction = () => {
-    deleteProject(projects.id)
+    deleteProject(currentProject)
     navigation.pop()
   }
   
@@ -44,7 +48,7 @@ const ProjectDetails = ({ route, navigation }) => {
             </View>  
           </View>
           <View style={styles.projectRow}>
-            <View style={styles.projectBox}>
+            <View>
               <Text style={[styles.projectTextBold, {marginBottom: 10}]}>Project Description:</Text>
               <Text style={[styles.projectText]}>{projects.description}</Text>
             </View>
