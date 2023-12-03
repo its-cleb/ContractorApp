@@ -5,8 +5,10 @@ const projectReducer = (state, action) => {
     case 'delete_project':
       return state.filter((projects) => projects.projectID !== action.payload)
     case 'add_project':
+      let currenttime = new Date()
+      let datestring = currenttime.toLocaleString();
       return [...state, { 
-        projectID: `Project #${state.length + 1}`,
+        projectID: datestring,
         clientName: 'John Smith', 
         contactDate: '10/10/2023', 
         phone:'123-456-7890', email:'test@gmail.com', 

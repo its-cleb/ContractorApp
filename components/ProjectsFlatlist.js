@@ -19,7 +19,7 @@ const ProjectFlatlist = () => {
                 <View style={styles.projectContainer}>
                   <View style={styles.projectRowTop}>
                     <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}, {item.projectID}</Text>
+                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}</Text>
                     </View>
                     <View style={[styles.projectColumnRight, { flex: 1 }]}>
                       <Text style={styles.projectTextRight}>{item.contactDate}</Text>
