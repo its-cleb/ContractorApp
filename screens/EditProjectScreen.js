@@ -7,21 +7,30 @@ import IconButtonHSmall from '../components/IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../context/ProjectContext'
 
-const EditProjectsScreen = ({ navigation }) => {
+const EditProjectsScreen = ({ route, navigation }) => {
   
-  const { addProject } = useContext(Context)
+  const { state, addProject } = useContext(Context)
+
+  const { payload } = route.params
+
+  const projects = state.find(projects => projects.projectID === payload)
+  
+  const test = () => {
+    console.log(payload)
+  }
+
 
   // --- Form Inputs ---
-  const [ clientName, setClientName ] = useState('')
-  const [ contactDate, setContactDate ] = useState('')
-  const [ phone, setPhone ] = useState('')
-  const [ email, setEmail ] = useState('')
-  const [ address, setAddress ] = useState('')
-  const [ unitNumber, setUnitNumber ] = useState('')
-  const [ city, setCity ] = useState('')
-  const [ usState, setUsState ] = useState('')
-  const [ zip, setZip ] = useState('')
-  const [ description, setDescription ] = useState('')
+  const [ clientName, setClientName ] = useState(projects.clientName)
+  const [ contactDate, setContactDate ] = useState(projects.contactDate)
+  const [ phone, setPhone ] = useState(projects.phone)
+  const [ email, setEmail ] = useState(projects.email)
+  const [ address, setAddress ] = useState(projects.address)
+  const [ unitNumber, setUnitNumber ] = useState(projects.unitNumber)
+  const [ city, setCity ] = useState(projects.city)
+  const [ usState, setUsState ] = useState(projects.usState)
+  const [ zip, setZip ] = useState(projects.zip)
+  const [ description, setDescription ] = useState(projects.description)
 
 
   const addProjectBackPage = () => {
@@ -73,7 +82,7 @@ const EditProjectsScreen = ({ navigation }) => {
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={globalStyles.modal}>
-          
+
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Client Name</Text>

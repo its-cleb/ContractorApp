@@ -53,7 +53,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           
         </View>
         <View>
-          <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload: state.projectID})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
+          <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
         </View>
     </>
   )

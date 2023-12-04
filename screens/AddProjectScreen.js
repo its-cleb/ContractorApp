@@ -22,8 +22,6 @@ const AddProjectsScreen = ({ navigation }) => {
   const [ usState, setUsState ] = useState('')
   const [ zip, setZip ] = useState('')
   const [ description, setDescription ] = useState('')
-
-
   
   const addProjectBackPage = () => {
     addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
