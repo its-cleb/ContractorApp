@@ -40,5 +40,17 @@ const deleteProject = dispatch => {
 export const { Context, Provider } = createDataContext(
   projectReducer, 
   { addProject, deleteProject },
-  []
+  [{
+    projectID: 'Test Project',
+    clientName: 'John Smith', 
+    contactDate: '10/10/2023', 
+    phone:'123-456-7890', 
+    email:'test@gmail.com', 
+    address: '1234 Admiral Way', 
+    unitNumber:'1', 
+    city:'Seattle', 
+    usState:'WA', 
+    zip:'98231', 
+    description: 'Install 2 planks on the forklift.'
+  }]
 )

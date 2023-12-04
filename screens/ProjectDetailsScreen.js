@@ -4,7 +4,7 @@ import { Context } from '../context/ProjectContext'
 import DeleteButton from '../components/DeleteButton'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 
-const ProjectDetails = ({ route, navigation }) => {
+const ProjectDetailsScreen = ({ route, navigation }) => {
   
   const { state, deleteProject } = useContext(Context)
 
@@ -51,9 +51,10 @@ const ProjectDetails = ({ route, navigation }) => {
           </View>
         
           
-        </View><View style={styles.editprojectbutton}>
-            <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload: state.projectID})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
-          </View>
+        </View>
+        <View>
+          <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload: state.projectID})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
+        </View>
     </>
   )
 }
@@ -108,4 +109,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ProjectDetails
+export default ProjectDetailsScreen

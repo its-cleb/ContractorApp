@@ -3,12 +3,12 @@ import { TouchableOpacity, StyleSheet, Text } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { globalStyles } from '../styles/globalstyles'
 
-const IconButtonHContent = props => {    
+const IconButtonHSmall = props => {    
 
   return (
     <TouchableOpacity onPress={props.pressFunction} style={[styles.touchableOpacity, { backgroundColor: `${props.bgcolor}`, flexDirection: 'row' }]}> 
-        <FontAwesome5 style={globalStyles.buttonIcon} name={props.icon} size={18} color={props.textcolor} />
-        <Text style={[globalStyles.textButton, { color: `${props.textcolor}`, fontSize: 18}]}>{props.title}</Text>
+        <FontAwesome5 style={globalStyles.buttonIcon} name={props.icon} size={16} color={props.textcolor} />
+        <Text style={[globalStyles.textButton, { color: `${props.textcolor}`, fontSize: 16}]}>{props.title}</Text>
     </TouchableOpacity>
   )
 }
@@ -19,10 +19,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: "steelblue",
-    margin: 10,
+    marginHorizontal: 10,
+    marginVertical: 5,
     borderRadius: 5,
     padding: 5,
   },
 })
 
-export default IconButtonHContent
+export default IconButtonHSmall

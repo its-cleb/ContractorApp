@@ -3,6 +3,7 @@ import { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import TextButton from '../components/TextButton'
+import IconButtonHSmall from '../components/IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../context/ProjectContext'
 
@@ -23,7 +24,6 @@ const EditProjectsScreen = ({ navigation }) => {
   const [ description, setDescription ] = useState('')
 
 
-  
   const addProjectBackPage = () => {
     addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
     navigation.pop()
@@ -72,7 +72,7 @@ const EditProjectsScreen = ({ navigation }) => {
     {/* --- Project Details --- */}
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
 
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} style={globalStyles.modal}>
+        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={globalStyles.modal}>
           
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -182,8 +182,10 @@ const EditProjectsScreen = ({ navigation }) => {
             </View>
           </View>
 
-          <TextButton pressFunction={addProjectBackPage} bgcolor="steelblue" text="Add Project"/>
-          
+          <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
+            <IconButtonHSmall pressFunction={addProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
+            <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+          </View>          
         </KeyboardAvoidingView>
 
         {/* --- Date Picker --- */}

@@ -9,7 +9,7 @@ import EstimatorScreen from './navigation/EstimatorScreen'
 import CompanyScreen from './navigation/CompanyScreen'
 import AddProjectScreen from './screens/AddProjectScreen'
 import EditProjectScreen from './screens/EditProjectScreen'
-import ProjectDetails from './screens/ProjectDetails'
+import ProjectDetailsScreen from './screens/ProjectDetailsScreen'
 import ViewProjectsScreen from './screens/ViewProjectsScreen'
 import { Provider } from './context/ProjectContext'
 
@@ -45,7 +45,7 @@ function ProjectScreen() {
       />
       <Stack.Screen
         name="ProjectDetails"
-        component={ProjectDetails}
+        component={ProjectDetailsScreen}
         options={{ headerTitle: "Project Details" }}
       />
     </Stack.Navigator>

@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TextInput, Pressable, Platform, Keyboard, Keybo
 import { globalStyles } from '../styles/globalstyles'
 import TextButton from '../components/TextButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import IconButtonHSmall from '../components/IconButtonHSmall'
 import { Context } from '../context/ProjectContext'
 
 const AddProjectsScreen = ({ navigation }) => {
@@ -72,7 +73,7 @@ const AddProjectsScreen = ({ navigation }) => {
     {/* --- Project Details --- */}
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
 
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} style={globalStyles.modal}>
+        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -20} style={globalStyles.modal}>
           
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -182,8 +183,9 @@ const AddProjectsScreen = ({ navigation }) => {
             </View>
           </View>
 
-          <TextButton pressFunction={addProjectBackPage} bgcolor="steelblue" text="Add Project"/>
-          
+          <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
+            <IconButtonHSmall pressFunction={addProjectBackPage} title='Add Project' icon='plus' textcolor='white' bgcolor='steelblue' />
+          </View>
         </KeyboardAvoidingView>
 
         {/* --- Date Picker --- */}

@@ -71,7 +71,7 @@ export const globalStyles = StyleSheet.create({
     margin: 10
   },
   modalActionButton: {
-    marginTop: 10
+    marginTop: 10,
   },
   // Form Styling
   formRow: {
