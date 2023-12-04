@@ -2,50 +2,27 @@ import React from 'react'
 import { useState, useContext } from 'react'
 import { View, Text, StyleSheet, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
-import TextButton from './TextButton'
-import IconButtonHSmall from './IconButtonHSmall'
+import TextButton from '../components/TextButton'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import IconButtonHSmall from '../components/IconButtonHSmall'
 import { Context } from '../context/ProjectContext'
 
-const ProjectForm = ({ initialValues, navigation }) => {
+const AddProjectsScreen = ({ navigation }) => {
   
   const { addProject } = useContext(Context)
 
-  // Declare default values if AddProject was the parent
-  const defaultProjectValues = { 
-    projectID: '',
-    clientName: '', 
-    contactDate: '', 
-    phone:'', 
-    email:'', 
-    address: '', 
-    unitNumber:'', 
-    city:'', 
-    usState:'', 
-    zip:'', 
-    description: ''
-  }
- 
-  // Check if parent element passed initialValues prop
-  if (initialValues === undefined) {
-    projectValues = defaultProjectValues
-  } else {
-    projectValues = Object.fromEntries(initialValues)
-  }
-  
   // --- Form Inputs ---
-  const [ clientName, setClientName ] = useState(projectValues.clientName)
-  const [ contactDate, setContactDate ] = useState(projectValues.contactDate)
-  const [ phone, setPhone ] = useState(projectValues.phone)
-  const [ email, setEmail ] = useState(projectValues.email)
-  const [ address, setAddress ] = useState(projectValues.address)
-  const [ unitNumber, setUnitNumber ] = useState(projectValues.unitNumber)
-  const [ city, setCity ] = useState(projectValues.city)
-  const [ usState, setUsState ] = useState(projectValues.usState)
-  const [ zip, setZip ] = useState(projectValues.zip)
-  const [ description, setDescription ] = useState(projectValues.description)
-
-
+  const [ clientName, setClientName ] = useState('')
+  const [ contactDate, setContactDate ] = useState('')
+  const [ phone, setPhone ] = useState('')
+  const [ email, setEmail ] = useState('')
+  const [ address, setAddress ] = useState('')
+  const [ unitNumber, setUnitNumber ] = useState('')
+  const [ city, setCity ] = useState('')
+  const [ usState, setUsState ] = useState('')
+  const [ zip, setZip ] = useState('')
+  const [ description, setDescription ] = useState('')
+  
   const addProjectBackPage = () => {
     addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
     navigation.pop()
@@ -94,8 +71,8 @@ const ProjectForm = ({ initialValues, navigation }) => {
     {/* --- Project Details --- */}
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
 
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={globalStyles.modal}>
-
+        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -20} style={globalStyles.modal}>
+          
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Client Name</Text>
@@ -205,10 +182,8 @@ const ProjectForm = ({ initialValues, navigation }) => {
           </View>
 
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
-            <IconButtonHSmall pressFunction={addProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-            <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
-          </View>    
-       
+            <IconButtonHSmall pressFunction={addProjectBackPage} title='Add Project' icon='plus' textcolor='white' bgcolor='steelblue' />
+          </View>
         </KeyboardAvoidingView>
 
         {/* --- Date Picker --- */}
@@ -240,9 +215,8 @@ const ProjectForm = ({ initialValues, navigation }) => {
   ) 
   }
 
-
 const styles = StyleSheet.create({
 
 })
 
-export default ProjectForm
+export default AddProjectsScreen

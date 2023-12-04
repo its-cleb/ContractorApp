@@ -49,9 +49,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
               <Text style={[styles.projectText]}>{projects.description}</Text>
             </View>
           </View>
-        
-          
         </View>
+        
         <View>
           <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
         </View>
