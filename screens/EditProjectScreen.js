@@ -5,7 +5,7 @@ import ProjectForm from '../components/ProjectForm'
 
 const EditProjectsScreen = ({ route }) => {
  
-  const { state } = useContext(Context)
+  const { state, editProject } = useContext(Context)
 
   const { payload } = route.params
 
@@ -14,7 +14,7 @@ const EditProjectsScreen = ({ route }) => {
   const projectData = Object.entries(projects)
 
     return (  
-      <ProjectForm initialValues={projectData} />        
+      <ProjectForm initialValues={projectData} onSubmit={(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => editProject()}/>        
     ) 
   }
 

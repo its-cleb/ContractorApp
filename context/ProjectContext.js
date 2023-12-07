@@ -20,6 +20,8 @@ const projectReducer = (state, action) => {
         zip: action.payload.zip, 
         description: action.payload.description
       }]
+    case 'edit_project':
+      return
     default:
       return state
   }
@@ -31,6 +33,12 @@ const addProject = dispatch => {
   }
 }
 
+const editProject = dispatch => {
+  return (clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => {
+    dispatch({ type: 'edit_project', payload: { clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description } })
+  }
+}
+
 const deleteProject = dispatch => {
   return projectID => {
     dispatch({ type: 'delete_project', payload: projectID })
@@ -39,7 +47,7 @@ const deleteProject = dispatch => {
 
 export const { Context, Provider } = createDataContext(
   projectReducer, 
-  { addProject, deleteProject },
+  { addProject, editProject, deleteProject },
   [{
     projectID: 'Test Project',
     clientName: 'John Smith', 

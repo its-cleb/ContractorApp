@@ -29,8 +29,19 @@ const ProjectForm = ({ initialValues, navigation }) => {
   // Check if parent element passed initialValues prop
   if (initialValues === undefined) {
     projectValues = defaultProjectValues
+    projectEmpty = true
   } else {
     projectValues = Object.fromEntries(initialValues)
+    projectEmpty = false
+  }
+
+  let controlButtons
+  if (projectEmpty === true) {
+    controlButtons = <IconButtonHSmall pressFunction={addProjectBackPage} title='Add Project' icon='plus' textcolor='white' bgcolor='steelblue' />
+  } else {
+    controlButtons = 
+    <IconButtonHSmall pressFunction={saveProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
+    <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
   }
   
   // --- Form Inputs ---
@@ -47,6 +58,10 @@ const ProjectForm = ({ initialValues, navigation }) => {
 
 
   const addProjectBackPage = () => {
+    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    navigation.pop()
+  }
+  const saveProjectBackPage = () => {
     addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
     navigation.pop()
   }
@@ -205,8 +220,7 @@ const ProjectForm = ({ initialValues, navigation }) => {
           </View>
 
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
-            <IconButtonHSmall pressFunction={addProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-            <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+            {controlButtons}
           </View>    
        
         </KeyboardAvoidingView>
@@ -239,7 +253,6 @@ const ProjectForm = ({ initialValues, navigation }) => {
     </>
   ) 
   }
-
 
 const styles = StyleSheet.create({
 
