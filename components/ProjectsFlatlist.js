@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import { Context } from '../context/ProjectContext'
 import { useNavigation } from '@react-navigation/native';
 
-
 const ProjectFlatlist = () => {
   const { state } = useContext(Context)
   const navigation = useNavigation()

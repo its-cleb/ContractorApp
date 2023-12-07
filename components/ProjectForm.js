@@ -1,18 +1,19 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, StyleSheet, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import TextButton from './TextButton'
 import IconButtonHSmall from './IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../context/ProjectContext'
 
-const ProjectForm = ({ initialValues, navProps }) => {
+const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
   
-  const { addProject } = useContext(Context)
+  const { addProject, editProject } = useContext(Context)
   
-  // Get navigation props from parent component
-  const navigation = navProps
+  // Get props from parent component
+  const navigation = navProp
+  const projectID = payloadProp
 
   // Declare default values if AddProject was the parent
   const defaultProjectValues = { 
@@ -38,15 +39,18 @@ const ProjectForm = ({ initialValues, navProps }) => {
     projectEmpty = false
   }
 
+  // Control Button functionality
   const addProjectBackPage = () => {
     addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
     navigation.pop()
   }
   const saveProjectBackPage = () => {
-    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    editProject(projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    console.log(editProject)
     navigation.pop()
   }
 
+  // Change buttons based on page
   let controlButtons
   if (projectEmpty === true) {
     controlButtons = <IconButtonHSmall pressFunction={addProjectBackPage} title='Add Project' icon='plus' textcolor='white' bgcolor='steelblue' />
@@ -258,9 +262,5 @@ const ProjectForm = ({ initialValues, navProps }) => {
     </>
   ) 
   }
-
-const styles = StyleSheet.create({
-
-})
 
 export default ProjectForm

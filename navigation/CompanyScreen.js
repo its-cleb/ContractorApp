@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
 
@@ -14,7 +14,5 @@ const CompanyScreen = () => {
     </>
   )
 }
-
-const styles = StyleSheet.create({})
 
 export default CompanyScreen

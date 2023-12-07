@@ -21,7 +21,9 @@ const projectReducer = (state, action) => {
         description: action.payload.description
       }]
     case 'edit_project':
-      return
+      return state.map((projects) => {
+        return projects.projectID === action.payload.projectID ? action.payload : projects
+      })
     default:
       return state
   }
@@ -29,13 +31,19 @@ const projectReducer = (state, action) => {
 
 const addProject = dispatch => {
   return (clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => {
-    dispatch({ type: 'add_project', payload: { clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description } })
+    dispatch({ 
+      type: 'add_project', 
+      payload: { clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description } 
+    })
   }
 }
 
 const editProject = dispatch => {
-  return (clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => {
-    dispatch({ type: 'edit_project', payload: { clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description } })
+  return (projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => {
+    dispatch({ 
+      type: 'edit_project', 
+      payload: { projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description } 
+    })
   }
 }
 

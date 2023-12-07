@@ -1,17 +1,11 @@
-import React, { useContext } from 'react'
-import { StyleSheet } from 'react-native'
-import { Context } from '../context/ProjectContext'
+import React from 'react'
 import ProjectForm from '../components/ProjectForm'
 
 const AddProjectsScreen = ({ navigation }) => {
 
     return (  
-      <ProjectForm navProps={navigation} />        
+      <ProjectForm navProp={navigation} />        
     ) 
   }
-
-const styles = StyleSheet.create({
-
-})
 
 export default AddProjectsScreen

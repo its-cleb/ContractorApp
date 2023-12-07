@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHContent from '../components/IconButtonHContent'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
@@ -22,9 +22,5 @@ const ViewProjectsScreen = ({ navigation }) => {
     </>
   ) 
   }
-
-const styles = StyleSheet.create({
-
-})
 
 export default ViewProjectsScreen

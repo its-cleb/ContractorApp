@@ -14,7 +14,6 @@ const IconButtonHSmall = props => {
 }
 
 const styles = StyleSheet.create({
-
   touchableOpacity: {
     alignItems: 'center',
     justifyContent: 'center',
