@@ -4,6 +4,7 @@ import { globalStyles } from '../styles/globalstyles'
 import IconButtonHContent from '../components/IconButtonHContent'
 import ProjectFlatlist from '../components/ProjectsFlatlist'
 import DrawerHeader from '../components/DrawerHeader'
+import SearchBar from '../components/SearchBar'
 
 const ViewProjectsScreen = ({ navigation }) => {
 
@@ -11,9 +12,7 @@ const ViewProjectsScreen = ({ navigation }) => {
     <>
       <DrawerHeader title="Projects" />
 
-      <View style={globalStyles.containerHCentered}>
-        <Text style={globalStyles.textTitle}>View Projects</Text>
-      </View>
+      <SearchBar placeholderText="Search Projects" />
 
       <ProjectFlatlist />
       
