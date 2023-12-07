@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 import { Context } from '../context/ProjectContext'
 import ProjectForm from '../components/ProjectForm'
 
-const EditProjectsScreen = ({ route }) => {
+const EditProjectsScreen = ({ route, navigation }) => {
  
   const { state, editProject } = useContext(Context)
 
@@ -14,7 +14,7 @@ const EditProjectsScreen = ({ route }) => {
   const projectData = Object.entries(projects)
 
     return (  
-      <ProjectForm initialValues={projectData} onSubmit={(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => editProject()}/>        
+      <ProjectForm initialValues={projectData} navProps={navigation} onSubmit={(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => editProject()}/>        
     ) 
   }
 

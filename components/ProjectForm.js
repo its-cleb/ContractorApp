@@ -7,9 +7,12 @@ import IconButtonHSmall from './IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../context/ProjectContext'
 
-const ProjectForm = ({ initialValues, navigation }) => {
+const ProjectForm = ({ initialValues, navProps }) => {
   
   const { addProject } = useContext(Context)
+  
+  // Get navigation props from parent component
+  const navigation = navProps
 
   // Declare default values if AddProject was the parent
   const defaultProjectValues = { 
@@ -35,13 +38,24 @@ const ProjectForm = ({ initialValues, navigation }) => {
     projectEmpty = false
   }
 
+  const addProjectBackPage = () => {
+    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    navigation.pop()
+  }
+  const saveProjectBackPage = () => {
+    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    navigation.pop()
+  }
+
   let controlButtons
   if (projectEmpty === true) {
     controlButtons = <IconButtonHSmall pressFunction={addProjectBackPage} title='Add Project' icon='plus' textcolor='white' bgcolor='steelblue' />
   } else {
     controlButtons = 
-    <IconButtonHSmall pressFunction={saveProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-    <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+    <>
+      <IconButtonHSmall pressFunction={saveProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
+      <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+    </>
   }
   
   // --- Form Inputs ---
@@ -56,15 +70,6 @@ const ProjectForm = ({ initialValues, navigation }) => {
   const [ zip, setZip ] = useState(projectValues.zip)
   const [ description, setDescription ] = useState(projectValues.description)
 
-
-  const addProjectBackPage = () => {
-    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
-    navigation.pop()
-  }
-  const saveProjectBackPage = () => {
-    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
-    navigation.pop()
-  }
 
   // --- Date Picker ---
 

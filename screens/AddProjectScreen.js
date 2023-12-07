@@ -3,12 +3,10 @@ import { StyleSheet } from 'react-native'
 import { Context } from '../context/ProjectContext'
 import ProjectForm from '../components/ProjectForm'
 
-const AddProjectsScreen = ({ route }) => {
- 
-  const { addProject } = useContext(Context)
+const AddProjectsScreen = ({ navigation }) => {
 
     return (  
-      <ProjectForm />        
+      <ProjectForm navProps={navigation} />        
     ) 
   }
 
