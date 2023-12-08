@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
     paddingVertical: Platform.OS === 'ios' ? 10 : 6,
     paddingHorizontal: 8,
-    margin: 10
+    margin: 10,
+    marginTop: 20
   },
   buttonIcon: {
     marginRight: 10
