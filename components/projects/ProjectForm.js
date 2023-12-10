@@ -1,11 +1,11 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
-import TextButton from './TextButton'
-import IconButtonHSmall from './IconButtonHSmall'
+import { globalStyles } from '../../styles/globalstyles'
+import TextButton from '../TextButton'
+import IconButtonHSmall from '../IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { Context } from '../context/ProjectContext'
+import { Context } from '../../context/ProjectContext'
 
 const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
   

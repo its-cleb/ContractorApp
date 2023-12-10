@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from '../context/ProjectContext'
-import ProjectForm from '../components/ProjectForm'
+import ProjectForm from '../components/projects/ProjectForm'
 
 const EditProjectsScreen = ({ route, navigation }) => {
  

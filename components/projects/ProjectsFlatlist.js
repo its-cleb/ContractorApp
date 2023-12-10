@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import { Context } from '../context/ProjectContext'
+import { Context } from '../../context/ProjectContext'
 import { useNavigation } from '@react-navigation/native';
 
 const ProjectFlatlist = () => {

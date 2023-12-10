@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
+import { globalStyles } from '../../styles/globalstyles'
 
 const ActiveProjects = () => {
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import ProjectForm from '../components/ProjectForm'
+import ProjectForm from '../components/projects/ProjectForm'
 
 const AddProjectsScreen = ({ navigation }) => {
 
