@@ -46,7 +46,6 @@ const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
   }
   const saveProjectBackPage = () => {
     editProject(projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
-    console.log(editProject)
     navigation.pop()
   }
 
