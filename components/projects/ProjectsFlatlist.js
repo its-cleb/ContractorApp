@@ -16,6 +16,7 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
          item.city.toLowerCase().includes(searchText.toLowerCase()) ||
          item.usState.toLowerCase().includes(searchText.toLowerCase()) ||
          item.description.toLowerCase().includes(searchText.toLowerCase()) ||
+         item.contactDate.toLowerCase().includes(searchText.toLowerCase()) ||
          searchText === ""
     ) { 
       return (
