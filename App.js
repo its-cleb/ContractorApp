@@ -4,14 +4,23 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
+
 import HomeScreen from './navigation/HomeScreen'
 import EstimatorScreen from './navigation/EstimatorScreen'
 import CompanyScreen from './navigation/CompanyScreen'
+import ProjectsScreen from './navigation/ProjectsScreen'
+import EmployeeScreen from './navigation/EmployeeScreen'
+
 import AddProjectScreen from './screens/AddProjectScreen'
 import EditProjectScreen from './screens/EditProjectScreen'
 import ProjectDetailsScreen from './screens/ProjectDetailsScreen'
-import ViewProjectsScreen from './screens/ViewProjectsScreen'
-import { Provider } from './context/ProjectContext'
+
+import AddEmployeeScreen from './screens/AddEmployeeScreen'
+import EditEmployeeScreen from './screens/EditEmployeeScreen'
+import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
+
+import { Provider as ProjectProvider } from './context/ProjectContext'
+import { Provider as EmployeeProvider } from './context/EmployeesContext'
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,12 +34,12 @@ const MyTheme = {
 }
 
 // Projects Pages
-function ProjectScreen() {
+function ProjectScreenStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="ViewProjects"
-        component={ViewProjectsScreen}
+        component={ProjectsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -51,10 +60,40 @@ function ProjectScreen() {
     </Stack.Navigator>
     )
 }
+
+// Employee Pages
+function EmployeeScreenStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ViewEmployees"
+        component={EmployeeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddEmployee"
+        component={AddEmployeeScreen}
+        options={{ headerTitle: "Add New Employee" }}
+      />
+      <Stack.Screen
+        name="EditEmployee"
+        component={EditEmployeeScreen}
+        options={{ headerTitle: "Edit Employee" }}
+      />
+      <Stack.Screen
+        name="EmployeeDetails"
+        component={EmployeeDetailsScreen}
+        options={{ headerTitle: "Employee Details" }}
+      />
+    </Stack.Navigator>
+    )
+}
+
 export default function App() {
   
   return (
-    <Provider>
+    <ProjectProvider>
+    <EmployeeProvider>
       <NavigationContainer theme={MyTheme}>
         <Drawer.Navigator 
           initialRouteName="Home"
@@ -77,7 +116,7 @@ export default function App() {
               name="Estimator" 
               component={EstimatorScreen} 
               options={{ 
-                drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" />),
+                drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" style={{marginRight: -2}} />),
                 headerTitle: "Quotes & Estimates",
                 drawerLabel: "Estimator",
                 headerShown: false
@@ -85,11 +124,21 @@ export default function App() {
             />
             <Drawer.Screen 
               name="Projects" 
-              component={ProjectScreen} 
+              component={ProjectScreenStack} 
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="tools" size={24} color="black" />),
+                drawerIcon: () => (<FontAwesome5 name="tools" size={22} color="black" />),
                 headerTitle: "Your Projects",
                 drawerLabel: "Projects",
+                headerShown: false
+              }} 
+            />
+            <Drawer.Screen 
+              name="Employees"
+              component={EmployeeScreenStack} 
+              options={{ 
+                drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" style={{marginRight: -4, marginLeft: -2}} />),
+                headerTitle: "Employees",
+                drawerLabel: "Employees",
                 headerShown: false
               }} 
             />
@@ -97,7 +146,7 @@ export default function App() {
               name="Company" 
               component={CompanyScreen} 
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" />),
+                drawerIcon: () => (<FontAwesome5 name="briefcase" size={22} color="#222" style={{paddingLeft: 2, marginRight: -2}} />),
                 headerTitle: "Company Details",
                 drawerLabel: "Company",
                 headerShown: false
@@ -105,12 +154,7 @@ export default function App() {
             />
         </Drawer.Navigator>
       </NavigationContainer>
-    </Provider>
+    </EmployeeProvider>
+    </ProjectProvider>
   );
 }
-
-const styles = StyleSheet.create ({
-  drawerText: {
-    fontSize: 18,
-  }
-})

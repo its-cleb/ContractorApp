@@ -4,6 +4,7 @@ import { Context } from '../../context/ProjectContext'
 import { useNavigation } from '@react-navigation/native';
 
 const ProjectFlatlist = ( filterSearchTerm ) => {
+  
   const { state } = useContext(Context)
   const navigation = useNavigation()
 

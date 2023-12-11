@@ -24,10 +24,6 @@ const projectReducer = (state, action) => {
       return state.map((projects) => {
         return projects.projectID === action.payload.projectID ? action.payload : projects
       })
-    case 'filter_project':
-      return state.map((projects) => {
-        return projects.projectID === action.payload.projectID ? action.payload : projects
-    })
     default:
       return state
   }
@@ -51,15 +47,6 @@ const editProject = dispatch => {
   }
 }
 
-const filterProject = dispatch => {
-  return (projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description) => {
-    dispatch({ 
-      type: 'filter_project', 
-      payload: { projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description } 
-    })
-  }
-}
-
 const deleteProject = dispatch => {
   return projectID => {
     dispatch({ type: 'delete_project', payload: projectID })
@@ -68,7 +55,7 @@ const deleteProject = dispatch => {
 
 export const { Context, Provider } = createDataContext(
   projectReducer, 
-  { addProject, editProject, filterProject, deleteProject },
+  { addProject, editProject, deleteProject },
   [{
     projectID: 'Test Project',
     clientName: 'John Smith', 
