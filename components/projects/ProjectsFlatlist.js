@@ -13,37 +13,13 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
 
  
   const filteredProjects = (item) => {
-  
-    if ( searchText === "" ) { // If SearchBar is empty
-      return (
-      <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {payload: item.projectID})}>
-        <View style={styles.projectContainer}>
-          <View style={styles.projectRowTop}>
-            <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-              <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}</Text>
-            </View>
-            <View style={[styles.projectColumnRight, { flex: 1 }]}>
-              <Text style={styles.projectTextRight}>{item.contactDate}</Text>
-            </View>
-          </View>
-          <View style={styles.projectRowBottom}>
-            <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-              <Text style={styles.projectTextLeft}>{item.city}, {item.usState}</Text>
-            </View>
-            <View style={[styles.projectColumnRight, { flex: 2 }]}>
-              <Text style={styles.projectTextRight}>{item.description}</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-      )
-    } 
     // Check all fields for matching
     if ( item.clientName.toLowerCase().includes(searchText.toLowerCase()) || 
          item.city.toLowerCase().includes(searchText.toLowerCase()) ||
          item.usState.toLowerCase().includes(searchText.toLowerCase()) ||
-         item.description.toLowerCase().includes(searchText.toLowerCase())
-       ) { 
+         item.description.toLowerCase().includes(searchText.toLowerCase()) ||
+         searchText === ""
+    ) { 
       return (
         <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {payload: item.projectID})}>
           <View style={styles.projectContainer}>
@@ -78,7 +54,6 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => filteredProjects(item) }
       />
-
     </View>
   )
 }
