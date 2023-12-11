@@ -60,13 +60,15 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
 const styles = StyleSheet.create({
   flatlistbox: {
     flex: 1,
-    marginBottom: 80
+    marginBottom: Platform.OS === 'ios' ? 60 : 90
   },
   projectContainer: {
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'darkkhaki',
     marginVertical: 5,
     marginHorizontal: 10,
-    backgroundColor: 'maroon',
+    backgroundColor: 'khaki',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#eeeeee99',
+    borderBottomColor: 'darkkhaki',
     paddingBottom: 3
   },
   projectRowBottom: {
@@ -88,12 +90,12 @@ const styles = StyleSheet.create({
     paddingTop: 5
   },
   projectTextLeft: {
-    color: 'white',
+    color: 'black',
     textAlign: 'left',
     fontSize: 16,
   },
   projectTextRight: {
-    color: 'white',
+    color: 'black',
     textAlign: 'right',
     fontSize: 16,
     flexWrap: 'wrap'

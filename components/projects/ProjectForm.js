@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
@@ -117,7 +117,7 @@ const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
     {/* --- Project Details --- */}
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
 
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={globalStyles.modal}>
+        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -260,6 +260,15 @@ const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
       </Pressable>
     </>
   ) 
-  }
+}
 
+const styles = StyleSheet.create({
+    contentBox: {
+      alignItems: 'center',
+      paddingHorizontal: 10,
+      paddingVertical: 20,
+      flex: 1,
+    },
+
+})
 export default ProjectForm

@@ -19,41 +19,41 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   
   return (
     <>
-        <View style={styles.projectContainer}>
-          <View style={styles.projectHeader}>
-            <Text style={styles.projectTextHeader}>{projects.clientName}</Text>
-            <DeleteButton pressFunction={deleteProjectNavBack}/>
-          </View>
-          <View style={styles.projectRow}>
-            <Text style={[styles.projectTextBold, styles.flexOne]}>First Contacted:</Text>
-            <Text style={styles.projectTextRight}>{projects.contactDate}</Text>
-          </View>
-          <View style={styles.projectRow}>
-            <Text style={[styles.projectTextBold, styles.flexOne]}>Phone:</Text>
-            <Text style={styles.projectTextRight}>{projects.phone}</Text>
-          </View>
-          <View style={styles.projectRow}>
-            <Text style={[styles.projectTextBold, styles.flexOne]}>Email:</Text>
-            <Text style={styles.projectTextRight}>{projects.email}</Text>
-          </View>
-          <View style={styles.projectRow}>
-            <Text style={[styles.projectTextBold]}>Address:</Text>
-            <View style={styles.flexOne}>
-              <Text style={styles.projectTextRight}>{projects.address}, {projects.unitNumber}</Text>
-              <Text style={styles.projectTextRight}>{projects.city}, {projects.usState} {projects.zip}</Text>
-            </View>  
-          </View>
-          <View style={styles.projectRow}>
-            <View>
-              <Text style={[styles.projectTextBold, {marginBottom: 10}]}>Project Description:</Text>
-              <Text style={[styles.projectText]}>{projects.description}</Text>
-            </View>
+      <View style={styles.projectContainer}>
+        <View style={styles.projectHeader}>
+          <Text style={styles.projectTextHeader}>{projects.clientName}</Text>
+          <DeleteButton pressFunction={deleteProjectNavBack}/>
+        </View>
+        <View style={styles.projectRow}>
+          <Text style={[styles.projectTextBold, styles.flexOne]}>First Contacted:</Text>
+          <Text style={styles.projectTextRight}>{projects.contactDate}</Text>
+        </View>
+        <View style={styles.projectRow}>
+          <Text style={[styles.projectTextBold, styles.flexOne]}>Phone:</Text>
+          <Text style={styles.projectTextRight}>{projects.phone}</Text>
+        </View>
+        <View style={styles.projectRow}>
+          <Text style={[styles.projectTextBold, styles.flexOne]}>Email:</Text>
+          <Text style={styles.projectTextRight}>{projects.email}</Text>
+        </View>
+        <View style={styles.projectRow}>
+          <Text style={[styles.projectTextBold]}>Address:</Text>
+          <View style={styles.flexOne}>
+            <Text style={styles.projectTextRight}>{projects.address}, {projects.unitNumber}</Text>
+            <Text style={styles.projectTextRight}>{projects.city}, {projects.usState} {projects.zip}</Text>
+          </View>  
+        </View>
+        <View style={styles.projectRow}>
+          <View>
+            <Text style={[styles.projectTextBold, {marginBottom: 10}]}>Project Description:</Text>
+            <Text style={[styles.projectText]}>{projects.description}</Text>
           </View>
         </View>
-        
-        <View>
-          <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
-        </View>
+      </View>
+      
+      <View>
+        <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
+      </View>
     </>
   )
 }
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   projectContainer: {
     borderRadius: 5,
     margin: 10,
-    padding: 10,
     paddingBottom: 8,
   },
   projectHeader: {

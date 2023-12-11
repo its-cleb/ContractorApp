@@ -58,21 +58,7 @@ export const globalStyles = StyleSheet.create({
   pressableBox: {
     flex: 1,
   },
-  // Modal Styling
-  modal: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-    flex: 1,
-  },
-  modalCloseButton: {
-    alignContent: 'flex-end',
-    alignSelf: 'flex-end',
-    margin: 10
-  },
-  modalActionButton: {
-    marginTop: 10,
-  },
+
   // Form Styling
   formRow: {
     flexDirection: 'row',
@@ -93,7 +79,7 @@ export const globalStyles = StyleSheet.create({
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
     paddingVertical: Platform.OS === 'ios' ? 10 : 6,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     color: 'black'
   },
   formFieldInputMultiline: {
@@ -103,7 +89,7 @@ export const globalStyles = StyleSheet.create({
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
     paddingTop: Platform.OS === 'ios' ? 10 : 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     minHeight: 80,
     textAlignVertical: 'top'
   },

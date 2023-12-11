@@ -10,23 +10,25 @@ const ViewProjectsScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState('')
   
   return (
-    <SafeAreaView style={styles.pageContainer}>
+    <>
       <DrawerHeader title="Projects" />
+      <SafeAreaView style={styles.pageContainer}>
+        
+        <SearchBar 
+          placeholderText="Search Projects" 
+          searchTerm={searchTerm} 
+          onTermChange={newSearchTerm => setSearchTerm(newSearchTerm)} 
+          onTermSubmit={() => Keyboard.dismiss()} 
+        />
 
-      <SearchBar 
-        placeholderText="Search Projects" 
-        searchTerm={searchTerm} 
-        onTermChange={newSearchTerm => setSearchTerm(newSearchTerm)} 
-        onTermSubmit={() => Keyboard.dismiss()} 
-      />
+        <ProjectFlatlist filterSearchTerm={searchTerm} />
 
-      <ProjectFlatlist filterSearchTerm={searchTerm} />
+        <View style={styles.addProjectButton}>
+          <IconButtonHContent pressFunction={() => navigation.navigate('AddProject')} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+        </View>
 
-      <View style={styles.addProjectButton}>
-        <IconButtonHContent pressFunction={() => navigation.navigate('AddProject')} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
-      </View>
-
-    </SafeAreaView>
+      </SafeAreaView>
+    </>
   ) 
 }
 

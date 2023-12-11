@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, Text } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 const SearchBar = ({ placeholderText, searchTerm, onTermChange, onTermSubmit }) => {
@@ -29,16 +29,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999999',
     backgroundColor: '#eeeeee',
-    paddingVertical: Platform.OS === 'ios' ? 10 : 6,
     paddingHorizontal: 8,
     margin: 10,
     marginTop: 15
   },
   buttonIcon: {
-    marginRight: 10
+    marginRight: 10,
+    paddingVertical: Platform.OS === 'ios' ? 10 : 6,
   },
   formFieldInput: {
-    fontSize: 20
+    fontSize: 20,
+    paddingVertical: Platform.OS === 'ios' ? 10 : 6,
+    flex: 1,
+    // alignItems: 'stretch',
+    // backgroundColor: 'red'
   }
 })
 
