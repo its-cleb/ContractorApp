@@ -8,10 +8,8 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
   const navigation = useNavigation()
 
   // Get Search Bar Value and convert it to string
-  const value = Object.values(filterSearchTerm)
-  const searchText = value.toString()
+  const searchText = Object.values(filterSearchTerm).toString()
 
- 
   const filteredProjects = (item) => {
     // Check all fields for matching
     if ( item.clientName.toLowerCase().includes(searchText.toLowerCase()) || 
@@ -48,7 +46,7 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
   }
 
   return (
-    <View style={styles.flatlist}>
+    <View style={styles.flatlistbox}>
       <FlatList 
         data={state} 
         keyExtractor={(item) => item.projectID}
@@ -59,6 +57,10 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
 }
 
 const styles = StyleSheet.create({
+  flatlistbox: {
+    flex: 1,
+    marginBottom: 80
+  },
   projectContainer: {
     borderRadius: 5,
     marginVertical: 5,
@@ -84,12 +86,6 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingTop: 5
   },
-  projectColumnLeft: {
-    // backgroundColor: 'red'
-  },
-  projectColumnRight: {
-    // backgroundColor: 'blue'
-  },
   projectTextLeft: {
     color: 'white',
     textAlign: 'left',
@@ -100,10 +96,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontSize: 16,
     flexWrap: 'wrap'
-  },
-  flatlist: {
-    maxHeight: 300,
-    marginBottom: 20
   },
   flexBox: {
     flexDirection: 'row',
