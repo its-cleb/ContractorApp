@@ -18,7 +18,7 @@ const EmployeeFlatlist = () => {
             <View style={styles.projectContainer}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                  <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.name}</Text>
+                  <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.employeeName}</Text>
                 </View>
                 <View style={[styles.projectColumnRight, { flex: 1 }]}>
                   <Text style={styles.projectTextRight}>${item.wage}/hr</Text>

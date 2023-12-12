@@ -9,7 +9,7 @@ const employeeReducer = (state, action) => {
       let datestring = currenttime.toLocaleString();
       return [...state, { 
         employeeID: datestring,
-        name: action.payload.name, 
+        employeeName: action.payload.employeeName, 
         phone: action.payload.phone,
         email: action.payload.email, 
         address: action.payload.address, 
@@ -29,19 +29,19 @@ const employeeReducer = (state, action) => {
 }
 
 const addEmployee = dispatch => {
-  return (name, phone, email, address, unitNumber, city, usState, zip, wage) => {
+  return (employeeName, phone, email, address, unitNumber, city, usState, zip, wage) => {
     dispatch({ 
       type: 'add_employee', 
-      payload: { name, phone, email, address, unitNumber, city, usState, zip, wage } 
+      payload: {employeeName, phone, email, address, unitNumber, city, usState, zip, wage } 
     })
   }
 }
 
 const editEmployee = dispatch => {
-  return (employeeID, name, phone, email, address, unitNumber, city, usState, zip, wage) => {
+  return (employeeID, employeeName, phone, email, address, unitNumber, city, usState, zip, wage) => {
     dispatch({ 
       type: 'edit_employee', 
-      payload: { employeeID, name, phone, email, address, unitNumber, city, usState, zip, wage } 
+      payload: { employeeID, employeeName, phone, email, address, unitNumber, city, usState, zip, wage } 
     })
   }
 }
@@ -57,7 +57,7 @@ export const { Context, Provider } = createDataContext(
   { addEmployee, editEmployee, deleteEmployee },
   [{
     employeeID: 'Test employee',
-    name: 'John Smith', 
+    employeeName: 'John Smith', 
     phone:'123-456-7890', 
     email:'test@gmail.com', 
     address: '1234 Admiral Way', 

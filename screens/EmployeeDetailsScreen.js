@@ -21,7 +21,7 @@ const EmployeeDetailsScreen = ({ route, navigation }) => {
     <>
       <View style={styles.employeeContainer}>
         <View style={styles.employeeHeader}>
-          <Text style={styles.employeeTextHeader}>{employees.name}</Text>
+          <Text style={styles.employeeTextHeader}>{employees.employeeName}</Text>
           <DeleteButton pressFunction={deleteEmployeeNavBack}/>
         </View>
         <View style={styles.employeeRow}>

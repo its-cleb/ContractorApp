@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
-import EmployeesFlatlist from '../components/employees/EmployeesFlatlist'
+import EmployeesFlatlist from '../components/employees/EmployeeFlatlist'
 import IconButtonHContent from '../components/IconButtonHContent'
 
 const EmployeeScreen = ({ navigation }) => {
