@@ -20,7 +20,7 @@ import EditEmployeeScreen from './screens/EditEmployeeScreen'
 import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
 
 import { Provider as ProjectProvider } from './context/ProjectContext'
-import { Provider as EmployeeProvider } from './context/EmployeesContext'
+import { Provider as EmployeeProvider } from './context/EmployeeContext'
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();

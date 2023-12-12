@@ -13,7 +13,7 @@ const EmployeeScreen = ({ navigation }) => {
 
       <EmployeesFlatlist />
 
-      <View style={styles.addProjectButton}>
+      <View style={styles.addEmployeeButton}>
         <IconButtonHContent pressFunction={() => navigation.navigate('AddEmployee')} title="Add New Employee" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
       </View>
     </>
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1
   },
-  addProjectButton: {
+  addEmployeeButton: {
     backgroundColor: '#fafafa',
     position: 'absolute',
     alignItems: 'center',
