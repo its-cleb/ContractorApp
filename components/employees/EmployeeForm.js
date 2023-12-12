@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Keyboard, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
@@ -70,10 +70,13 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
   const [ zip, setZip ] = useState(employeeValues.zip)
   const [ wage, setWage ] = useState(employeeValues.wage)
 
+  const keyboardDismiss = () => {
+    Keyboard.dismiss()
+  }
+  
   return (
-    <>    
-    {/* --- Employee Details --- */}
-      <Pressable onPress={Keyboard.dismiss()} style={globalStyles.pressableBox}>
+
+    <TouchableWithoutFeedback onPress={keyboardDismiss} style={globalStyles.pressableBox}>
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
@@ -92,7 +95,7 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 keyboardType="numeric"
-                value={employeeName}
+                value={wage}
                 onChangeText={text => setWage(text)}></TextInput>
             </View>
           </View>
@@ -173,8 +176,7 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
           </View>    
        
         </KeyboardAvoidingView>
-      </Pressable>
-    </>
+        </TouchableWithoutFeedback>
   ) 
 }
 
