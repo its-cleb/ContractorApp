@@ -34,7 +34,7 @@ const EstimatorScreen = () => {
       <DrawerHeader title="Estimator" />
 
       <View style={styles.addCostButton}>
-        <IconButtonHContent pressFunction={() => setModalVisible(true)} title="Add Line Item" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+        <IconButtonHContent pressFunction={openModal} title="Add Line Item" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
       </View>
 
       {modalBackground}
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '100%',
     width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 100
   },
   addCostButton: {
     backgroundColor: '#fafafa',
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     paddingBottom: 10,
+    zIndex: 10
   },
   modalBox: {
     flex: 1,
@@ -119,14 +121,6 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingBottom: 20,
     borderRadius: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 0,
-    elevation: 5,
   },
   formBox: {
     flexDirection: 'row',
