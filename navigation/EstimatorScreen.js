@@ -8,34 +8,103 @@ import ModalCloseButton from '../components/ModalCloseButton'
 
 const EstimatorScreen = () => {
   
+  const [estimateSheet, setEstimateSheet] = useState([])
+  const [modalState, setModalState] = useState('')
+  const [sectionName, setSectionName] = useState('')
   const [lineItem, setLineItem] = useState('')
   const [cost, setCost] = useState('')
-
  
   // --- Modal Functions ---
   const [modalVisible, setModalVisible] = React.useState(false)
   const { width } = useWindowDimensions()
 
-  const openModal = () => {
+  const openSectionModal = () => {
+    setModalState('Section')
+    console.log('sectionModal')
+    setModalVisible(true)
+  }
+  const openLineItemModal = () => {
+    setModalState('LineItem')
+    console.log('lineItemModal')
     setModalVisible(true)
   }
   const closeModal = () => {
     setModalVisible(false)
   }
 
+  const addLineItem = () => {
+    setEstimateSheet(previousState => [...previousState, { type: 'lineItem', value: lineItem, cost: cost}])
+    setModalVisible(false)
+    console.log(estimateSheet)
+  }
+
+  const addSection = () => {
+    setEstimateSheet(previousState => [...previousState, { type: 'section', value: sectionName}])
+    setModalVisible(false)
+    console.log(estimateSheet)
+  }
+
   let modalBackground
   if (modalVisible === true) {
     modalBackground = <View style={styles.modalBG}></View>  
-  }
+  } else { }
+
+  // --- Modal Form Content ---
+  let modalFormContent
+  if (modalState === 'LineItem') {
+    modalFormButton = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
+    modalFormContent =
+    <View style={styles.formBox}>
+      <View style={globalStyles.formRow}>
+        <View style={[globalStyles.formColumn, { flex: 5 }]}>
+          <Text style={globalStyles.formFieldCaption}>Line Item</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            value={lineItem}
+            onChangeText={text => setLineItem(text)}></TextInput>
+        </View>
+        <View style={[globalStyles.formColumn, { flex: 2 }]}>
+          <Text style={globalStyles.formFieldCaption}>Cost</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            keyboardType="numeric"
+            value={cost}
+            onChangeText={text => setCost(text)}></TextInput>
+        </View>
+      </View>
+    </View>
+    } if (modalState === 'Section') {
+      modalFormButton = <IconButtonHSmall pressFunction={addSection} title='Add Section' icon='indent' textcolor='white' bgcolor='steelblue' />
+      modalFormContent =
+      <View style={styles.formBox}>
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 1 }]}>
+            <Text style={globalStyles.formFieldCaption}>Section</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={sectionName}
+              onChangeText={text => setSectionName(text)}></TextInput>
+          </View>
+        </View>
+      </View>
+    }
 
   return (
     <View style={styles.pageContainer}>
 
       <DrawerHeader title="Estimator" />
 
-      <View style={styles.addCostButton}>
-        <IconButtonHContent pressFunction={openModal} title="Add Line Item" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
-      </View>
+      <View style={styles.buttonRow}>
+        <View style={styles.addSectionButton}>
+          <IconButtonHSmall pressFunction={openSectionModal} title="Add Section" icon="plus" bgcolor="steelblue" textcolor="white"/>
+        </View>
+        <View style={styles.addLineItemButton}>
+          <IconButtonHSmall pressFunction={openLineItemModal} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
+        </View>
+      </View>  
 
       {modalBackground}
 
@@ -52,30 +121,8 @@ const EstimatorScreen = () => {
             
             {/* Modal Content */}
             <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
-
-              <View style={styles.formBox}>
-                <View style={globalStyles.formRow}>
-                  <View style={[globalStyles.formColumn, { flex: 5 }]}>
-                    <Text style={globalStyles.formFieldCaption}>Line Item</Text>
-                    <TextInput 
-                      autoCorrect={false} 
-                      style={globalStyles.formFieldInput}
-                      value={lineItem}
-                      onChangeText={text => setLineItem(text)}></TextInput>
-                  </View>
-                  <View style={[globalStyles.formColumn, { flex: 2 }]}>
-                    <Text style={globalStyles.formFieldCaption}>Cost</Text>
-                    <TextInput 
-                      autoCorrect={false} 
-                      style={globalStyles.formFieldInput}
-                      keyboardType="numeric"
-                      value={cost}
-                      onChangeText={text => setCost(text)}></TextInput>
-                  </View>
-                </View>
-              </View>
-
-              <IconButtonHSmall pressFunction={closeModal} title='Add Line Item' icon='bars' textcolor='white' bgcolor='steelblue' />
+              {modalFormContent}
+              {modalFormButton}
             </KeyboardAvoidingView>
 
           </View>  
@@ -99,7 +146,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 100
   },
-  addCostButton: {
+  buttonRow: {
+    flexDirection: 'row',
+    flex: 1,
     backgroundColor: '#fafafa',
     position: 'absolute',
     alignItems: 'center',
@@ -107,6 +156,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     paddingBottom: 10,
     zIndex: 10
+  },
+  addSectionButton: {
+    flex: 1,
+    marginRight: -5
+  },
+  addLineItemButton: {
+    flex: 1,
+    marginLeft: -5
   },
   modalBox: {
     flex: 1,
