@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHContent from '../components/IconButtonHContent'
@@ -8,7 +8,7 @@ import ModalCloseButton from '../components/ModalCloseButton'
 
 const EstimatorScreen = () => {
   
-  const [estimateSheet, setEstimateSheet] = useState([])
+  const [estimateSheet, setEstimateSheet] = useState([{type: 'Section', value: 'Phase 1'}])
   const [modalState, setModalState] = useState('')
   const [sectionName, setSectionName] = useState('')
   const [lineItem, setLineItem] = useState('')
@@ -16,16 +16,17 @@ const EstimatorScreen = () => {
  
   // --- Modal Functions ---
   const [modalVisible, setModalVisible] = React.useState(false)
-  const { width } = useWindowDimensions()
+  const { height, width } = useWindowDimensions()
 
   const openSectionModal = () => {
     setModalState('Section')
-    console.log('sectionModal')
+    setSectionName('')
     setModalVisible(true)
   }
   const openLineItemModal = () => {
     setModalState('LineItem')
-    console.log('lineItemModal')
+    setLineItem('')
+    setCost('')
     setModalVisible(true)
   }
   const closeModal = () => {
@@ -33,15 +34,13 @@ const EstimatorScreen = () => {
   }
 
   const addLineItem = () => {
-    setEstimateSheet(previousState => [...previousState, { type: 'lineItem', value: lineItem, cost: cost}])
+    setEstimateSheet(previousState => [...previousState, { type: 'LineItem', value: lineItem, cost: cost}])
     setModalVisible(false)
-    console.log(estimateSheet)
   }
 
   const addSection = () => {
-    setEstimateSheet(previousState => [...previousState, { type: 'section', value: sectionName}])
+    setEstimateSheet(previousState => [...previousState, { type: 'Section', value: sectionName}])
     setModalVisible(false)
-    console.log(estimateSheet)
   }
 
   let modalBackground
@@ -51,6 +50,8 @@ const EstimatorScreen = () => {
 
   // --- Modal Form Content ---
   let modalFormContent
+  let modalFormButton
+
   if (modalState === 'LineItem') {
     modalFormButton = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
     modalFormContent =
@@ -91,11 +92,32 @@ const EstimatorScreen = () => {
         </View>
       </View>
     }
-
+    
+  // ----- Main Return -----
   return (
     <View style={styles.pageContainer}>
 
       <DrawerHeader title="Estimator" />
+
+      {/* --- Line Items --- */}
+      <ScrollView style={{ marginBottom: 75}}>
+        {estimateSheet.map((line) => {
+          if (line.type === 'Section')   {
+            return (
+              <View>
+                <Text style={styles.section}>{line.value}</Text>
+              </View>
+            )
+          } if (line.type === 'LineItem') {
+            return (
+              <View style={styles.lineRow}>
+                <Text style={styles.lineItem}>{line.value} ...</Text>
+                <Text style={styles.lineCost}>${line.cost}</Text>
+              </View>
+            )
+          } else { return }
+        })}
+      </ScrollView>
 
       <View style={styles.buttonRow}>
         <View style={styles.addSectionButton}>
@@ -108,6 +130,7 @@ const EstimatorScreen = () => {
 
       {modalBackground}
 
+      {/* --- Modal --- */}
       <View style={styles.modalBox}>
         <Modal 
           animationType='slide'
@@ -119,7 +142,6 @@ const EstimatorScreen = () => {
           <View style={[styles.modalContent, { width: width-40 }]}>
             <ModalCloseButton pressFunction={closeModal} />
             
-            {/* Modal Content */}
             <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
               {modalFormContent}
               {modalFormButton}
@@ -149,7 +171,6 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     flex: 1,
-    backgroundColor: '#fafafa',
     position: 'absolute',
     alignItems: 'center',
     width: '100%',
@@ -184,6 +205,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
   },
+  lineItemsBox:{
+  },
+  section: {
+    backgroundColor: 'steelblue', 
+    color: 'white', 
+    fontSize: 20, 
+    fontWeight: 'bold',
+    paddingVertical: 8,
+    paddingHorizontal: 10
+  },
+  lineRow: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingLeft: 20
+  },
+  lineItem: {
+    alignSelf: 'flex-start',
+    fontSize: 18,
+    flex: 5
+  },
+  lineCost: {
+    alignSelf: 'flex-end',
+    alignContent: 'flex-end',
+    fontSize: 18,
+    flex: 2
+  }
 }) 
 
 export default EstimatorScreen
