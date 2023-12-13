@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   lineItemsBox:{
   },
   section: {
-    backgroundColor: 'steelblue', 
+    backgroundColor: 'dodgerblue', 
     color: 'white', 
     fontSize: 20, 
     fontWeight: 'bold',
