@@ -17,7 +17,7 @@ const HomeScreen = () => {
           <IconButtonNavigate navpage="Projects" title="Projects" icon="tools" bgcolor="steelblue" /> 
         </View>
         <View style={styles.flexItem}>
-         <IconButtonNavigate navpage="Company" title="Company" icon="users" bgcolor="chocolate" /> 
+         <IconButtonNavigate navpage="Employees" title="Employees" icon="users" bgcolor="chocolate" /> 
         </View>
      </View>
     </>

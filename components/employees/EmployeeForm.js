@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useContext } from 'react'
 import { View, Text, TextInput, Keyboard, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
-import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
 import { Context } from '../../context/EmployeeContext'
 

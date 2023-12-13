@@ -3,7 +3,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import { StyleSheet } from 'react-native'
 
 import HomeScreen from './navigation/HomeScreen'
 import EstimatorScreen from './navigation/EstimatorScreen'
@@ -89,6 +88,19 @@ function EmployeeScreenStack() {
     )
 }
 
+// Estimator Pages
+function EstimatorStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="View"
+        component={EstimatorScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 export default function App() {
   
   return (
@@ -114,10 +126,10 @@ export default function App() {
             />
             <Drawer.Screen 
               name="Estimator" 
-              component={EstimatorScreen} 
+              component={EstimatorStack} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" style={{marginRight: -2}} />),
-                headerTitle: "Quotes & Estimates",
+                headerTitle: "Quotes & Estimator",
                 drawerLabel: "Estimator",
                 headerShown: false
               }} 
