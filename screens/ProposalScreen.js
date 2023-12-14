@@ -7,12 +7,14 @@ import BottomTab3 from '../components/BottomTab3'
 
 const ProposalScreen = () => {
   
-  const [proposalSheet, setProposalSheet] = useState([{type: 'Section', value: 'Phase 1'}])
-  const [modalState1, setModalState1] = useState('')
-  const [modalState2, setModalState2] = useState('')
+  const [proposalSheet, setProposalSheet] = useState([{type: 'Section', value: 'Phase 1', date: '10/10/2023'}])
+  const [modal2State, setmodal2State] = useState('')
   const [sectionName, setSectionName] = useState('')
+  const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
   const [cost, setCost] = useState('')
+
+  let USDollar = Intl.NumberFormat('en-US');
  
   // --- Modal Functions ---
   const [modal1Visible, setModal1Visible] = React.useState(false)
@@ -23,13 +25,14 @@ const ProposalScreen = () => {
     setModal1Visible(true)
   }
   const openSectionModal = () => {
-    setModalState2('Section')
+    setmodal2State('Section')
     setSectionName('')
+    setPhaseDate('')
     setModal1Visible(false)
     setModal2Visible(true)
   }
   const openLineItemModal = () => {
-    setModalState2('LineItem')
+    setmodal2State('LineItem')
     setLineItem('')
     setCost('')
     setModal1Visible(false)
@@ -41,12 +44,11 @@ const ProposalScreen = () => {
   }
 
   const addLineItem = () => {
-    setProposalSheet(previousState => [...previousState, { type: 'LineItem', value: lineItem, cost: cost}])
+    setProposalSheet(previousState => [...previousState, { type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
     setModal2Visible(false)
   }
-
   const addSection = () => {
-    setProposalSheet(previousState => [...previousState, { type: 'Section', value: sectionName}])
+    setProposalSheet(previousState => [...previousState, { type: 'Section', value: sectionName, date: phaseDate}])
     setModal2Visible(false)
   }
 
@@ -59,7 +61,7 @@ const ProposalScreen = () => {
   let modalFormContent
   let modalFormButton
 
-  if (modalState2 === 'LineItem') {
+  if (modal2State === 'LineItem') {
     modalFormButton = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
     modalFormContent =
     <View style={styles.formBox}>
@@ -83,23 +85,31 @@ const ProposalScreen = () => {
         </View>
       </View>
     </View>
-    } if (modalState2 === 'Section') {
-      modalFormButton = <IconButtonHSmall pressFunction={addSection} title='Add Section' icon='indent' textcolor='white' bgcolor='steelblue' />
-      modalFormContent =
-      <View style={styles.formBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <Text style={globalStyles.formFieldCaption}>Section</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={sectionName}
-              onChangeText={text => setSectionName(text)}></TextInput>
-          </View>
+  } if (modal2State === 'Section') {
+    modalFormButton = <IconButtonHSmall pressFunction={addSection} title='Add Section' icon='indent' textcolor='white' bgcolor='steelblue' />
+    modalFormContent =
+    <View style={styles.formBox}>
+      <View style={globalStyles.formRow}>
+        <View style={[globalStyles.formColumn, { flex: 5 }]}>
+          <Text style={globalStyles.formFieldCaption}>Section</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            value={sectionName}
+            onChangeText={text => setSectionName(text)}></TextInput>
+        </View>
+        <View style={[globalStyles.formColumn, { flex: 3 }]}>
+          <Text style={globalStyles.formFieldCaption}>Date</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            value={phaseDate}
+            onChangeText={text => setPhaseDate(text)}></TextInput>
         </View>
       </View>
-    }
-    
+    </View>
+  }
+  
   // ----- Main Return -----
   return (
     <View style={styles.pageContainer}>
@@ -109,8 +119,9 @@ const ProposalScreen = () => {
         {proposalSheet.map((line) => {
           if (line.type === 'Section')   {
             return (
-              <View>
-                <Text style={styles.section}>{line.value}</Text>
+              <View style={styles.section}>
+                <Text style={styles.phaseName}>{line.value}</Text>
+                <Text style={styles.phaseDate}>{line.date}</Text>
               </View>
             )
           } if (line.type === 'LineItem') {
@@ -194,16 +205,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 100
   },
-  buttonRow: {
-    flexDirection: 'row',
-    flex: 1,
-    position: 'absolute',
-    alignItems: 'center',
-    width: '100%',
-    bottom: 0,
-    paddingBottom: 10,
-    zIndex: 10
-  },
+
+  // Modal 1 
   lineSelectionBox: {
     flex: 1,
     justifyContent: 'center',
@@ -213,6 +216,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%'
   },
+
+  // Modal 2
   modalBox: {
     flex: 1,
     justifyContent: 'center',
@@ -232,13 +237,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
   },
+
+  // Proposal Sheet
   section: {
+    flexDirection: 'row',
     backgroundColor: 'dodgerblue', 
-    color: 'white', 
-    fontSize: 20, 
-    fontWeight: 'bold',
     paddingVertical: 10,
     paddingHorizontal: 10
+  },
+  phaseName: {
+    alignSelf: 'flex-start',
+    color: 'white', 
+    fontSize: 20,     
+    fontWeight: 'bold',
+    flex: 1
+  },
+  phaseDate: {
+    color: 'white',
+    alignSelf: 'flex-end',
+    textAlign: 'right',
+    fontSize: 18,
+    flex: 1
   },
   lineRow: {
     flexDirection: 'row',

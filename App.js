@@ -11,7 +11,7 @@ import ProjectsScreen from './navigation/ProjectsScreen'
 import EmployeeScreen from './navigation/EmployeeScreen'
 
 import AddProjectScreen from './screens/AddProjectScreen'
-import EditProjectScreen from './screens/EditProjectScreen'
+import EditClientScreen from './screens/EditClientScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
 import ProposalScreen from './screens/ProposalScreen'
 
@@ -48,9 +48,9 @@ function ProjectScreenStack() {
         options={{ headerTitle: "Add New Project" }}
       />
       <Stack.Screen
-        name="EditProject"
-        component={EditProjectScreen}
-        options={{ headerTitle: "Edit Project" }}
+        name="EditClient"
+        component={EditClientScreen}
+        options={{ headerTitle: "Edit Client" }}
       />
       <Stack.Screen
         name="ClientDetails"

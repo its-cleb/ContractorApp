@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Context } from '../context/ProjectContext'
 import ProjectForm from '../components/projects/ProjectForm'
 
-const EditProjectsScreen = ({ route, navigation }) => {
+const EditClientScreen = ({ route, navigation }) => {
  
   const { state } = useContext(Context)
 
@@ -22,4 +22,4 @@ const EditProjectsScreen = ({ route, navigation }) => {
     ) 
   }
 
-export default EditProjectsScreen
+export default EditClientScreen
