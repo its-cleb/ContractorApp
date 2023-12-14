@@ -21,7 +21,7 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
          searchText === ""
     ) { 
       return (
-        <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', {payload: item.projectID})}>
+        <TouchableOpacity onPress={() => navigation.navigate('ClientDetails', {payload: item.projectID})}>
           <View style={styles.projectContainer}>
             <View style={styles.projectRowTop}>
               <View style={[styles.projectColumnLeft, { flex: 1 }]}>

@@ -4,7 +4,7 @@ import { Context } from '../context/ProjectContext'
 import DeleteButton from '../components/DeleteButton'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 
-const ProjectDetailsScreen = ({ route, navigation }) => {
+const ClientDetailsScreen = ({ route, navigation }) => {
   
   const { state, deleteProject } = useContext(Context)
 
@@ -52,7 +52,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       </View>
       
       <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload})} title='Edit Project' icon='edit' textcolor='white' bgcolor='steelblue' />
+        <IconButtonHSmall pressFunction={() => navigation.navigate('EditProject', {payload})} title='Edit Client Details' icon='user-alt' textcolor='white' bgcolor='steelblue' />
+      </View>
+      <View>
+        <IconButtonHSmall pressFunction={() => navigation.navigate('ProposalScreen', {payload})} title='View Proposals' icon='file-alt' textcolor='white' bgcolor='steelblue' />
       </View>
     </>
   )
@@ -107,4 +110,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ProjectDetailsScreen
+export default ClientDetailsScreen

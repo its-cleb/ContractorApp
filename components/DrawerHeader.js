@@ -9,7 +9,7 @@ const DrawerHeader = props => {
   const navigation = useNavigation()
 
   return (
-    <SafeAreaView style={{backgroundColor: 'white', flexDirection: 'row', borderBottomColor: '#ddd', borderBottomWidth: 1}}>
+    <SafeAreaView style={{backgroundColor: 'white', flexDirection: 'row', borderBottomColor: '#ccc', borderBottomWidth: 1}}>
       <StatusBar hidden />
       <TouchableOpacity 
         style={[globalStyles.touchableOpacityButton, { backgroundColor: `${props.bgcolor}`, flexDirection: 'row' }]}

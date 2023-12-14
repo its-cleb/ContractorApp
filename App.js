@@ -12,7 +12,8 @@ import EmployeeScreen from './navigation/EmployeeScreen'
 
 import AddProjectScreen from './screens/AddProjectScreen'
 import EditProjectScreen from './screens/EditProjectScreen'
-import ProjectDetailsScreen from './screens/ProjectDetailsScreen'
+import ClientDetailsScreen from './screens/ClientDetailsScreen'
+import ProposalScreen from './screens/ProposalScreen'
 
 import AddEmployeeScreen from './screens/AddEmployeeScreen'
 import EditEmployeeScreen from './screens/EditEmployeeScreen'
@@ -52,9 +53,14 @@ function ProjectScreenStack() {
         options={{ headerTitle: "Edit Project" }}
       />
       <Stack.Screen
-        name="ProjectDetails"
-        component={ProjectDetailsScreen}
-        options={{ headerTitle: "Project Details" }}
+        name="ClientDetails"
+        component={ClientDetailsScreen}
+        options={{ headerTitle: "Client Details" }}
+      />
+      <Stack.Screen
+        name="ProposalScreen"
+        component={ProposalScreen}
+        options={{ headerTitle: "Proposals" }}
       />
     </Stack.Navigator>
     )
