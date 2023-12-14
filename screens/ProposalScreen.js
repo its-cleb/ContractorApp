@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCloseButton from '../components/ModalCloseButton'
@@ -7,9 +7,10 @@ import BottomTab3 from '../components/BottomTab3'
 
 const ProposalScreen = () => {
   
-  const [proposalSheet, setProposalSheet] = useState([{type: 'Section', value: 'Phase 1', date: '10/10/2023'}])
+  const [proposalSheet, setProposalSheet] = useState([{type: 'Phase', value: 'Phase 1', date: '10/10/2023'}])
   const [modal2State, setmodal2State] = useState('')
-  const [sectionName, setSectionName] = useState('')
+  const [modal3State, setmodal3State] = useState('')
+  const [phaseName, setPhaseName] = useState('')
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
   const [cost, setCost] = useState('')
@@ -17,19 +18,24 @@ const ProposalScreen = () => {
   let USDollar = Intl.NumberFormat('en-US');
  
   // --- Modal Functions ---
-  const [modal1Visible, setModal1Visible] = React.useState(false)
-  const [modal2Visible, setModal2Visible] = React.useState(false)
+  const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
+  const [modal2Visible, setModal2Visible] = React.useState(false) // Add New Line Modal
+  const [modal3Visible, setModal3Visible] = React.useState(false) // Edit Line Modal
+
   const { height, width } = useWindowDimensions()
 
   const openLineSelectionModal = () => {
     setModal1Visible(true)
+    setModal2Visible(false)
+    setModal3Visible(false)
   }
-  const openSectionModal = () => {
-    setmodal2State('Section')
-    setSectionName('')
+  const openPhaseModal = () => {
+    setmodal2State('Phase')
+    setPhaseName('')
     setPhaseDate('')
     setModal1Visible(false)
     setModal2Visible(true)
+    setModal3Visible(false)
   }
   const openLineItemModal = () => {
     setmodal2State('LineItem')
@@ -37,105 +43,181 @@ const ProposalScreen = () => {
     setCost('')
     setModal1Visible(false)
     setModal2Visible(true)
+    setModal3Visible(false)
+  }
+  const editPhase = () => {
+    setmodal3State('Phase')
+    setPhaseName('')
+    setPhaseDate('')
+    setModal1Visible(false)
+    setModal2Visible(false)
+    setModal3Visible(true)
+  }
+  const editLineItem = () => {
+    setmodal3State('LineItem')
+    setLineItem('')
+    setCost('')
+    setModal1Visible(false)
+    setModal2Visible(false)
+    setModal3Visible(true)
   }
   const closeModal = () => {
     setModal1Visible(false)
     setModal2Visible(false)
+    setModal3Visible(false)
   }
 
   const addLineItem = () => {
     setProposalSheet(previousState => [...previousState, { type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
     setModal2Visible(false)
+    setModal3Visible(false)
   }
-  const addSection = () => {
-    setProposalSheet(previousState => [...previousState, { type: 'Section', value: sectionName, date: phaseDate}])
+  const addPhase = () => {
+    setProposalSheet(previousState => [...previousState, { type: 'Phase', value: phaseName, date: phaseDate}])
     setModal2Visible(false)
+    setModal3Visible(false)
   }
 
   let modalBackground
-  if (modal1Visible === true || modal2Visible === true) {
+  if (modal1Visible === true || modal2Visible === true || modal3Visible === true) {
     modalBackground = <View style={styles.modalBG}></View>  
   } else { }
 
-  // --- Modal Form Content ---
-  let modalFormContent
-  let modalFormButton
+  // --- Modal 2 Add Form Content ---
+  let modalForm2Content
+  let modalForm2Button
 
   if (modal2State === 'LineItem') {
-    modalFormButton = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
-    modalFormContent =
-    <View style={styles.formBox}>
-      <View style={globalStyles.formRow}>
-        <View style={[globalStyles.formColumn, { flex: 5 }]}>
-          <Text style={globalStyles.formFieldCaption}>Line Item</Text>
-          <TextInput 
-            autoCorrect={false} 
-            style={globalStyles.formFieldInput}
-            value={lineItem}
-            onChangeText={text => setLineItem(text)}></TextInput>
-        </View>
-        <View style={[globalStyles.formColumn, { flex: 2 }]}>
-          <Text style={globalStyles.formFieldCaption}>Cost</Text>
-          <TextInput 
-            autoCorrect={false} 
-            style={globalStyles.formFieldInput}
-            keyboardType="numeric"
-            value={cost}
-            onChangeText={text => setCost(text)}></TextInput>
-        </View>
-      </View>
-    </View>
-  } if (modal2State === 'Section') {
-    modalFormButton = <IconButtonHSmall pressFunction={addSection} title='Add Section' icon='indent' textcolor='white' bgcolor='steelblue' />
-    modalFormContent =
-    <View style={styles.formBox}>
-      <View style={globalStyles.formRow}>
-        <View style={[globalStyles.formColumn, { flex: 5 }]}>
-          <Text style={globalStyles.formFieldCaption}>Section</Text>
-          <TextInput 
-            autoCorrect={false} 
-            style={globalStyles.formFieldInput}
-            value={sectionName}
-            onChangeText={text => setSectionName(text)}></TextInput>
-        </View>
-        <View style={[globalStyles.formColumn, { flex: 3 }]}>
-          <Text style={globalStyles.formFieldCaption}>Date</Text>
-          <TextInput 
-            autoCorrect={false} 
-            style={globalStyles.formFieldInput}
-            value={phaseDate}
-            onChangeText={text => setPhaseDate(text)}></TextInput>
+    console.log('Line Item Pressed')
+    modalForm2Button = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
+    modalForm2Content =
+      <View style={styles.formBox}>
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 5 }]}>
+            <Text style={globalStyles.formFieldCaption}>Line Item</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={lineItem}
+              onChangeText={text => setLineItem(text)}></TextInput>
+          </View>
+          <View style={[globalStyles.formColumn, { flex: 2 }]}>
+            <Text style={globalStyles.formFieldCaption}>Cost</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              keyboardType="numeric"
+              value={cost}
+              onChangeText={text => setCost(text)}></TextInput>
+          </View>
         </View>
       </View>
-    </View>
-  }
+  } if (modal2State === 'Phase') {
+    console.log('Phase Pressed')
+    modalForm2Button = <IconButtonHSmall pressFunction={addPhase} title='Add Phase' icon='indent' textcolor='white' bgcolor='steelblue' />
+    modalForm2Content =
+      <View style={styles.formBox}>
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 5 }]}>
+            <Text style={globalStyles.formFieldCaption}>Phase</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={phaseName}
+              onChangeText={text => setPhaseName(text)}></TextInput>
+          </View>
+          <View style={[globalStyles.formColumn, { flex: 3 }]}>
+            <Text style={globalStyles.formFieldCaption}>Date</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={phaseDate}
+              onChangeText={text => setPhaseDate(text)}></TextInput>
+          </View>
+        </View>
+      </View>
+  } else {}
+
+  // Modal 3 Edit Form Content
+  let modalForm3Content
+  let modalForm3Button
+
+  if (modal3State === 'LineItem') {
+    modalForm3Button = <IconButtonHSmall pressFunction={editLineItem} title='Save Edit' icon='edit' textcolor='white' bgcolor='steelblue' />
+    modalForm3Content =
+      <View style={styles.formBox}>
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 5 }]}>
+            <Text style={globalStyles.formFieldCaption}>Line Item</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={lineItem}
+              onChangeText={text => setLineItem(text)}></TextInput>
+          </View>
+          <View style={[globalStyles.formColumn, { flex: 2 }]}>
+            <Text style={globalStyles.formFieldCaption}>Cost</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              keyboardType="numeric"
+              value={cost}
+              onChangeText={text => setCost(text)}></TextInput>
+          </View>
+        </View>
+      </View>
+  } if (modal3State === 'Phase') {
+    modalForm3Button = 
+      <IconButtonHSmall pressFunction={editPhase} title='Save Edit' icon='edit' textcolor='white' bgcolor='steelblue' />
+    modalForm3Content =
+      <View style={styles.formBox}>
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 5 }]}>
+            <Text style={globalStyles.formFieldCaption}>Phase</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={phaseName}
+              onChangeText={text => setPhaseName(text)}></TextInput>
+          </View>
+          <View style={[globalStyles.formColumn, { flex: 3 }]}>
+            <Text style={globalStyles.formFieldCaption}>Date</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={phaseDate}
+              onChangeText={text => setPhaseDate(text)}></TextInput>
+          </View>
+        </View>
+      </View>
+  } else {}
   
   // ----- Main Return -----
   return (
     <View style={styles.pageContainer}>
 
-      {/* --- Line Items --- */}
+      {/* --- Display Line Items --- */}
       <ScrollView style={{ marginBottom: 75}}>
         {proposalSheet.map((line) => {
-          if (line.type === 'Section')   {
+          if (line.type === 'Phase')   {
             return (
-              <View style={styles.section}>
+              <TouchableOpacity style={styles.phase} onPress={editPhase}>
                 <Text style={styles.phaseName}>{line.value}</Text>
                 <Text style={styles.phaseDate}>{line.date}</Text>
-              </View>
+              </TouchableOpacity>
             )
           } if (line.type === 'LineItem') {
             return (
-              <View style={styles.lineRow}>
+              <TouchableOpacity style={styles.lineRow} onPress={editLineItem}>
                 <Text style={styles.lineItem}>{line.value} ...</Text>
                 <Text style={styles.lineCost}>${line.cost}</Text>
-              </View>
+              </TouchableOpacity>
             )
           } else { return }
         })}
       </ScrollView>
 
-      {/* --- Line Selection Modal --- */}
+      {/* --- Add Line Type Modal --- */}
       <View style={styles.modalBox}>
         <Modal 
           animationType='slide'
@@ -147,7 +229,7 @@ const ProposalScreen = () => {
             <View style={styles.modalContent}>
               <ModalCloseButton pressFunction={closeModal} />
                 <View style={styles.lineSelectionButtonsBox}>
-                  <IconButtonHSmall pressFunction={openSectionModal} title="Add Section" icon="plus" bgcolor="steelblue" textcolor="white"/>
+                  <IconButtonHSmall pressFunction={openPhaseModal} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/>
                   <IconButtonHSmall pressFunction={openLineItemModal} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
                 </View>
             </View>
@@ -175,18 +257,35 @@ const ProposalScreen = () => {
           visible={modal2Visible}
           onRequestClose={() => setModal2Visible(false)}
         >
-        <View style={styles.modalBox}>
-          <View style={[styles.modalContent, { width: width-40 }]}>
-            <ModalCloseButton pressFunction={closeModal} />
-            
-            <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
-              {modalFormContent}
-              {modalFormButton}
-            </KeyboardAvoidingView>
+          <View style={styles.modalBox}>
+            <View style={[styles.modalContent, { width: width-40 }]}>
+              <ModalCloseButton pressFunction={closeModal} />
+              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
+                {modalForm2Content}
+                {modalForm2Button}
+              </KeyboardAvoidingView>
+            </View>  
+          </View>
+        </Modal>
+      </View>
 
-          </View>  
-        </View>
-
+      {/* --- Edit Line Item Modal --- */}
+      <View style={styles.modalBox}>
+        <Modal 
+          animationType='slide'
+          transparent={true} 
+          visible={modal3Visible}
+          onRequestClose={() => setModal3Visible(false)}
+        >
+          <View style={styles.modalBox}>
+            <View style={[styles.modalContent, { width: width-40 }]}>
+              <ModalCloseButton pressFunction={closeModal} />
+              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
+                {modalForm3Content}
+                {modalForm3Button}
+              </KeyboardAvoidingView>
+            </View>  
+          </View>
         </Modal>
       </View>
 
@@ -239,7 +338,7 @@ const styles = StyleSheet.create({
   },
 
   // Proposal Sheet
-  section: {
+  phase: {
     flexDirection: 'row',
     backgroundColor: 'dodgerblue', 
     paddingVertical: 10,
