@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
@@ -10,6 +10,7 @@ const ProposalScreen = () => {
   const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), type: 'Phase', value: 'Phase 1', date: '10/10/2023'}])
   const [modal2State, setmodal2State] = useState('')
   const [modal3State, setmodal3State] = useState('')
+  const [clickedItem, setClickedItem] = useState('')
   const [phaseName, setPhaseName] = useState('')
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
@@ -64,7 +65,8 @@ const ProposalScreen = () => {
   }
 
   // Edit Line Item Modal Settings
-  const openEditPhaseModal = () => {
+  const openEditPhaseModal = (index) => {
+    console.log('Index:', index)
     setmodal3State('Phase')
     setPhaseName('')
     setPhaseDate('')
@@ -219,11 +221,10 @@ const ProposalScreen = () => {
 
       {/* --- Display Line Items --- */}
       <ScrollView style={{ marginBottom: 75}}>
-        {proposalSheet.map((line) => {
+        {proposalSheet.map((line, index) => {
           if (line.type === 'Phase')   {
-            console.log(line.key)
             return (
-              <TouchableOpacity style={styles.phase} onPress={openEditPhaseModal}>
+              <TouchableOpacity style={styles.phase} onPress={() => openEditPhaseModal(index)}>
                 <Text style={styles.phaseName}>{line.value}</Text>
                 <Text style={styles.phaseDate}>{line.date}</Text>
               </TouchableOpacity>
