@@ -5,10 +5,8 @@ import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCloseButton from '../components/ModalCloseButton'
 import BottomTab3 from '../components/BottomTab3'
 
-let splicedProposalSheet
-let currentLine = ''
-let currentLineKey = ''
-let currentLineIndex = ''
+// Scoped variables for line items
+let currentLineIndex = 0
 
 const ProposalScreen = () => {
   
@@ -22,14 +20,12 @@ const ProposalScreen = () => {
 
   let USDollar = Intl.NumberFormat('en-US');
 
-
- 
   // --- Modal Functions ---
   const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
   const [modal2Visible, setModal2Visible] = React.useState(false) // Add New Line Modal
   const [modal3Visible, setModal3Visible] = React.useState(false) // Edit Line Modal
 
-  const { height, width } = useWindowDimensions()
+  const { width } = useWindowDimensions()
 
   const closeModal = () => {
     setModal1Visible(false)
@@ -67,44 +63,32 @@ const ProposalScreen = () => {
   // Edit Line Item Modal Settings
   const openEditPhaseModal = (lineKey) => {
     setmodal3State('Phase')
-    currentLineKey = lineKey
     currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
-    
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setPhaseName(lineData.value1)
     setPhaseDate(lineData.value2)
-
     setModal3Visible(true)
-    console.log('lineindex:', currentLineIndex)
-    console.log('currentlinekey:', currentLineKey)
-
   }
   const openEditLineItemModal = (lineKey) => {
     setmodal3State('LineItem')
-    currentLineKey = lineKey
     currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
-
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setLineItem(lineData.value1)
     setCost(lineData.value2)
-
     setModal3Visible(true)
   }
   const editPhase = () => {
-    const copiedProposalSheet = proposalSheet
-    console.log('currentlinekey:', currentLineKey)
-    splicedProposalSheet = copiedProposalSheet.splice(currentLineIndex, 1, {key: currentLineKey, isPhase: false, value1: lineItem, value2: cost})
-    console.log('splicedProposalSheet:', splicedProposalSheet)
-
-    setProposalSheet(splicedProposalSheet)
-    console.log('proposalSheet:', proposalSheet)
+    const copiedProposalSheet = proposalSheet  
+    copiedProposalSheet[currentLineIndex].value1 = phaseName
+    copiedProposalSheet[currentLineIndex].value2 = phaseDate
+    setProposalSheet(copiedProposalSheet)
     setModal3Visible(false)
   }
   const editLineItem = () => {
-    // const copiedProposalSheet = proposalSheet.map((test))
-    console.log(copiedProposalSheet)
-
-
+    const copiedProposalSheet = proposalSheet  
+    copiedProposalSheet[currentLineIndex].value1 = lineItem
+    copiedProposalSheet[currentLineIndex].value2 = cost
+    setProposalSheet(copiedProposalSheet)
     setModal3Visible(false)
   }
 
@@ -233,7 +217,7 @@ const ProposalScreen = () => {
         keyExtractor={item => item.key}
         renderItem={({item}) => 
           <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
-            <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : '. . .'}</Text>
+            <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
             <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.value2}</Text>
           </TouchableOpacity>
       }
