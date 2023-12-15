@@ -17,7 +17,7 @@ const ProposalScreen = () => {
   const [lineIndex, setLineIndex] = useState('')
 
   let USDollar = Intl.NumberFormat('en-US');
-
+  let splicedProposalSheet
  
   // --- Modal Functions ---
   const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
@@ -33,8 +33,6 @@ const ProposalScreen = () => {
   }
   const openLineSelectionModal = () => {
     setModal1Visible(true)
-    setModal2Visible(false)
-    setModal3Visible(false)
   }
 
   // Add Line Item Modal Settings
@@ -44,7 +42,6 @@ const ProposalScreen = () => {
     setPhaseDate('')
     setModal1Visible(false)
     setModal2Visible(true)
-    setModal3Visible(false)
   }
   const openLineItemModal = () => {
     setmodal2State('LineItem')
@@ -52,17 +49,15 @@ const ProposalScreen = () => {
     setCost('')
     setModal1Visible(false)
     setModal2Visible(true)
-    setModal3Visible(false)
   }
   const addLineItem = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
     setModal2Visible(false)
-    setModal3Visible(false)
+    console.log('addLineItem')
   }
   const addPhase = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'Phase', value: phaseName, date: phaseDate}])
     setModal2Visible(false)
-    setModal3Visible(false)
   }
 
   // Edit Line Item Modal Settings
@@ -73,37 +68,40 @@ const ProposalScreen = () => {
     setPhaseName(currentLine.value)
     setPhaseDate(currentLine.date)
     setModal3Visible(true)
-    console.log('index:', lineIndex)
+    // console.log('index:', lineIndex)
   }
   const openEditLineItemModal = (index) => {
-    // let currentLine = proposalSheet[index]
-    // setLineItem(currentLine.value)
-    // setCost(currentLine.cost)
-    // setModal3Visible(true)
+    let currentLine = proposalSheet[index]
+    setLineIndex(index)
+    setmodal3State('LineItem')
+    setLineItem(currentLine.value)
+    setCost(currentLine.cost)
+    setModal3Visible(true)
   }
   const editLineItem = () => {
-    const splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'LineItem', value: lineItem, cost: cost})
+    const copiedProposalSheet = proposalSheet.slice()
+    console.log('copiedProposalSheet:', copiedProposalSheet)
+    splicedProposalSheet = copiedProposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'LineItem', value: lineItem, cost: cost})
+    console.log('splicedProposalSheet:', splicedProposalSheet)
     setProposalSheet(splicedProposalSheet)
-    setModal1Visible(false)
-    setModal2Visible(false)
+    console.log('proposalSheet:', proposalSheet)
     setModal3Visible(false)
   }
   const editPhase = () => {
-    const splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'Phase', value: phaseName, date: phaseDate})
+    splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'Phase', value: phaseName, date: phaseDate})
     setProposalSheet(splicedProposalSheet)
-    setModal1Visible(false)
-    setModal2Visible(false)
     setModal3Visible(false)
     console.log(proposalSheet)
   }
 
-
+  // --- Modal 1 ---
   let modalBackground
+
   if (modal1Visible === true || modal2Visible === true || modal3Visible === true) {
     modalBackground = <View style={styles.modalBG}></View>  
-  } else { }
+  } else { console.log('Modal 1 error') }
 
-  // --- Modal 2 Add Form Content ---
+  // --- Modal 2 ---
   let modalForm2Content
   let modalForm2Button
 
@@ -154,9 +152,9 @@ const ProposalScreen = () => {
           </View>
         </View>
       </View>
-  } else {}
+  } else { console.log('Modal 2 error')}
 
-  // Modal 3 Edit Form Content
+  // --- Modal 3 ---
   let modalForm3Content
   let modalForm3Button
 
@@ -209,7 +207,7 @@ const ProposalScreen = () => {
           </View>
         </View>
       </View>
-  } else {}
+  } else { console.log('Modal 3 error') }
   
   // ----- Main Return -----
   return (
@@ -227,12 +225,14 @@ const ProposalScreen = () => {
             )
           } if (line.type === 'LineItem') {
             return (
-              <TouchableOpacity style={styles.lineRow} onPress={openEditLineItemModal(index)}>
+              <TouchableOpacity style={styles.lineRow} onPress={() => openEditLineItemModal(index)}>
                 <Text style={styles.lineItem}>{line.value} ...</Text>
                 <Text style={styles.lineCost}>${line.cost}</Text>
               </TouchableOpacity>
             )
-          } else {  }
+          } else {  
+            console.log('Main Return error')
+          }
         })}
       </ScrollView>
 
