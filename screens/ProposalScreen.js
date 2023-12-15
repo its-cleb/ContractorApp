@@ -10,13 +10,14 @@ const ProposalScreen = () => {
   const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), type: 'Phase', value: 'Phase 1', date: '10/10/2023'}])
   const [modal2State, setmodal2State] = useState('')
   const [modal3State, setmodal3State] = useState('')
-  const [clickedItem, setClickedItem] = useState('')
   const [phaseName, setPhaseName] = useState('')
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
   const [cost, setCost] = useState('')
+  const [lineIndex, setLineIndex] = useState('')
 
   let USDollar = Intl.NumberFormat('en-US');
+
  
   // --- Modal Functions ---
   const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
@@ -66,39 +67,34 @@ const ProposalScreen = () => {
 
   // Edit Line Item Modal Settings
   const openEditPhaseModal = (index) => {
-    console.log('Index:', index)
+    let currentLine = proposalSheet[index]
+    setLineIndex(index)
     setmodal3State('Phase')
-    setPhaseName('')
-    setPhaseDate('')
-    setModal1Visible(false)
-    setModal2Visible(false)
+    setPhaseName(currentLine.value)
+    setPhaseDate(currentLine.date)
     setModal3Visible(true)
+    console.log('index:', lineIndex)
   }
-  const openEditLineItemModal = () => {
-    setmodal3State('LineItem')
-    setLineItem('')
-    setCost('')
-    setModal1Visible(false)
-    setModal2Visible(false)
-    setModal3Visible(true)
+  const openEditLineItemModal = (index) => {
+    // let currentLine = proposalSheet[index]
+    // setLineItem(currentLine.value)
+    // setCost(currentLine.cost)
+    // setModal3Visible(true)
   }
   const editLineItem = () => {
-    setmodal3State('LineItem')
-    setLineItem('')
-    setCost('')
-    // setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
-    setModal1Visible(false)
-    setModal2Visible(false)
-    setModal3Visible(true)
-  }
-  const editPhase = () => {
-    setmodal3State('Phase')
-    setPhaseName('')
-    setPhaseDate('')
-    // setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'Phase', value: phaseName, date: phaseDate}])
+    const splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'LineItem', value: lineItem, cost: cost})
+    setProposalSheet(splicedProposalSheet)
     setModal1Visible(false)
     setModal2Visible(false)
     setModal3Visible(false)
+  }
+  const editPhase = () => {
+    const splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'Phase', value: phaseName, date: phaseDate})
+    setProposalSheet(splicedProposalSheet)
+    setModal1Visible(false)
+    setModal2Visible(false)
+    setModal3Visible(false)
+    console.log(proposalSheet)
   }
 
 
@@ -231,7 +227,7 @@ const ProposalScreen = () => {
             )
           } if (line.type === 'LineItem') {
             return (
-              <TouchableOpacity style={styles.lineRow} onPress={openEditLineItemModal}>
+              <TouchableOpacity style={styles.lineRow} onPress={openEditLineItemModal(index)}>
                 <Text style={styles.lineItem}>{line.value} ...</Text>
                 <Text style={styles.lineCost}>${line.cost}</Text>
               </TouchableOpacity>
