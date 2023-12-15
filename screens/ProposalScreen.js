@@ -8,7 +8,7 @@ import BottomTab3 from '../components/BottomTab3'
 // Scoped variables for line items
 let currentLineIndex = 0
 
-const ProposalScreen = () => {
+const ProposalScreen = ({ navigation }) => {
   
   const [proposalSheet, setProposalSheet] = useState([])
   const [modal2isPhase, setmodal2isPhase] = useState('')
@@ -17,6 +17,7 @@ const ProposalScreen = () => {
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
   const [cost, setCost] = useState('')
+  const [description, setDescription] = useState('')
 
   let USDollar = Intl.NumberFormat('en-US');
 
@@ -24,6 +25,8 @@ const ProposalScreen = () => {
   const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
   const [modal2Visible, setModal2Visible] = React.useState(false) // Add New Line Modal
   const [modal3Visible, setModal3Visible] = React.useState(false) // Edit Line Modal
+  const [modal4Visible, setModal4Visible] = React.useState(false) // Save Proposal Modal
+
 
   const { width } = useWindowDimensions()
 
@@ -97,10 +100,18 @@ const ProposalScreen = () => {
     setModal3Visible(false)
   }
 
+  // Save Proposal Modal Settings
+  const openSaveProposal = () => {
+    setModal4Visible(true)
+  }
+  const saveProposal = () => {
+    navigation.pop()
+  }
+
   // --- Modal 1 (Select Line Item Type) ---
   let modalBackground
 
-  if (modal1Visible === true || modal2Visible === true || modal3Visible === true) {
+  if (modal1Visible === true || modal2Visible === true || modal3Visible === true || modal4Visible === true) {
     modalBackground = <View style={styles.modalBG}></View>  
   } else { console.log('Modal 1 error') }
 
@@ -213,6 +224,7 @@ const ProposalScreen = () => {
         button1function={openLineSelectionModal}
         button2icon='save'
         button2text='Save'
+        button2function={openSaveProposal}
         button3icon='envelope'
         button3text='Send'
       />
@@ -252,6 +264,37 @@ const ProposalScreen = () => {
                 {modalForm3Content}
                 {modalForm3Button}
                 <IconButtonHSmall pressFunction={deleteLineItem} title='Delete Line Item' icon='backspace' textcolor='white' bgcolor='maroon' />
+              </KeyboardAvoidingView>
+            </View>  
+          </View>
+        </Modal>
+      </View>
+
+      {/* --- Modal 4 --- */}
+      <View style={styles.modalBox}>
+        <Modal 
+          animationType='slide'
+          transparent={true} 
+          visible={modal4Visible}
+          onRequestClose={() => setModal4Visible(false)}
+        >
+          <View style={styles.modalBox}>
+            <View style={[styles.modalContent, { width: width-40 }]}>
+              <ModalCloseButton pressFunction={closeModal} />
+              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
+                <View style={styles.formBox}>
+                  <View style={globalStyles.formRow}>
+                    <View style={[globalStyles.formColumn, { flex: 1 }]}>
+                      <Text style={globalStyles.formFieldCaption}>Add Project Description</Text>
+                      <TextInput 
+                        autoCorrect={false} 
+                        style={globalStyles.formFieldInput}
+                        value={description}
+                        onChangeText={text => setLineItem(text)}></TextInput>
+                    </View>
+                  </View>
+                </View>
+              <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
               </KeyboardAvoidingView>
             </View>  
           </View>
