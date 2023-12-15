@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonIcon: {
-    margin: 8
+    margin: 8,
+    marginBottom: 5
   },
   text: {
     color: 'black', 

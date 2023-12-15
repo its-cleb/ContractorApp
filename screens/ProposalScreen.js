@@ -10,9 +10,9 @@ let currentLineIndex = 0
 
 const ProposalScreen = () => {
   
-  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'Phase 1', value2: '10/10/2023'}])
-  const [modal2State, setmodal2State] = useState('')
-  const [modal3State, setmodal3State] = useState('')
+  const [proposalSheet, setProposalSheet] = useState([])
+  const [modal2isPhase, setmodal2isPhase] = useState('')
+  const [modal3isPhase, setmodal3isPhase] = useState('')
   const [phaseName, setPhaseName] = useState('')
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
@@ -38,14 +38,14 @@ const ProposalScreen = () => {
 
   // Add Line Item Modal Settings
   const openPhaseModal = () => {
-    setmodal2State('Phase')
+    setmodal2isPhase(true)
     setPhaseName('')
     setPhaseDate('')
     setModal1Visible(false)
     setModal2Visible(true)
   }
   const openLineItemModal = () => {
-    setmodal2State('LineItem')
+    setmodal2isPhase(false)
     setLineItem('')
     setCost('')
     setModal1Visible(false)
@@ -62,7 +62,7 @@ const ProposalScreen = () => {
 
   // Edit Line Item Modal Settings
   const openEditPhaseModal = (lineKey) => {
-    setmodal3State('Phase')
+    setmodal3isPhase(true)
     currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setPhaseName(lineData.value1)
@@ -70,7 +70,7 @@ const ProposalScreen = () => {
     setModal3Visible(true)
   }
   const openEditLineItemModal = (lineKey) => {
-    setmodal3State('LineItem')
+    setmodal3isPhase(false)
     currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setLineItem(lineData.value1)
@@ -95,7 +95,6 @@ const ProposalScreen = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet.splice(currentLineIndex, 1)
     setModal3Visible(false)
-
   }
 
   // --- Modal 1 ---
@@ -107,10 +106,16 @@ const ProposalScreen = () => {
 
   // --- Modal 2 ---
   let modalForm2Content
-  let modalForm2Button
+  let modalForm2Button = 
+    <IconButtonHSmall 
+      pressFunction={modal2isPhase ? addPhase : addLineItem} 
+      title={modal2isPhase ? 'Add Phase' : 'Add Line Item'} 
+      icon={modal2isPhase ? 'indent' : 'list'} 
+      textcolor='white' 
+      bgcolor='steelblue' 
+    />
 
-  if (modal2State === 'LineItem') {
-    modalForm2Button = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
+  if (modal2isPhase === false) {
     modalForm2Content =
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -133,8 +138,7 @@ const ProposalScreen = () => {
           </View>
         </View>
       </View>
-  } if (modal2State === 'Phase') {
-    modalForm2Button = <IconButtonHSmall pressFunction={addPhase} title='Add Phase' icon='indent' textcolor='white' bgcolor='steelblue' />
+  } if (modal2isPhase === true) {
     modalForm2Content =
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -160,11 +164,10 @@ const ProposalScreen = () => {
 
   // --- Modal 3 ---
   let modalForm3Content
-  let modalForm3Button
+  let modalForm3Button = <IconButtonHSmall pressFunction={modal3isPhase ? editPhase : editLineItem} title='Save Edit' icon='edit' textcolor='white' bgcolor='steelblue' />
   let modalForm3DeleteButton = <IconButtonHSmall pressFunction={deleteLineItem} title='Delete Line Item' icon='backspace' textcolor='white' bgcolor='maroon' />
 
-  if (modal3State === 'LineItem') {
-    modalForm3Button = <IconButtonHSmall pressFunction={editLineItem} title='Save Edit' icon='edit' textcolor='white' bgcolor='steelblue' />
+  if (modal3isPhase === false) {
     modalForm3Content =
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -187,9 +190,7 @@ const ProposalScreen = () => {
           </View>
         </View>
       </View>
-  } if (modal3State === 'Phase') {
-    modalForm3Button = 
-      <IconButtonHSmall pressFunction={editPhase} title='Save Edit' icon='edit' textcolor='white' bgcolor='steelblue' />
+  } if (modal3isPhase === true) {
     modalForm3Content =
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -218,7 +219,6 @@ const ProposalScreen = () => {
     <View style={styles.pageContainer}> 
 
       {/* --- Display Line Items --- */}
-
       <FlatList
         data={proposalSheet}
         keyExtractor={item => item.key}
