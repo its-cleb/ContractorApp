@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView, TouchableOpacity, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCloseButton from '../components/ModalCloseButton'
@@ -7,7 +7,7 @@ import BottomTab3 from '../components/BottomTab3'
 
 const ProposalScreen = () => {
   
-  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), type: 'Phase', value: 'Phase 1', date: '10/10/2023'}])
+  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'Phase 1', value2: '10/10/2023'}])
   const [modal2State, setmodal2State] = useState('')
   const [modal3State, setmodal3State] = useState('')
   const [phaseName, setPhaseName] = useState('')
@@ -51,22 +51,22 @@ const ProposalScreen = () => {
     setModal2Visible(true)
   }
   const addLineItem = () => {
-    setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
+    setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: lineItem, value2: USDollar.format(cost)}])
     setModal2Visible(false)
     console.log('addLineItem')
   }
   const addPhase = () => {
-    setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'Phase', value: phaseName, date: phaseDate}])
+    setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: phaseName, value2: phaseDate}])
     setModal2Visible(false)
   }
 
   // Edit Line Item Modal Settings
-  const openEditPhaseModal = (index) => {
-    let currentLine = proposalSheet[index]
-    setLineIndex(index)
+  const openEditPhaseModal = (lineKey) => {
+    console.log(lineKey)
+    // let currentLine = proposalSheet[index]
     setmodal3State('Phase')
-    setPhaseName(currentLine.value)
-    setPhaseDate(currentLine.date)
+    setPhaseName(currentLine.value1)
+    setPhaseDate(currentLine.value2)
     setModal3Visible(true)
     // console.log('index:', lineIndex)
   }
@@ -74,21 +74,21 @@ const ProposalScreen = () => {
     let currentLine = proposalSheet[index]
     setLineIndex(index)
     setmodal3State('LineItem')
-    setLineItem(currentLine.value)
-    setCost(currentLine.cost)
+    setLineItem(currentLine.value1)
+    setCost(currentLine.value2)
     setModal3Visible(true)
   }
   const editLineItem = () => {
     const copiedProposalSheet = proposalSheet.slice()
     console.log('copiedProposalSheet:', copiedProposalSheet)
-    splicedProposalSheet = copiedProposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'LineItem', value: lineItem, cost: cost})
+    splicedProposalSheet = copiedProposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, isPhase: false, value1: lineItem, value2: cost})
     console.log('splicedProposalSheet:', splicedProposalSheet)
     setProposalSheet(splicedProposalSheet)
     console.log('proposalSheet:', proposalSheet)
     setModal3Visible(false)
   }
   const editPhase = () => {
-    splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, type: 'Phase', value: phaseName, date: phaseDate})
+    splicedProposalSheet = proposalSheet.splice(lineIndex, 1, {key: proposalSheet[lineIndex].key, isPhase: true, value1: phaseName, value2: phaseDate})
     setProposalSheet(splicedProposalSheet)
     setModal3Visible(false)
     console.log(proposalSheet)
@@ -194,7 +194,6 @@ const ProposalScreen = () => {
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
               value={phaseName}
-              defaultValue='test'
               onChangeText={text => setPhaseName(text)}></TextInput>
           </View>
           <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -211,10 +210,10 @@ const ProposalScreen = () => {
   
   // ----- Main Return -----
   return (
-    <View style={styles.pageContainer}>
+    <View style={styles.pageContainer}> 
 
       {/* --- Display Line Items --- */}
-      <ScrollView style={{ marginBottom: 75}}>
+      {/* <ScrollView style={{ marginBottom: 75}}>
         {proposalSheet.map((line, index) => {
           if (line.type === 'Phase')   {
             return (
@@ -234,7 +233,21 @@ const ProposalScreen = () => {
             console.log('Main Return error')
           }
         })}
-      </ScrollView>
+      </ScrollView> */}
+      
+      <FlatList
+        data={proposalSheet}
+        keyExtractor={item => item.key}
+        renderItem={({item}) => 
+          <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => openEditPhaseModal(item.key)}>
+            <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : '. . . . .'}</Text>
+            <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.value2}</Text>
+          </TouchableOpacity>
+
+      }
+      />
+
+
 
       {/* --- Add Line Type Modal --- */}
       <View style={styles.modalBox}>
