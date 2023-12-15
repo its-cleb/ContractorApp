@@ -91,6 +91,12 @@ const ProposalScreen = () => {
     setProposalSheet(copiedProposalSheet)
     setModal3Visible(false)
   }
+  const deleteLineItem = () => {
+    const copiedProposalSheet = proposalSheet  
+    copiedProposalSheet.splice(currentLineIndex, 1)
+    setModal3Visible(false)
+
+  }
 
   // --- Modal 1 ---
   let modalBackground
@@ -155,6 +161,7 @@ const ProposalScreen = () => {
   // --- Modal 3 ---
   let modalForm3Content
   let modalForm3Button
+  let modalForm3DeleteButton = <IconButtonHSmall pressFunction={deleteLineItem} title='Delete Line Item' icon='backspace' textcolor='white' bgcolor='maroon' />
 
   if (modal3State === 'LineItem') {
     modalForm3Button = <IconButtonHSmall pressFunction={editLineItem} title='Save Edit' icon='edit' textcolor='white' bgcolor='steelblue' />
@@ -223,8 +230,6 @@ const ProposalScreen = () => {
       }
       />
 
-
-
       {/* --- Add Line Type Modal --- */}
       <View style={styles.modalBox}>
         <Modal 
@@ -291,6 +296,7 @@ const ProposalScreen = () => {
               <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
                 {modalForm3Content}
                 {modalForm3Button}
+                {modalForm3DeleteButton}
               </KeyboardAvoidingView>
             </View>  
           </View>
