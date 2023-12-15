@@ -7,7 +7,7 @@ import BottomTab3 from '../components/BottomTab3'
 
 const ProposalScreen = () => {
   
-  const [proposalSheet, setProposalSheet] = useState([{type: 'Phase', value: 'Phase 1', date: '10/10/2023'}])
+  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), type: 'Phase', value: 'Phase 1', date: '10/10/2023'}])
   const [modal2State, setmodal2State] = useState('')
   const [modal3State, setmodal3State] = useState('')
   const [phaseName, setPhaseName] = useState('')
@@ -24,11 +24,18 @@ const ProposalScreen = () => {
 
   const { height, width } = useWindowDimensions()
 
+  const closeModal = () => {
+    setModal1Visible(false)
+    setModal2Visible(false)
+    setModal3Visible(false)
+  }
   const openLineSelectionModal = () => {
     setModal1Visible(true)
     setModal2Visible(false)
     setModal3Visible(false)
   }
+
+  // Add Line Item Modal Settings
   const openPhaseModal = () => {
     setmodal2State('Phase')
     setPhaseName('')
@@ -45,10 +52,30 @@ const ProposalScreen = () => {
     setModal2Visible(true)
     setModal3Visible(false)
   }
-  const editPhase = () => {
+  const addLineItem = () => {
+    setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
+    setModal2Visible(false)
+    setModal3Visible(false)
+  }
+  const addPhase = () => {
+    setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'Phase', value: phaseName, date: phaseDate}])
+    setModal2Visible(false)
+    setModal3Visible(false)
+  }
+
+  // Edit Line Item Modal Settings
+  const openEditPhaseModal = () => {
     setmodal3State('Phase')
     setPhaseName('')
     setPhaseDate('')
+    setModal1Visible(false)
+    setModal2Visible(false)
+    setModal3Visible(true)
+  }
+  const openEditLineItemModal = () => {
+    setmodal3State('LineItem')
+    setLineItem('')
+    setCost('')
     setModal1Visible(false)
     setModal2Visible(false)
     setModal3Visible(true)
@@ -57,26 +84,21 @@ const ProposalScreen = () => {
     setmodal3State('LineItem')
     setLineItem('')
     setCost('')
+    // setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
     setModal1Visible(false)
     setModal2Visible(false)
     setModal3Visible(true)
   }
-  const closeModal = () => {
+  const editPhase = () => {
+    setmodal3State('Phase')
+    setPhaseName('')
+    setPhaseDate('')
+    // setProposalSheet(previousState => [...previousState, { key: Date.now(), type: 'Phase', value: phaseName, date: phaseDate}])
     setModal1Visible(false)
     setModal2Visible(false)
     setModal3Visible(false)
   }
 
-  const addLineItem = () => {
-    setProposalSheet(previousState => [...previousState, { type: 'LineItem', value: lineItem, cost: USDollar.format(cost)}])
-    setModal2Visible(false)
-    setModal3Visible(false)
-  }
-  const addPhase = () => {
-    setProposalSheet(previousState => [...previousState, { type: 'Phase', value: phaseName, date: phaseDate}])
-    setModal2Visible(false)
-    setModal3Visible(false)
-  }
 
   let modalBackground
   if (modal1Visible === true || modal2Visible === true || modal3Visible === true) {
@@ -88,7 +110,6 @@ const ProposalScreen = () => {
   let modalForm2Button
 
   if (modal2State === 'LineItem') {
-    console.log('Line Item Pressed')
     modalForm2Button = <IconButtonHSmall pressFunction={addLineItem} title='Add Line Item' icon='list' textcolor='white' bgcolor='steelblue' />
     modalForm2Content =
       <View style={styles.formBox}>
@@ -113,7 +134,6 @@ const ProposalScreen = () => {
         </View>
       </View>
   } if (modal2State === 'Phase') {
-    console.log('Phase Pressed')
     modalForm2Button = <IconButtonHSmall pressFunction={addPhase} title='Add Phase' icon='indent' textcolor='white' bgcolor='steelblue' />
     modalForm2Content =
       <View style={styles.formBox}>
@@ -178,6 +198,7 @@ const ProposalScreen = () => {
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
               value={phaseName}
+              defaultValue='test'
               onChangeText={text => setPhaseName(text)}></TextInput>
           </View>
           <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -200,20 +221,21 @@ const ProposalScreen = () => {
       <ScrollView style={{ marginBottom: 75}}>
         {proposalSheet.map((line) => {
           if (line.type === 'Phase')   {
+            console.log(line.key)
             return (
-              <TouchableOpacity style={styles.phase} onPress={editPhase}>
+              <TouchableOpacity style={styles.phase} onPress={openEditPhaseModal}>
                 <Text style={styles.phaseName}>{line.value}</Text>
                 <Text style={styles.phaseDate}>{line.date}</Text>
               </TouchableOpacity>
             )
           } if (line.type === 'LineItem') {
             return (
-              <TouchableOpacity style={styles.lineRow} onPress={editLineItem}>
+              <TouchableOpacity style={styles.lineRow} onPress={openEditLineItemModal}>
                 <Text style={styles.lineItem}>{line.value} ...</Text>
                 <Text style={styles.lineCost}>${line.cost}</Text>
               </TouchableOpacity>
             )
-          } else { return }
+          } else {  }
         })}
       </ScrollView>
 
