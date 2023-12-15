@@ -105,7 +105,28 @@ const ProposalScreen = () => {
   } else { console.log('Modal 1 error') }
 
   // --- Modal 2 ---
-  let modalForm2Content
+  let modalForm2Content = 
+    <View style={styles.formBox}>
+      <View style={globalStyles.formRow}>
+        <View style={[globalStyles.formColumn, { flex: 5 }]}>
+          <Text style={globalStyles.formFieldCaption}>{modal2isPhase ? 'Phase' : 'Line Item'}</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            value={modal2isPhase ? phaseName : lineItem}
+            onChangeText={text => modal2isPhase ? setPhaseName(text) : setLineItem(text)}></TextInput>
+        </View>
+        <View style={[globalStyles.formColumn, { flex: modal2isPhase ? 3 : 2 }]}>
+          <Text style={globalStyles.formFieldCaption}>{modal2isPhase ? 'Date' : 'Cost'}</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            keyboardType="numeric"
+            value={modal2isPhase ? phaseDate : cost}
+            onChangeText={text => modal2isPhase ? setPhaseDate(text) : setCost(text)}></TextInput>
+        </View>
+      </View>
+    </View>
   let modalForm2Button = 
     <IconButtonHSmall 
       pressFunction={modal2isPhase ? addPhase : addLineItem} 
@@ -115,52 +136,52 @@ const ProposalScreen = () => {
       bgcolor='steelblue' 
     />
 
-  if (modal2isPhase === false) {
-    modalForm2Content =
-      <View style={styles.formBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 5 }]}>
-            <Text style={globalStyles.formFieldCaption}>Line Item</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={lineItem}
-              onChangeText={text => setLineItem(text)}></TextInput>
-          </View>
-          <View style={[globalStyles.formColumn, { flex: 2 }]}>
-            <Text style={globalStyles.formFieldCaption}>Cost</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              keyboardType="numeric"
-              value={cost}
-              onChangeText={text => setCost(text)}></TextInput>
-          </View>
-        </View>
-      </View>
-  } if (modal2isPhase === true) {
-    modalForm2Content =
-      <View style={styles.formBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 5 }]}>
-            <Text style={globalStyles.formFieldCaption}>Phase</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={phaseName}
-              onChangeText={text => setPhaseName(text)}></TextInput>
-          </View>
-          <View style={[globalStyles.formColumn, { flex: 3 }]}>
-            <Text style={globalStyles.formFieldCaption}>Date</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={phaseDate}
-              onChangeText={text => setPhaseDate(text)}></TextInput>
-          </View>
-        </View>
-      </View>
-  } else { console.log('Modal 2 error')}
+  // if (modal2isPhase === false) {
+  //   modalForm2Content =
+  //     <View style={styles.formBox}>
+  //       <View style={globalStyles.formRow}>
+  //         <View style={[globalStyles.formColumn, { flex: 5 }]}>
+  //           <Text style={globalStyles.formFieldCaption}>Line Item</Text>
+  //           <TextInput 
+  //             autoCorrect={false} 
+  //             style={globalStyles.formFieldInput}
+  //             value={lineItem}
+  //             onChangeText={text => setLineItem(text)}></TextInput>
+  //         </View>
+  //         <View style={[globalStyles.formColumn, { flex: 2 }]}>
+  //           <Text style={globalStyles.formFieldCaption}>Cost</Text>
+  //           <TextInput 
+  //             autoCorrect={false} 
+  //             style={globalStyles.formFieldInput}
+  //             keyboardType="numeric"
+  //             value={cost}
+  //             onChangeText={text => setCost(text)}></TextInput>
+  //         </View>
+  //       </View>
+  //     </View>
+  // } if (modal2isPhase === true) {
+  //   modalForm2Content =
+  //     <View style={styles.formBox}>
+  //       <View style={globalStyles.formRow}>
+  //         <View style={[globalStyles.formColumn, { flex: 5 }]}>
+  //           <Text style={globalStyles.formFieldCaption}>Phase</Text>
+  //           <TextInput 
+  //             autoCorrect={false} 
+  //             style={globalStyles.formFieldInput}
+  //             value={phaseName}
+  //             onChangeText={text => setPhaseName(text)}></TextInput>
+  //         </View>
+  //         <View style={[globalStyles.formColumn, { flex: 3 }]}>
+  //           <Text style={globalStyles.formFieldCaption}>Date</Text>
+  //           <TextInput 
+  //             autoCorrect={false} 
+  //             style={globalStyles.formFieldInput}
+  //             value={phaseDate}
+  //             onChangeText={text => setPhaseDate(text)}></TextInput>
+  //         </View>
+  //       </View>
+  //     </View>
+  // } else { console.log('Modal 2 error')}
 
   // --- Modal 3 ---
   let modalForm3Content
