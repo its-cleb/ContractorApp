@@ -14,33 +14,39 @@ import ModalCloseButton from './ModalCloseButton'
 */}
 
 const ModalCenterBG = props => {
+  return (
+    <View style={[styles.componentContainer, {zIndex: props.modalVisible ? 10 : 0 }]}>
+      <View style={props.modalVisible ? styles.modalBG : ''}></View>
 
-  <View style={{flex: 1, backgroundColor: 'red', zIndex: 1000, paddingTop: 200}}>
-    <View><Text>TEST</Text></View>
-    {/* <View style={styles.modalBG}></View>   */}
+      <View style={styles.modalBox}>
+        <Modal 
+          animationType='slide'
+          transparent={true} 
+          visible={props.modalVisible}
+          onRequestClose={() => props.modalOnRequestClose}
+        >
+          <View style={styles.modalBox}>
+            <View style={[styles.modalContent, { width: props.screenWidth-40 }]}>
+              <ModalCloseButton pressFunction={props.closeModalButton} />
+              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
+                {props.modalContent}
+              </KeyboardAvoidingView>
+            </View>  
+          </View>
+        </Modal>
+        
+      </View>
 
-    <View style={styles.modalBox}>
-      <Modal 
-        animationType='slide'
-        transparent={true} 
-        visible={props.modalVisible}
-        onRequestClose={() => props.modalOnRequestClose}
-      >
-        <View style={styles.modalBox}>
-          <View style={[styles.modalContent, { width: props.screenWidth-40 }]}>
-            <ModalCloseButton pressFunction={props.closeModalButton} />
-            <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
-              {props.modalContent}
-            </KeyboardAvoidingView>
-          </View>  
-        </View>
-      </Modal>
     </View>
-
-  </View>
+  )
 }
 
 const styles = StyleSheet.create({
+  componentContainer: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+  },
   modalBG: {
     position: 'absolute',
     height: '100%',
