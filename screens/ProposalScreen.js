@@ -37,7 +37,7 @@ const ProposalScreen = ({ route, navigation }) => {
 
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
   
-  let projectTotal = lineItems.reduce(function(previousValue, currentValue) 
+  let totalCost = lineItems.reduce(function(previousValue, currentValue) 
   { 
     return (
       previousValue + +currentValue.value2
@@ -121,9 +121,8 @@ const ProposalScreen = ({ route, navigation }) => {
     setModal4Visible(true)
   }
   const saveProposal = () => {
-
-    addProposal(clientID, proposalID, description, proposalSheet)
-    project = [ clientID, proposalID, description, proposalSheet]
+    addProposal(clientID, proposalID, description, totalCost, proposalSheet)
+    project = [ clientID, proposalID, description, totalCost, proposalSheet]
     navigation.pop()
   }
 
@@ -244,7 +243,7 @@ const ProposalScreen = ({ route, navigation }) => {
           }
         />
         <View style={styles.totalBar}>
-          <Text style={styles.totalText}>Total: ${Intl.NumberFormat('en-US').format(projectTotal)}</Text>
+          <Text style={styles.totalText}>Total: ${Intl.NumberFormat('en-US').format(totalCost)}</Text>
         </View>
       </View>
 

@@ -9,7 +9,8 @@ const proposalReducer = (state, action) => {
         clientID: action.payload.clientID,
         projectID: action.payload.projectID,
         description: action.payload.description,
-        proposal: action.payload.proposal
+        proposal: action.payload.proposal,
+        totalCost: action.payload.totalCost
       }]
     case 'edit_proposal':
       return state.map((proposals) => {
@@ -21,19 +22,19 @@ const proposalReducer = (state, action) => {
 }
 
 const addProposal = dispatch => {
-  return (clientID, proposalID, description, proposal) => {
+  return (clientID, proposalID, description, totalCost, proposal) => {
     dispatch({ 
       type: 'add_proposal', 
-      payload: { clientID, proposalID, description, proposal } 
+      payload: { clientID, proposalID, description, totalCost, proposal } 
     })
   }
 }
 
 const editProposal = dispatch => {
-  return (clientID, proposalID, description, proposal) => {
+  return (clientID, proposalID, description, totalCost, proposal) => {
     dispatch({ 
       type: 'edit_proposal', 
-      payload: { clientID, proposalID, description, proposal } 
+      payload: { clientID, proposalID, description, totalCost, proposal } 
     })
   }
 }

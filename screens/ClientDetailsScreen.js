@@ -1,21 +1,19 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { Context as ClientContext} from '../context/ClientContext'
-import { Context as ProposalContext} from '../context/ProposalContext'
 import DeleteButton from '../components/DeleteButton'
-import IconButtonHSmall from '../components/IconButtonHSmall'
 import ProposalsFlatlist from '../components/proposals/ProposalsFlatlist'
+import BottomTab3 from '../components/BottomTab3'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 
 const ClientDetailsScreen = ({ route, navigation }) => {
   
   const { state, deleteClient } = useContext(ClientContext)
 
-  const { proposalState } = useContext(ProposalContext)
-
   const { payload } = route.params
   
-  const projects = state.find(projects => projects.clientID === payload)
+  const clients = state.find(clients => clients.clientID === payload)
 
   const deleteClientNavBack = () => {
     deleteClient(payload)
@@ -26,47 +24,50 @@ const ClientDetailsScreen = ({ route, navigation }) => {
     <>
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>
-          <Text style={styles.projectTextHeader}>{projects.clientName}</Text>
+          <Text style={styles.projectTextHeader}>{clients.clientName}</Text>
           <DeleteButton pressFunction={deleteClientNavBack}/>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>First Contacted:</Text>
-          <Text style={styles.projectTextRight}>{projects.contactDate}</Text>
+          <Text style={styles.projectTextRight}>{clients.contactDate}</Text>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Phone:</Text>
-          <Text style={styles.projectTextRight}>{projects.phone}</Text>
+          <Text style={styles.projectTextRight}>{clients.phone}</Text>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Email:</Text>
-          <Text style={styles.projectTextRight}>{projects.email}</Text>
+          <Text style={styles.projectTextRight}>{clients.email}</Text>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold]}>Address:</Text>
           <View style={styles.flexOne}>
-            <Text style={styles.projectTextRight}>{projects.address}, {projects.unitNumber}</Text>
-            <Text style={styles.projectTextRight}>{projects.city}, {projects.usState} {projects.zip}</Text>
+            <Text style={styles.projectTextRight}>{clients.address}, {clients.unitNumber}</Text>
+            <Text style={styles.projectTextRight}>{clients.city}, {clients.usState} {clients.zip}</Text>
           </View>  
         </View>
 
         <View style={styles.proposalsBox}>
           <Text style={[styles.projectTextBold]}>Projects:</Text>
           <View>
-            <ProposalsFlatlist />
+            <ProposalsFlatlist filter={clients.clientID} />
           </View>  
         </View>
 
       </View>
       
       
-      
 
-      <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('EditClient', {payload})} title='Edit Client Details' icon='user-alt' textcolor='white' bgcolor='steelblue' />
-      </View>
-      <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('ProposalScreen', projects.clientID)} title='View Proposals' icon='file-alt' textcolor='white' bgcolor='steelblue' />
-      </View>
+      <BottomTab3 
+        button1icon='user-alt'
+        button1text='Edit Client'
+        button1function={() => navigation.navigate('EditClient', {payload})}
+        button2icon='file-alt'
+        button2text='Add Project'
+        button2function={() => navigation.navigate('ProposalScreen', clients.clientID)}
+        button3icon=''
+        button3text=''
+      /> 
     </>
   )
 }
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     paddingBottom: 8,
+    flex: 1
   },
   projectHeader: {
     flexDirection: 'row',
@@ -125,6 +127,8 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     borderRadius: 5,
     borderWidth: 1,
+    flex: 1,
+    flexGrow: 1
   },
 })
 

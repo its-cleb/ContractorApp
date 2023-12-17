@@ -1,17 +1,20 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Context } from '../../context/ProposalContext'
 import { useNavigation } from '@react-navigation/native';
 
-const ProposalsFlatlist = () => {
+const ProposalsFlatlist = props => {
  
   const { state } = useContext(Context)
   const navigation = useNavigation()
 
+  const proposals = state.filter((clients) => clients.clientID === props.filter )
+  console.log(proposals)
+
   return (
     <View style={styles.flatlistbox}>
       <FlatList 
-        data={state} 
+        data={proposals} 
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => 
           <TouchableOpacity onPress={() => navigation.navigate('ProposalScreen', {payload: item.projectID})}>
@@ -21,7 +24,7 @@ const ProposalsFlatlist = () => {
                   <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.description}</Text>
                 </View>
                 <View style={[styles.projectColumnRight, { flex: 1 }]}>
-                  <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>{item.description}</Text>
+                  <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>${Intl.NumberFormat('en-US').format(item.totalCost)}</Text>
                 </View>
               </View>
             </View>
