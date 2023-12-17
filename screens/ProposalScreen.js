@@ -110,15 +110,8 @@ const ProposalScreen = ({ navigation }) => {
     navigation.pop()
   }
 
-  // --- Modal BG ---
-  // let modalBackground
-
-  // if (modal1Visible === true || modal2Visible === true || modal3Visible === true || modal4Visible === true) {
-  //   modalBackground = <View style={styles.modalBG}></View>  
-  // } else { console.log('Modal 1 error') }
-
   // --- Modal 1 (Select Line Item Type) ---
-  let modal1Content =
+  const modal1Content =
     <View style={styles.contentBox}>
       <View style={styles.lineSelectionButtonsBox}>
         <IconButtonHSmall pressFunction={openPhaseModal} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/> 
@@ -127,7 +120,7 @@ const ProposalScreen = ({ navigation }) => {
     </View>
 
   // --- Modal 2 (Add Line Item) ---
-  let modal2Content = 
+  const modal2Content = 
     <>
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -160,7 +153,7 @@ const ProposalScreen = ({ navigation }) => {
     </>
 
   // --- Modal 3 (Edit/Delete Line Item) ---
-  let modal3Content = 
+  const modal3Content = 
     <>
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -200,7 +193,7 @@ const ProposalScreen = ({ navigation }) => {
     </>
 
   // --- Modal 4 (Save Proposal) ---
-  let modal4Content = 
+  const modal4Content = 
     <>
       <View style={styles.formBox}>
         <View style={globalStyles.formRow}>
@@ -217,7 +210,7 @@ const ProposalScreen = ({ navigation }) => {
       <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
     </>
 
-  // ----- Main Return -----
+  // ---------- Main Return ----------
   return (
     <View style={styles.pageContainer}> 
 
@@ -235,35 +228,6 @@ const ProposalScreen = ({ navigation }) => {
         />
       </View>
 
-      {/* --- Modal 1 --- */}
-
-      <ModalCenterBG
-        modalVisible={modal1Visible}
-        modalOnRequestClose={() => setModal1Visible(false)}
-        screenWidth={width}
-        closeModalButton={closeModal}
-        modalContent={modal1Content}
-      /> 
-
-      {/* <View style={styles.modalBox}>
-        <Modal 
-          animationType='slide'
-          transparent={true} 
-          visible={modal1Visible}
-          onRequestClose={() => setModal1Visible(false)}
-        >
-          <View style={styles.lineSelectionBox}>
-            <View style={styles.modalContent}>
-              <ModalCloseButton pressFunction={closeModal} />
-                <View style={styles.lineSelectionButtonsBox}>
-                  <IconButtonHSmall pressFunction={openPhaseModal} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/>
-                  <IconButtonHSmall pressFunction={openLineItemModal} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
-                </View>
-            </View>
-          </View>  
-        </Modal>
-      </View> */}
-
       <BottomTab3 
         button1icon='plus'
         button1text='Add Line'
@@ -275,8 +239,16 @@ const ProposalScreen = ({ navigation }) => {
         button3text='Send'
       />
 
-      {/* --- Modal 2 --- */}
+      {/* --- Modal 1 --- */}
+      <ModalCenterBG
+        modalVisible={modal1Visible}
+        modalOnRequestClose={() => setModal1Visible(false)}
+        screenWidth={width}
+        closeModalButton={closeModal}
+        modalContent={modal1Content}
+      /> 
 
+      {/* --- Modal 2 --- */}
       <ModalCenterBG
         modalVisible={modal2Visible}
         modalOnRequestClose={() => setModal2Visible(false)}
@@ -284,24 +256,6 @@ const ProposalScreen = ({ navigation }) => {
         closeModalButton={closeModal}
         modalContent={modal2Content}
       /> 
-
-      {/* <View style={styles.modalBox}>
-        <Modal 
-          animationType='slide'
-          transparent={true} 
-          visible={modal2Visible}
-          onRequestClose={() => setModal2Visible(false)}
-        >
-          <View style={styles.modalBox}>
-            <View style={[styles.modalContent, { width: width-40 }]}>
-              <ModalCloseButton pressFunction={closeModal} />
-              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
-                {modal2Content}
-              </KeyboardAvoidingView>
-            </View>  
-          </View>
-        </Modal>
-      </View> */}
 
       {/* --- Modal 3 --- */}
       <ModalCenterBG
@@ -311,25 +265,6 @@ const ProposalScreen = ({ navigation }) => {
         closeModalButton={closeModal}
         modalContent={modal3Content}
       /> 
-{/* 
-      <View style={styles.modalBox}>
-        <Modal 
-          animationType='slide'
-          transparent={true} 
-          visible={modal3Visible}
-          onRequestClose={() => setModal3Visible(false)}
-        >
-          <View style={styles.modalBox}>
-            <View style={[styles.modalContent, { width: width-40 }]}>
-              <ModalCloseButton pressFunction={closeModal} />
-              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
-                {modal3Content}
-                <IconButtonHSmall pressFunction={deleteLineItem} title='Delete Line Item' icon='backspace' textcolor='white' bgcolor='maroon' />
-              </KeyboardAvoidingView>
-            </View>  
-          </View>
-        </Modal>
-      </View> */}
 
       {/* --- Modal 4 --- */}
       <ModalCenterBG
@@ -339,24 +274,6 @@ const ProposalScreen = ({ navigation }) => {
         closeModalButton={closeModal}
         modalContent={modal4Content}
       /> 
-{/* 
-      <View style={styles.modalBox}>
-        <Modal 
-          animationType='slide'
-          transparent={true} 
-          visible={modal4Visible}
-          onRequestClose={() => setModal4Visible(false)}
-        >
-          <View style={styles.modalBox}>
-            <View style={[styles.modalContent, { width: width-40 }]}>
-              <ModalCloseButton pressFunction={closeModal} />
-              <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
-                {modal4Content}
-              </KeyboardAvoidingView>
-            </View>  
-          </View>
-        </Modal>
-      </View> */}
 
     </View>
   )
