@@ -9,7 +9,7 @@ const proposalReducer = (state, action) => {
       let datestring = currenttime.toLocaleString();
       return [...state, { 
         proposalID: datestring,
-        projectID: action.payload.clientName, 
+        clientID: action.payload.clientName, 
       }]
     case 'edit_proposal':
       return state.map((proposals) => {
@@ -21,19 +21,19 @@ const proposalReducer = (state, action) => {
 }
 
 const addProposal = dispatch => {
-  return (proposalID, projectID) => {
+  return (proposalID, clientID) => {
     dispatch({ 
       type: 'add_proposal', 
-      payload: { proposalID, projectID } 
+      payload: { proposalID, clientID } 
     })
   }
 }
 
 const editProposal = dispatch => {
-  return (proposalID, projectID ) => {
+  return (proposalID, clientID ) => {
     dispatch({ 
       type: 'edit_proposal', 
-      payload: { proposalID, projectID } 
+      payload: { proposalID, clientID } 
     })
   }
 }
@@ -49,6 +49,6 @@ export const { Context, Provider } = createDataContext(
   { addProposal, editProposal, deleteProposal },
   [{
     proposalID: 'Test Proposal',
-    projectID: 'John Smith', 
+    clientID: 'John Smith', 
   }]
 )

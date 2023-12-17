@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import { Context } from '../../context/ProjectContext'
+import { Context } from '../../context/ClientContext'
 import { useNavigation } from '@react-navigation/native';
 
-const ProjectFlatlist = ( filterSearchTerm ) => {
+const ClientFlatlist = ( filterSearchTerm ) => {
   
   const { state } = useContext(Context)
   const navigation = useNavigation()
@@ -11,7 +11,7 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
   // Get Search Bar Value and convert it to string
   const searchText = Object.values(filterSearchTerm).toString()
 
-  const filteredProjects = (item) => {
+  const filteredClients = (item) => {
     // Check all fields for matching
     if ( item.clientName.toLowerCase().includes(searchText.toLowerCase()) || 
          item.city.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -21,22 +21,22 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
          searchText === ""
     ) { 
       return (
-        <TouchableOpacity onPress={() => navigation.navigate('ClientDetails', {payload: item.projectID})}>
-          <View style={styles.projectContainer}>
-            <View style={styles.projectRowTop}>
-              <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.clientName}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('ClientDetails', {payload: item.clientID})}>
+          <View style={styles.clientContainer}>
+            <View style={styles.clientRowTop}>
+              <View style={[styles.clientColumnLeft, { flex: 1 }]}>
+                <Text style={[styles.clientTextLeft, { fontWeight: 'bold' }]}>{item.clientName}</Text>
               </View>
-              <View style={[styles.projectColumnRight, { flex: 1 }]}>
-                <Text style={styles.projectTextRight}>{item.contactDate}</Text>
+              <View style={[styles.clientColumnRight, { flex: 1 }]}>
+                <Text style={styles.clientTextRight}>{item.contactDate}</Text>
               </View>
             </View>
-            <View style={styles.projectRowBottom}>
-              <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                <Text style={styles.projectTextLeft}>{item.city}, {item.usState}</Text>
+            <View style={styles.clientRowBottom}>
+              <View style={[styles.clientColumnLeft, { flex: 1 }]}>
+                <Text style={styles.clientTextLeft}>{item.city}, {item.usState}</Text>
               </View>
-              <View style={[styles.projectColumnRight, { flex: 2 }]}>
-                <Text style={styles.projectTextRight}>{item.description}</Text>
+              <View style={[styles.clientColumnRight, { flex: 2 }]}>
+                <Text style={styles.clientTextRight}>{item.description}</Text>
               </View>
             </View>
           </View>
@@ -51,8 +51,8 @@ const ProjectFlatlist = ( filterSearchTerm ) => {
     <View style={styles.flatlistbox}>
       <FlatList 
         data={state} 
-        keyExtractor={(item) => item.projectID}
-        renderItem={({ item }) => filteredProjects(item) }
+        keyExtractor={(item) => item.clientID}
+        renderItem={({ item }) => filteredClients(item) }
       />
     </View>
   )
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: Platform.OS === 'ios' ? 60 : 90
   },
-  projectContainer: {
+  clientContainer: {
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'darkkhaki',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     flex: 1
   },
-  projectRowTop: {
+  clientRowTop: {
     flex: 1,
     flexDirection: 'row',
     gap: 10,
@@ -84,18 +84,18 @@ const styles = StyleSheet.create({
     borderBottomColor: 'darkkhaki',
     paddingBottom: 3
   },
-  projectRowBottom: {
+  clientRowBottom: {
     flex: 1,
     flexDirection: 'row',
     gap: 10,
     paddingTop: 5
   },
-  projectTextLeft: {
+  clientTextLeft: {
     color: 'black',
     textAlign: 'left',
     fontSize: 16,
   },
-  projectTextRight: {
+  clientTextRight: {
     color: 'black',
     textAlign: 'right',
     fontSize: 16,
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ProjectFlatlist
+export default ClientFlatlist

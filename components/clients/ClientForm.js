@@ -5,19 +5,19 @@ import { globalStyles } from '../../styles/globalstyles'
 import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { Context } from '../../context/ProjectContext'
+import { Context } from '../../context/ClientContext'
 
-const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
+const ClientForm = ({ initialValues, navProp, payloadProp }) => {
   
-  const { addProject, editProject } = useContext(Context)
+  const { addClient, editClient } = useContext(Context)
   
   // Get props from parent component
   const navigation = navProp
-  const projectID = payloadProp
+  const clientID = payloadProp
 
-  // Declare default values if AddProject was the parent
-  const defaultProjectValues = { 
-    projectID: '',
+  // Declare default values if AddClient was the parent
+  const defaultClientValues = { 
+    clientID: '',
     clientName: '', 
     contactDate: '', 
     phone:'', 
@@ -32,46 +32,46 @@ const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
  
   // Check if parent element passed initialValues prop
   if (initialValues === undefined) {
-    projectValues = defaultProjectValues
-    projectEmpty = true
+    clientValues = defaultClientValues
+    clientEmpty = true
   } else {
-    projectValues = Object.fromEntries(initialValues)
-    projectEmpty = false
+    clientValues = Object.fromEntries(initialValues)
+    clientEmpty = false
   }
 
   // Control Button functionality
-  const addProjectBackPage = () => {
-    addProject(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+  const addClientBackPage = () => {
+    addClient(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
     navigation.pop()
   }
-  const saveProjectBackPage = () => {
-    editProject(projectID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+  const saveClientBackPage = () => {
+    editClient(clientID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
     navigation.pop()
   }
 
   // Change buttons based on page
   let controlButtons
-  if (projectEmpty === true) {
-    controlButtons = <IconButtonHSmall pressFunction={addProjectBackPage} title='Add Project' icon='plus' textcolor='white' bgcolor='steelblue' />
+  if (clientEmpty === true) {
+    controlButtons = <IconButtonHSmall pressFunction={addClientBackPage} title='Add Client' icon='plus' textcolor='white' bgcolor='steelblue' />
   } else {
     controlButtons = 
     <>
-      <IconButtonHSmall pressFunction={saveProjectBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
+      <IconButtonHSmall pressFunction={saveClientBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
       <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
     </>
   }
   
   // --- Form Inputs ---
-  const [ clientName, setClientName ] = useState(projectValues.clientName)
-  const [ contactDate, setContactDate ] = useState(projectValues.contactDate)
-  const [ phone, setPhone ] = useState(projectValues.phone)
-  const [ email, setEmail ] = useState(projectValues.email)
-  const [ address, setAddress ] = useState(projectValues.address)
-  const [ unitNumber, setUnitNumber ] = useState(projectValues.unitNumber)
-  const [ city, setCity ] = useState(projectValues.city)
-  const [ usState, setUsState ] = useState(projectValues.usState)
-  const [ zip, setZip ] = useState(projectValues.zip)
-  const [ description, setDescription ] = useState(projectValues.description)
+  const [ clientName, setClientName ] = useState(clientValues.clientName)
+  const [ contactDate, setContactDate ] = useState(clientValues.contactDate)
+  const [ phone, setPhone ] = useState(clientValues.phone)
+  const [ email, setEmail ] = useState(clientValues.email)
+  const [ address, setAddress ] = useState(clientValues.address)
+  const [ unitNumber, setUnitNumber ] = useState(clientValues.unitNumber)
+  const [ city, setCity ] = useState(clientValues.city)
+  const [ usState, setUsState ] = useState(clientValues.usState)
+  const [ zip, setZip ] = useState(clientValues.zip)
+  const [ description, setDescription ] = useState(clientValues.description)
 
 
   // --- Date Picker ---
@@ -114,7 +114,7 @@ const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
 
   return (
     <>    
-    {/* --- Project Details --- */}
+    {/* --- Client Details --- */}
       <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
@@ -217,7 +217,7 @@ const ProjectForm = ({ initialValues, navProp, payloadProp }) => {
           
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>Project Description</Text>
+              <Text style={globalStyles.formFieldCaption}>Client Description</Text>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInputMultiline} 
@@ -271,4 +271,4 @@ const styles = StyleSheet.create({
     },
 
 })
-export default ProjectForm
+export default ClientForm

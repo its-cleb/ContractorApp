@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Context } from '../context/ProjectContext'
+import { Context } from '../context/ClientContext'
 import DeleteButton from '../components/DeleteButton'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 
@@ -10,7 +10,7 @@ const ClientDetailsScreen = ({ route, navigation }) => {
 
   const { payload } = route.params
   
-  const projects = state.find(projects => projects.projectID === payload)
+  const projects = state.find(projects => projects.clientID === payload)
 
   const deleteProjectNavBack = () => {
     deleteProject(payload)
@@ -43,19 +43,13 @@ const ClientDetailsScreen = ({ route, navigation }) => {
             <Text style={styles.projectTextRight}>{projects.city}, {projects.usState} {projects.zip}</Text>
           </View>  
         </View>
-        <View style={styles.projectRow}>
-          <View>
-            <Text style={[styles.projectTextBold, {marginBottom: 10}]}>Project Description:</Text>
-            <Text style={[styles.projectText]}>{projects.description}</Text>
-          </View>
-        </View>
       </View>
       
       <View>
         <IconButtonHSmall pressFunction={() => navigation.navigate('EditClient', {payload})} title='Edit Client Details' icon='user-alt' textcolor='white' bgcolor='steelblue' />
       </View>
       <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('ProposalScreen', {payload: projects.projectID})} title='View Proposals' icon='file-alt' textcolor='white' bgcolor='steelblue' />
+        <IconButtonHSmall pressFunction={() => navigation.navigate('ProposalScreen', projects.clientID)} title='View Proposals' icon='file-alt' textcolor='white' bgcolor='steelblue' />
       </View>
     </>
   )

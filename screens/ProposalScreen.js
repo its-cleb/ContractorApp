@@ -10,8 +10,8 @@ let currentLineIndex = 0
 
 const ProposalScreen = ({ route, navigation }) => {
   
-  const clientID = route.params
-  console.log(clientID)
+  const clientID  = route.params
+  let project
 
   const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'test', value2: 'test'}])
   const [modal2isPhase, setmodal2isPhase] = useState('')
@@ -109,8 +109,8 @@ const ProposalScreen = ({ route, navigation }) => {
     setModal4Visible(true)
   }
   const saveProposal = () => {
-    
-    console.log(proposalSheet)
+    project = [ clientID, description, proposalSheet]
+    console.log(project)
     navigation.pop()
   }
 

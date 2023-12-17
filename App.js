@@ -10,7 +10,7 @@ import CompanyScreen from './navigation/CompanyScreen'
 import ProjectsScreen from './navigation/ProjectsScreen'
 import EmployeeScreen from './navigation/EmployeeScreen'
 
-import AddProjectScreen from './screens/AddProjectScreen'
+import AddClientScreen from './screens/AddClientScreen'
 import EditClientScreen from './screens/EditClientScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
 import ProposalScreen from './screens/ProposalScreen'
@@ -19,8 +19,10 @@ import AddEmployeeScreen from './screens/AddEmployeeScreen'
 import EditEmployeeScreen from './screens/EditEmployeeScreen'
 import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
 
-import { Provider as ProjectProvider } from './context/ProjectContext'
+import { Provider as ClientProvider } from './context/ClientContext'
 import { Provider as EmployeeProvider } from './context/EmployeeContext'
+import { Provider as ProposalProvider } from './context/ProposalContext'
+
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,9 +45,9 @@ function ProjectScreenStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AddProject"
-        component={AddProjectScreen}
-        options={{ headerTitle: "Add New Project" }}
+        name="AddClientScreen"
+        component={AddClientScreen}
+        options={{ headerTitle: "Add New Client" }}
       />
       <Stack.Screen
         name="EditClient"
@@ -110,8 +112,9 @@ function EstimatorStack() {
 export default function App() {
   
   return (
-    <ProjectProvider>
+    <ClientProvider>
     <EmployeeProvider>
+    <ProposalProvider>
       <NavigationContainer theme={MyTheme}>
         <Drawer.Navigator 
           initialRouteName="Home"
@@ -172,7 +175,8 @@ export default function App() {
             />
         </Drawer.Navigator>
       </NavigationContainer>
+    </ProposalProvider>
     </EmployeeProvider>
-    </ProjectProvider>
+    </ClientProvider>
   );
 }

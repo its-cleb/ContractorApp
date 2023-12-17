@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { Context } from '../context/ProjectContext'
-import ProjectForm from '../components/projects/ProjectForm'
+import { Context } from '../context/ClientContext'
+import ClientForm from '../components/clients/ClientForm'
 
 const EditClientScreen = ({ route, navigation }) => {
  
@@ -8,14 +8,14 @@ const EditClientScreen = ({ route, navigation }) => {
 
   const { payload } = route.params
 
-  const projects = state.find(projects => projects.projectID === payload)
+  const clients = state.find(clients => clients.clientID === payload)
 
-  // Destructrues projects from object to be usable by the child component
-  const projectData = Object.entries(projects)
+  // Destructrues clients from object to be usable by the child component
+  const clientData = Object.entries(clients)
 
     return (  
-      <ProjectForm 
-        initialValues={projectData} 
+      <ClientForm 
+        initialValues={clientData} 
         navProp={navigation} 
         payloadProp={payload}
       />        

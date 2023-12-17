@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Keyboard, SafeAreaView, StyleSheet, View } from 'react-native'
 import IconButtonHContent from '../components/IconButtonHContent'
-import ProjectFlatlist from '../components/projects/ProjectsFlatlist'
+import ClientFlatlist from '../components/clients/ClientsFlatlist'
 import DrawerHeader from '../components/DrawerHeader'
 import SearchBar from '../components/SearchBar'
 
@@ -21,10 +21,10 @@ const ViewProjectsScreen = ({ navigation }) => {
           onTermSubmit={() => Keyboard.dismiss()} 
         />
 
-        <ProjectFlatlist filterSearchTerm={searchTerm} />
+        <ClientFlatlist filterSearchTerm={searchTerm} />
 
         <View style={styles.addProjectButton}>
-          <IconButtonHContent pressFunction={() => navigation.navigate('AddProject')} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+          <IconButtonHContent pressFunction={() => navigation.navigate('AddClient')} title="Add New Client" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
         </View>
 
       </SafeAreaView>
