@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TextInput, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCenterBG from '../components/ModalCenterBG'
 import BottomTab3 from '../components/BottomTab3'
+import { Context } from '../context/ProposalContext'
+
 
 // Scoped variables for line items
 let currentLineIndex = 0
@@ -11,9 +13,12 @@ let currentLineIndex = 0
 const ProposalScreen = ({ route, navigation }) => {
   
   const clientID  = route.params
+  const proposalID = `${clientID}` + '-' + Date.now()
   let project
 
-  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'test', value2: 'test'}])
+  const { addProposal, editProposal } = useContext(Context)
+
+  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'test', value2: 2}])
   const [modal2isPhase, setmodal2isPhase] = useState('')
   const [modal3isPhase, setmodal3isPhase] = useState('')
   const [phaseName, setPhaseName] = useState('')
@@ -22,16 +27,22 @@ const ProposalScreen = ({ route, navigation }) => {
   const [cost, setCost] = useState('')
   const [description, setDescription] = useState('')
 
-  let USDollar = Intl.NumberFormat('en-US');
-
   // --- Modal Functions ---
   const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
   const [modal2Visible, setModal2Visible] = React.useState(false) // Add New Line Modal
   const [modal3Visible, setModal3Visible] = React.useState(false) // Edit Line Modal
   const [modal4Visible, setModal4Visible] = React.useState(false) // Save Proposal Modal
 
-
   const { width } = useWindowDimensions()
+
+  let lineItems = proposalSheet.filter((item) => item.isPhase === false )
+  
+  let projectTotal = lineItems.reduce(function(previousValue, currentValue) 
+  { 
+    return (
+      previousValue + +currentValue.value2
+    )
+  }, 0)
 
   const closeModal = () => {
     setModal1Visible(false)
@@ -59,8 +70,9 @@ const ProposalScreen = ({ route, navigation }) => {
     setModal2Visible(true)
   }
   const addLineItem = () => {
-    setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: lineItem, value2: USDollar.format(cost)}])
+    setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: lineItem, value2: cost}])
     setModal2Visible(false)
+    console.log(proposalSheet)
   }
   const addPhase = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: phaseName, value2: phaseDate}])
@@ -109,8 +121,9 @@ const ProposalScreen = ({ route, navigation }) => {
     setModal4Visible(true)
   }
   const saveProposal = () => {
-    project = [ clientID, description, proposalSheet]
-    console.log(project)
+
+    addProposal(clientID, proposalID, description, proposalSheet)
+    project = [ clientID, proposalID, description, proposalSheet]
     navigation.pop()
   }
 
@@ -226,10 +239,13 @@ const ProposalScreen = ({ route, navigation }) => {
           renderItem={({item}) => 
             <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
               <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
-              <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.value2}</Text>
+              <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{Intl.NumberFormat('en-US').format(item.value2)}</Text>
             </TouchableOpacity>
           }
         />
+        <View style={styles.totalBar}>
+          <Text style={styles.totalText}>Total: ${Intl.NumberFormat('en-US').format(projectTotal)}</Text>
+        </View>
       </View>
 
       <BottomTab3 
@@ -367,6 +383,20 @@ const styles = StyleSheet.create({
     alignContent: 'flex-end',
     fontSize: 18,
     flex: 2
+  },
+  totalBar: {
+    flexDirection: 'row',
+    backgroundColor: 'gainsboro', 
+    paddingVertical: 10,
+    paddingHorizontal: 10
+  },
+  totalText: {
+    color: 'black',
+    alignSelf: 'flex-end',
+    textAlign: 'right',
+    fontSize: 18,
+    fontWeight: 'bold',
+    flex: 1
   }
 }) 
 

@@ -45,7 +45,7 @@ function ProjectScreenStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AddClientScreen"
+        name="AddClient"
         component={AddClientScreen}
         options={{ headerTitle: "Add New Client" }}
       />

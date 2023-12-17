@@ -5,11 +5,11 @@ const proposalReducer = (state, action) => {
     case 'delete_proposal':
       return state.filter((proposals) => proposals.proposalID !== action.payload)
     case 'add_proposal':
-      let currenttime = new Date()
-      let datestring = currenttime.toLocaleString();
       return [...state, { 
-        proposalID: datestring,
-        clientID: action.payload.clientName, 
+        clientID: action.payload.clientID,
+        projectID: action.payload.projectID,
+        description: action.payload.description,
+        proposal: action.payload.proposal
       }]
     case 'edit_proposal':
       return state.map((proposals) => {
@@ -21,19 +21,19 @@ const proposalReducer = (state, action) => {
 }
 
 const addProposal = dispatch => {
-  return (proposalID, clientID) => {
+  return (clientID, proposalID, description, proposal) => {
     dispatch({ 
       type: 'add_proposal', 
-      payload: { proposalID, clientID } 
+      payload: { clientID, proposalID, description, proposal } 
     })
   }
 }
 
 const editProposal = dispatch => {
-  return (proposalID, clientID ) => {
+  return (clientID, proposalID, description, proposal) => {
     dispatch({ 
       type: 'edit_proposal', 
-      payload: { proposalID, clientID } 
+      payload: { clientID, proposalID, description, proposal } 
     })
   }
 }
@@ -47,8 +47,5 @@ const deleteProposal = dispatch => {
 export const { Context, Provider } = createDataContext(
   proposalReducer, 
   { addProposal, editProposal, deleteProposal },
-  [{
-    proposalID: 'Test Proposal',
-    clientID: 'John Smith', 
-  }]
+  []
 )

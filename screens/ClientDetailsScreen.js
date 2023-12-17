@@ -1,19 +1,24 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Context } from '../context/ClientContext'
+import { Context as ClientContext} from '../context/ClientContext'
+import { Context as ProposalContext} from '../context/ProposalContext'
 import DeleteButton from '../components/DeleteButton'
 import IconButtonHSmall from '../components/IconButtonHSmall'
+import ProposalsFlatlist from '../components/proposals/ProposalsFlatlist'
+
 
 const ClientDetailsScreen = ({ route, navigation }) => {
   
-  const { state, deleteProject } = useContext(Context)
+  const { state, deleteClient } = useContext(ClientContext)
+
+  const { proposalState } = useContext(ProposalContext)
 
   const { payload } = route.params
   
   const projects = state.find(projects => projects.clientID === payload)
 
-  const deleteProjectNavBack = () => {
-    deleteProject(payload)
+  const deleteClientNavBack = () => {
+    deleteClient(payload)
     navigation.pop()
   }
   
@@ -22,7 +27,7 @@ const ClientDetailsScreen = ({ route, navigation }) => {
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>
           <Text style={styles.projectTextHeader}>{projects.clientName}</Text>
-          <DeleteButton pressFunction={deleteProjectNavBack}/>
+          <DeleteButton pressFunction={deleteClientNavBack}/>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>First Contacted:</Text>
@@ -43,8 +48,19 @@ const ClientDetailsScreen = ({ route, navigation }) => {
             <Text style={styles.projectTextRight}>{projects.city}, {projects.usState} {projects.zip}</Text>
           </View>  
         </View>
+
+        <View style={styles.proposalsBox}>
+          <Text style={[styles.projectTextBold]}>Projects:</Text>
+          <View>
+            <ProposalsFlatlist />
+          </View>  
+        </View>
+
       </View>
       
+      
+      
+
       <View>
         <IconButtonHSmall pressFunction={() => navigation.navigate('EditClient', {payload})} title='Edit Client Details' icon='user-alt' textcolor='white' bgcolor='steelblue' />
       </View>
@@ -101,6 +117,14 @@ const styles = StyleSheet.create({
   },
   flexOne: {
     flex: 1,
+  },
+  proposalsBox: {
+    padding: 10,
+    marginTop: 5,
+    backgroundColor: '#fff',
+    borderColor: '#eee',
+    borderRadius: 5,
+    borderWidth: 1,
   },
 })
 
