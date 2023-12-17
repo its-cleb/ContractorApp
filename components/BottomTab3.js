@@ -3,6 +3,20 @@ import { Text, SafeAreaView, TouchableOpacity, StyleSheet, View } from 'react-na
 import { FontAwesome5 } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
+// --- Component Usage ---
+{/* 
+  <BottomTab3 
+    button1icon=''
+    button1text=''
+    button1function={}
+    button2icon=''
+    button2text=''
+    button2function={}
+    button3icon=''
+    button3text=''
+  /> 
+*/}
+
 const BottomTab3 = props => {    
   
   return (

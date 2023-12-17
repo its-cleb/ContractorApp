@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView, TouchableOpacity, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
+import ModalCenterBG from '../components/ModalCenterBG'
 import ModalCloseButton from '../components/ModalCloseButton'
 import BottomTab3 from '../components/BottomTab3'
 
@@ -34,6 +35,7 @@ const ProposalScreen = ({ navigation }) => {
     setModal1Visible(false)
     setModal2Visible(false)
     setModal3Visible(false)
+    setModal4Visible(false)
   }
   const openLineSelectionModal = () => {
     setModal1Visible(true)
@@ -108,12 +110,19 @@ const ProposalScreen = ({ navigation }) => {
     navigation.pop()
   }
 
-  // --- Modal 1 (Select Line Item Type) ---
+  // --- Modal BG ---
   let modalBackground
 
   if (modal1Visible === true || modal2Visible === true || modal3Visible === true || modal4Visible === true) {
     modalBackground = <View style={styles.modalBG}></View>  
   } else { console.log('Modal 1 error') }
+
+  // --- Modal 1 (Select Line Item Type) ---
+  let modal1Content =
+    <View style={styles.lineSelectionButtonsBox}>
+      <IconButtonHSmall pressFunction={openPhaseModal} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/>
+      <IconButtonHSmall pressFunction={openLineItemModal} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
+    </View>
 
   // --- Modal 2 (Add Line Item) ---
   let modalForm2Content = 
@@ -146,6 +155,9 @@ const ProposalScreen = ({ navigation }) => {
       textcolor='white' 
       bgcolor='steelblue' 
     />
+  let modal2Content = 
+    {modalForm2Content}
+    {modalForm2Button}
 
   // --- Modal 3 (Edit/Delete Line Item) ---
   let modalForm3Content = 
@@ -199,6 +211,15 @@ const ProposalScreen = ({ navigation }) => {
       {modalBackground}
 
       {/* --- Modal 1 --- */}
+
+      {/* <ModalCenterBG
+        modalVisible={true}
+        modalOnRequestClose={() => setModal1Visible(false)}
+        screenWidth={width}
+        closeModalButton={closeModal}
+        modalContent={modal1Content}
+      />  */}
+
       <View style={styles.modalBox}>
         <Modal 
           animationType='slide'
@@ -230,6 +251,15 @@ const ProposalScreen = ({ navigation }) => {
       />
 
       {/* --- Modal 2 --- */}
+
+      {/* <ModalCenterBG
+        modalVisible={modal2Visible}
+        modalOnRequestClose={() => setModal2Visible(false)}
+        screenWidth={width}
+        closeModalButton={closeModal}
+        modalContent={modal2Content}
+      />  */}
+
       <View style={styles.modalBox}>
         <Modal 
           animationType='slide'
