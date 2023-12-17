@@ -55,7 +55,7 @@ const ClientDetailsScreen = ({ route, navigation }) => {
         <IconButtonHSmall pressFunction={() => navigation.navigate('EditClient', {payload})} title='Edit Client Details' icon='user-alt' textcolor='white' bgcolor='steelblue' />
       </View>
       <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('ProposalScreen', {payload})} title='View Proposals' icon='file-alt' textcolor='white' bgcolor='steelblue' />
+        <IconButtonHSmall pressFunction={() => navigation.navigate('ProposalScreen', {payload: projects.projectID})} title='View Proposals' icon='file-alt' textcolor='white' bgcolor='steelblue' />
       </View>
     </>
   )

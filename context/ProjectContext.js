@@ -5,8 +5,7 @@ const projectReducer = (state, action) => {
     case 'delete_project':
       return state.filter((projects) => projects.projectID !== action.payload)
     case 'add_project':
-      let currenttime = new Date()
-      let datestring = currenttime.toLocaleString();
+      let datestring = Date.now()
       return [...state, { 
         projectID: datestring,
         clientName: action.payload.clientName, 
@@ -57,7 +56,7 @@ export const { Context, Provider } = createDataContext(
   projectReducer, 
   { addProject, editProject, deleteProject },
   [{
-    projectID: 'Test Project',
+    projectID: Date.now(),
     clientName: 'John Smith', 
     contactDate: '10/10/2023', 
     phone:'123-456-7890', 

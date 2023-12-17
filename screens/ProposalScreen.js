@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Modal, useWindowDimensions, KeyboardAvoidingView, ScrollView, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TextInput, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCenterBG from '../components/ModalCenterBG'
-import ModalCloseButton from '../components/ModalCloseButton'
 import BottomTab3 from '../components/BottomTab3'
 
 // Scoped variables for line items
 let currentLineIndex = 0
 
-const ProposalScreen = ({ navigation }) => {
+const ProposalScreen = ({ route, navigation }) => {
   
-  const [proposalSheet, setProposalSheet] = useState([{ key: 123123, isPhase: true, value1: 'test', value2: 'test'}])
+  const clientID = route.params
+  console.log(clientID)
+
+  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'test', value2: 'test'}])
   const [modal2isPhase, setmodal2isPhase] = useState('')
   const [modal3isPhase, setmodal3isPhase] = useState('')
   const [phaseName, setPhaseName] = useState('')
@@ -107,6 +109,8 @@ const ProposalScreen = ({ navigation }) => {
     setModal4Visible(true)
   }
   const saveProposal = () => {
+    
+    console.log(proposalSheet)
     navigation.pop()
   }
 
@@ -122,7 +126,7 @@ const ProposalScreen = ({ navigation }) => {
   // --- Modal 2 (Add Line Item) ---
   const modal2Content = 
     <>
-      <View style={styles.formBox}>
+      <View style={styles.contentBox}>
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 5 }]}>
             <Text style={globalStyles.formFieldCaption}>{modal2isPhase ? 'Phase' : 'Line Item'}</Text>
@@ -155,7 +159,7 @@ const ProposalScreen = ({ navigation }) => {
   // --- Modal 3 (Edit/Delete Line Item) ---
   const modal3Content = 
     <>
-      <View style={styles.formBox}>
+      <View style={styles.contentBox}>
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 5 }]}>
             <Text style={globalStyles.formFieldCaption}>{modal3isPhase ? 'Phase' : 'Line Item'}</Text>
@@ -195,7 +199,7 @@ const ProposalScreen = ({ navigation }) => {
   // --- Modal 4 (Save Proposal) ---
   const modal4Content = 
     <>
-      <View style={styles.formBox}>
+      <View style={styles.contentBox}>
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
             <Text style={globalStyles.formFieldCaption}>Add Project Description</Text>
@@ -203,14 +207,14 @@ const ProposalScreen = ({ navigation }) => {
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
               value={description}
-              onChangeText={text => setLineItem(text)}></TextInput>
+              onChangeText={text => setDescription(text)}></TextInput>
           </View>
         </View>
       </View>
       <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
     </>
 
-  // ---------- Main Return ----------
+  // ---------- | Main Return | ----------
   return (
     <View style={styles.pageContainer}> 
 
@@ -291,12 +295,15 @@ const styles = StyleSheet.create({
     zIndex: 100
   },
 
-  // Modal 1 
+  // Modals
   contentBox: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
   },
+
+  // Modal 1 
+
   lineSelectionBox: {
     flex: 1,
     width: '100%',
@@ -322,11 +329,6 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingBottom: 20,
     borderRadius: 5,
-  },
-  formBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
   },
 
   // Proposal Sheet
