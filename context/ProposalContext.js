@@ -7,7 +7,7 @@ const proposalReducer = (state, action) => {
     case 'add_proposal':
       return [...state, { 
         clientID: action.payload.clientID,
-        projectID: action.payload.projectID,
+        proposalID: action.payload.proposalID,
         description: action.payload.description,
         proposal: action.payload.proposal,
         totalCost: action.payload.totalCost

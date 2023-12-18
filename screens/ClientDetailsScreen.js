@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { Context as ClientContext} from '../context/ClientContext'
 import DeleteButton from '../components/DeleteButton'
 import ProposalsFlatlist from '../components/proposals/ProposalsFlatlist'
 import BottomTab3 from '../components/BottomTab3'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 
 const ClientDetailsScreen = ({ route, navigation }) => {
@@ -48,23 +47,19 @@ const ClientDetailsScreen = ({ route, navigation }) => {
         </View>
 
         <View style={styles.proposalsBox}>
-          <Text style={[styles.projectTextBold]}>Projects:</Text>
-          <View>
-            <ProposalsFlatlist filter={clients.clientID} />
-          </View>  
+          <Text style={[styles.projectTextBold]}>Proposals:</Text>
+          <ProposalsFlatlist filter={clients.clientID} />
         </View>
 
       </View>
       
-      
-
       <BottomTab3 
         button1icon='user-alt'
         button1text='Edit Client'
         button1function={() => navigation.navigate('EditClient', {payload})}
         button2icon='file-alt'
-        button2text='Add Project'
-        button2function={() => navigation.navigate('ProposalScreen', clients.clientID)}
+        button2text='Add Proposal'
+        button2function={() => navigation.navigate('ProposalScreen', { isAdd: true , clientID: clients.clientID, proposalID: ''})}
         button3icon=''
         button3text=''
       /> 
@@ -77,7 +72,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     paddingBottom: 8,
-    flex: 1
+    flex: 1,
+    marginBottom: 85
   },
   projectHeader: {
     flexDirection: 'row',

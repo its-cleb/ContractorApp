@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { Context } from '../../context/ProposalContext'
 import { useNavigation } from '@react-navigation/native';
 
@@ -9,15 +9,14 @@ const ProposalsFlatlist = props => {
   const navigation = useNavigation()
 
   const proposals = state.filter((clients) => clients.clientID === props.filter )
-  console.log(proposals)
 
   return (
     <View style={styles.flatlistbox}>
       <FlatList 
         data={proposals} 
-        keyExtractor={(item) => item.projectID}
+        keyExtractor={(item) => item.proposalID}
         renderItem={({ item }) => 
-          <TouchableOpacity onPress={() => navigation.navigate('ProposalScreen', {payload: item.projectID})}>
+          <TouchableOpacity onPress={() => navigation.navigate('ProposalScreen', { isAdd: false, proposalID: item.proposalID, clientID: item.clientID })}>
             <View style={styles.projectContainer}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 2 }]}>
@@ -37,7 +36,7 @@ const ProposalsFlatlist = props => {
 
 const styles = StyleSheet.create({
   flatlistbox: {
-    marginTop: 10
+    marginTop: 10,
   },
   projectContainer: {
     borderRadius: 5,

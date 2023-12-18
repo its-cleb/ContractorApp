@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
@@ -11,14 +11,19 @@ import { Context } from '../context/ProposalContext'
 let currentLineIndex = 0
 
 const ProposalScreen = ({ route, navigation }) => {
+
+  const { state, addProposal, editProposal } = useContext(Context)
   
-  const clientID  = route.params
-  const proposalID = `${clientID}` + '-' + Date.now()
-  let project
+  const isAdd = route.params.isAdd
+  const clientID  = route.params.clientID
+  const proposalID = isAdd ? `${clientID}` + '-' + Date.now() : route.params.proposalID
+  console.log('ProposalID:', proposalID)
 
-  const { addProposal, editProposal } = useContext(Context)
+  const selectectedProposal = state.find(proposals => proposals.proposalID === proposalID)
+  const currentProposal = isAdd ? [] : selectectedProposal.proposal
+  console.log('CurrentProposal:', currentProposal)
 
-  const [proposalSheet, setProposalSheet] = useState([{ key: Date.now(), isPhase: true, value1: 'test', value2: 2}])
+  const [proposalSheet, setProposalSheet] = useState(currentProposal)
   const [modal2isPhase, setmodal2isPhase] = useState('')
   const [modal3isPhase, setmodal3isPhase] = useState('')
   const [phaseName, setPhaseName] = useState('')
@@ -35,15 +40,17 @@ const ProposalScreen = ({ route, navigation }) => {
 
   const { width } = useWindowDimensions()
 
+  // Total Cost Calculation
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
   
   let totalCost = lineItems.reduce(function(previousValue, currentValue) 
-  { 
-    return (
-      previousValue + +currentValue.value2
-    )
-  }, 0)
+    { 
+      return (
+        previousValue + +currentValue.value2
+      )
+    }, 0)
 
+  // Modal Control
   const closeModal = () => {
     setModal1Visible(false)
     setModal2Visible(false)
@@ -231,14 +238,14 @@ const ProposalScreen = ({ route, navigation }) => {
     <View style={styles.pageContainer}> 
 
       {/* --- Display Line Items --- */}
-      <View style={{zIndex: 1}}>
+      <View style={styles.proposalSheet}>
         <FlatList
           data={proposalSheet}
           keyExtractor={item => item.key}
           renderItem={({item}) => 
             <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
               <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
-              <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{Intl.NumberFormat('en-US').format(item.value2)}</Text>
+              <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.isPhase ? item.value2 : Intl.NumberFormat('en-US').format(item.value2)}</Text>
             </TouchableOpacity>
           }
         />
@@ -301,6 +308,10 @@ const ProposalScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
+  },
+  proposalSheet: {
+    zIndex: 1,
+    marginBottom: 120
   },
   modalBG: {
     position: 'absolute',

@@ -15,6 +15,8 @@ import { useNavigation } from '@react-navigation/native'
     button3icon=''
     button3text=''
   /> 
+
+  Add marginBottom: 85 to page container above this element
 */}
 
 const BottomTab3 = props => {    
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     bottom: 0,
-    zIndex: 10
+    zIndex: 10,
   },
   buttonBox: {
     alignItems: 'center',
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     color: 'black', 
     alignContent: 'center',
     alignSelf: 'center',
-    fontSize: 16, 
+    fontSize: 14, 
     fontWeight: '500'
   }
 })
