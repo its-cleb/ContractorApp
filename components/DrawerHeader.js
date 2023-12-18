@@ -12,7 +12,7 @@ const DrawerHeader = props => {
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar hidden />
       <TouchableOpacity 
-        style={[globalStyles.touchableOpacityButton, { backgroundColor: `${props.bgcolor}`, flexDirection: 'row' }]}
+        style={[globalStyles.touchableOpacityButton, { backgroundColor: 'white', flexDirection: 'row' }]}
         onPress={() => {navigation.openDrawer()}}
       > 
           <Entypo name="menu" size={26} color="black" />

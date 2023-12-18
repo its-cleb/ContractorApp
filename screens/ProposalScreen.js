@@ -4,6 +4,7 @@ import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCenterBG from '../components/ModalCenterBG'
 import BottomTab3 from '../components/BottomTab3'
+import StackHeader from '../components/StackHeader'
 import { Context } from '../context/ProposalContext'
 
 
@@ -12,16 +13,17 @@ let currentLineIndex = 0
 
 const ProposalScreen = ({ route, navigation }) => {
 
-  const { state, addProposal, editProposal } = useContext(Context)
+  const { state, addProposal, editProposal, deleteProposal } = useContext(Context)
   
+  // Get navigation params
   const isAdd = route.params.isAdd
   const clientID  = route.params.clientID
   const proposalID = isAdd ? `${clientID}` + '-' + Date.now() : route.params.proposalID
-  console.log('ProposalID:', proposalID)
 
-  const selectectedProposal = state.find(proposals => proposals.proposalID === proposalID)
-  const currentProposal = isAdd ? [] : selectectedProposal.proposal
-  console.log('CurrentProposal:', currentProposal)
+  // Determine whether to add a new blank proposal or open existing
+  const selectedProposal = state.find(proposals => proposals.proposalID === proposalID)
+  const currentProposal = isAdd ? [] : selectedProposal.proposal
+  const editDescription = isAdd ? '' : selectedProposal.description
 
   const [proposalSheet, setProposalSheet] = useState(currentProposal)
   const [modal2isPhase, setmodal2isPhase] = useState('')
@@ -30,7 +32,7 @@ const ProposalScreen = ({ route, navigation }) => {
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
   const [cost, setCost] = useState('')
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState(editDescription)
 
   // --- Modal Functions ---
   const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
@@ -44,11 +46,7 @@ const ProposalScreen = ({ route, navigation }) => {
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
   
   let totalCost = lineItems.reduce(function(previousValue, currentValue) 
-    { 
-      return (
-        previousValue + +currentValue.value2
-      )
-    }, 0)
+    { return previousValue + +currentValue.value2 }, 0)
 
   // Modal Control
   const closeModal = () => {
@@ -79,7 +77,6 @@ const ProposalScreen = ({ route, navigation }) => {
   const addLineItem = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: lineItem, value2: cost}])
     setModal2Visible(false)
-    console.log(proposalSheet)
   }
   const addPhase = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: phaseName, value2: phaseDate}])
@@ -129,8 +126,20 @@ const ProposalScreen = ({ route, navigation }) => {
   }
   const saveProposal = () => {
     addProposal(clientID, proposalID, description, totalCost, proposalSheet)
-    project = [ clientID, proposalID, description, totalCost, proposalSheet]
     navigation.pop()
+  }
+  const overwriteProposal = () => {
+    editProposal(clientID, proposalID, description, totalCost, proposalSheet)
+    navigation.pop()
+  }
+
+  const deleteButton = () => {
+    if (isAdd === false) {
+      deleteProposal(proposalID)
+      navigation.pop()
+    } else {
+    navigation.pop()
+    }
   }
 
   // --- Modal 1 (Select Line Item Type) ---
@@ -221,7 +230,7 @@ const ProposalScreen = ({ route, navigation }) => {
       <View style={styles.contentBox}>
         <View style={globalStyles.formRow}>
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <Text style={globalStyles.formFieldCaption}>Add Project Description</Text>
+            <Text style={globalStyles.formFieldCaption}>{isAdd ? 'Add Project Description' : 'Edit Project Description'}</Text>
             <TextInput 
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
@@ -230,78 +239,85 @@ const ProposalScreen = ({ route, navigation }) => {
           </View>
         </View>
       </View>
-      <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
+      <IconButtonHSmall pressFunction={isAdd ? saveProposal : overwriteProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
     </>
 
   // ---------- | Main Return | ----------
   return (
-    <View style={styles.pageContainer}> 
-
-      {/* --- Display Line Items --- */}
-      <View style={styles.proposalSheet}>
-        <FlatList
-          data={proposalSheet}
-          keyExtractor={item => item.key}
-          renderItem={({item}) => 
-            <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
-              <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
-              <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.isPhase ? item.value2 : Intl.NumberFormat('en-US').format(item.value2)}</Text>
-            </TouchableOpacity>
-          }
-        />
-        <View style={styles.totalBar}>
-          <Text style={styles.totalText}>Total: ${Intl.NumberFormat('en-US').format(totalCost)}</Text>
-        </View>
-      </View>
-
-      <BottomTab3 
-        button1icon='plus'
-        button1text='Add Line'
-        button1function={openLineSelectionModal}
-        button2icon='save'
-        button2text='Save'
-        button2function={openSaveProposal}
-        button3icon='envelope'
-        button3text='Send'
+    <>
+      <StackHeader 
+        title={isAdd ? 'Add Proposal' : 'Edit Proposal'}
+        rightIcon='delete-forever'
+        pressFunction={deleteButton}
       />
+      <View style={styles.pageContainer}> 
 
-      {/* --- Modal 1 --- */}
-      <ModalCenterBG
-        modalVisible={modal1Visible}
-        modalOnRequestClose={() => setModal1Visible(false)}
-        screenWidth={width}
-        closeModalButton={closeModal}
-        modalContent={modal1Content}
-      /> 
+        {/* --- Display Line Items --- */}
+        <View style={styles.proposalSheet}>
+          <FlatList
+            data={proposalSheet}
+            keyExtractor={item => item.key}
+            renderItem={({item}) => 
+              <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
+                <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
+                <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.isPhase ? item.value2 : Intl.NumberFormat('en-US').format(item.value2)}</Text>
+              </TouchableOpacity>
+            }
+          />
+          <View style={styles.totalBar}>
+            <Text style={styles.totalText}>Total: ${Intl.NumberFormat('en-US').format(totalCost)}</Text>
+          </View>
+        </View>
 
-      {/* --- Modal 2 --- */}
-      <ModalCenterBG
-        modalVisible={modal2Visible}
-        modalOnRequestClose={() => setModal2Visible(false)}
-        screenWidth={width}
-        closeModalButton={closeModal}
-        modalContent={modal2Content}
-      /> 
+        <BottomTab3 
+          button1icon='plus'
+          button1text='Add Line'
+          button1function={openLineSelectionModal}
+          button2icon='save'
+          button2text='Save'
+          button2function={openSaveProposal}
+          button3icon='envelope'
+          button3text='Send'
+        />
 
-      {/* --- Modal 3 --- */}
-      <ModalCenterBG
-        modalVisible={modal3Visible}
-        modalOnRequestClose={() => setModal3Visible(false)}
-        screenWidth={width}
-        closeModalButton={closeModal}
-        modalContent={modal3Content}
-      /> 
+        {/* --- Modal 1 --- */}
+        <ModalCenterBG
+          modalVisible={modal1Visible}
+          modalOnRequestClose={() => setModal1Visible(false)}
+          screenWidth={width}
+          closeModalButton={closeModal}
+          modalContent={modal1Content}
+        /> 
 
-      {/* --- Modal 4 --- */}
-      <ModalCenterBG
-        modalVisible={modal4Visible}
-        modalOnRequestClose={() => setModal4Visible(false)}
-        screenWidth={width}
-        closeModalButton={closeModal}
-        modalContent={modal4Content}
-      /> 
+        {/* --- Modal 2 --- */}
+        <ModalCenterBG
+          modalVisible={modal2Visible}
+          modalOnRequestClose={() => setModal2Visible(false)}
+          screenWidth={width}
+          closeModalButton={closeModal}
+          modalContent={modal2Content}
+        /> 
 
-    </View>
+        {/* --- Modal 3 --- */}
+        <ModalCenterBG
+          modalVisible={modal3Visible}
+          modalOnRequestClose={() => setModal3Visible(false)}
+          screenWidth={width}
+          closeModalButton={closeModal}
+          modalContent={modal3Content}
+        /> 
+
+        {/* --- Modal 4 --- */}
+        <ModalCenterBG
+          modalVisible={modal4Visible}
+          modalOnRequestClose={() => setModal4Visible(false)}
+          screenWidth={width}
+          closeModalButton={closeModal}
+          modalContent={modal4Content}
+        /> 
+
+      </View>
+    </> 
   )
 }
 

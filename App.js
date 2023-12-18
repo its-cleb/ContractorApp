@@ -62,7 +62,7 @@ function ProjectScreenStack() {
       <Stack.Screen
         name="ProposalScreen"
         component={ProposalScreen}
-        options={{ headerTitle: "Proposals" }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
     )
