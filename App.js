@@ -7,7 +7,7 @@ import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 import HomeScreen from './navigation/HomeScreen'
 import EstimatorScreen from './navigation/EstimatorScreen'
 import CompanyScreen from './navigation/CompanyScreen'
-import ProjectsScreen from './navigation/ProjectsScreen'
+import ClientsScreen from './navigation/ClientsScreen'
 import EmployeeScreen from './navigation/EmployeeScreen'
 
 import AddClientScreen from './screens/AddClientScreen'
@@ -36,12 +36,12 @@ const MyTheme = {
 }
 
 // Projects Pages
-function ProjectScreenStack() {
+function ClientScreenStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="ViewProjects"
-        component={ProjectsScreen}
+        name="ViewClients"
+        component={ClientsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -144,12 +144,12 @@ export default function App() {
               }} 
             />
             <Drawer.Screen 
-              name="Projects" 
-              component={ProjectScreenStack} 
+              name="Clients" 
+              component={ClientScreenStack} 
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="tools" size={22} color="black" />),
-                headerTitle: "Your Projects",
-                drawerLabel: "Projects",
+                drawerIcon: () => (<FontAwesome5 name="user-alt" size={22} color="black" />),
+                headerTitle: "Your Clients",
+                drawerLabel: "Clients",
                 headerShown: false
               }} 
             />
@@ -157,7 +157,7 @@ export default function App() {
               name="Employees"
               component={EmployeeScreenStack} 
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="users" size={22} color="#222" style={{marginRight: -4, marginLeft: -2}} />),
+                drawerIcon: () => (<FontAwesome5 name="users-cog" size={22} color="#222" style={{marginRight: -4, marginLeft: -2}} />),
                 headerTitle: "Employees",
                 drawerLabel: "Employees",
                 headerShown: false

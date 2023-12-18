@@ -5,17 +5,17 @@ import ClientFlatlist from '../components/clients/ClientsFlatlist'
 import DrawerHeader from '../components/DrawerHeader'
 import SearchBar from '../components/SearchBar'
 
-const ViewProjectsScreen = ({ navigation }) => {
+const ViewClientsScreen = ({ navigation }) => {
 
   const [searchTerm, setSearchTerm] = useState('')
   
   return (
     <>
-      <DrawerHeader title="Projects" />
+      <DrawerHeader title="Clients" />
       <SafeAreaView style={styles.pageContainer}>
         
         <SearchBar 
-          placeholderText="Search Projects" 
+          placeholderText="Search Clients" 
           searchTerm={searchTerm} 
           onTermChange={newSearchTerm => setSearchTerm(newSearchTerm)} 
           onTermSubmit={() => Keyboard.dismiss()} 
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   }
 }) 
 
-export default ViewProjectsScreen
+export default ViewClientsScreen

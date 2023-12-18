@@ -64,7 +64,6 @@ export const { Context, Provider } = createDataContext(
     unitNumber:'1', 
     city:'Seattle', 
     usState:'WA', 
-    zip:'98231', 
-    description: 'Install 2 planks on the forklift.'
+    zip:'98231' 
   }]
 )

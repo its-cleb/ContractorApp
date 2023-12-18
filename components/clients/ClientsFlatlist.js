@@ -16,7 +16,6 @@ const ClientFlatlist = ( filterSearchTerm ) => {
     if ( item.clientName.toLowerCase().includes(searchText.toLowerCase()) || 
          item.city.toLowerCase().includes(searchText.toLowerCase()) ||
          item.usState.toLowerCase().includes(searchText.toLowerCase()) ||
-         item.description.toLowerCase().includes(searchText.toLowerCase()) ||
          item.contactDate.toLowerCase().includes(searchText.toLowerCase()) ||
          searchText === ""
     ) { 
@@ -32,11 +31,11 @@ const ClientFlatlist = ( filterSearchTerm ) => {
               </View>
             </View>
             <View style={styles.clientRowBottom}>
-              <View style={[styles.clientColumnLeft, { flex: 1 }]}>
-                <Text style={styles.clientTextLeft}>{item.city}, {item.usState}</Text>
+              <View style={[styles.clientColumnLeft, { flex: 3 }]}>
+                <Text style={styles.clientTextLeft}>{item.address}, {item.unit}</Text>
               </View>
               <View style={[styles.clientColumnRight, { flex: 2 }]}>
-                <Text style={styles.clientTextRight}>{item.description}</Text>
+                <Text style={styles.clientTextRight}>{item.city}, {item.usState}</Text>
               </View>
             </View>
           </View>

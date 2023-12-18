@@ -34,13 +34,25 @@ const ProposalScreen = ({ route, navigation }) => {
   const [cost, setCost] = useState('')
   const [description, setDescription] = useState(editDescription)
 
-  // --- Modal Functions ---
-  const [modal1Visible, setModal1Visible] = React.useState(false) // Line Type Selection Modal
-  const [modal2Visible, setModal2Visible] = React.useState(false) // Add New Line Modal
-  const [modal3Visible, setModal3Visible] = React.useState(false) // Edit Line Modal
-  const [modal4Visible, setModal4Visible] = React.useState(false) // Save Proposal Modal
-
   const { width } = useWindowDimensions()
+
+  // --- Modal Functions ---
+  const closedModals = {
+    modal1: false,
+    modal2: false,
+    modal3: false,
+    modal4: false
+  }
+
+  const [modalVisible, setModalVisible] = useState(closedModals)
+
+  const toggleModal = (key, value) => {
+    setModalVisible({ 
+      ...modalVisible,
+      [key]: value
+    })
+    console.log(key, value, modalVisible)
+  }
 
   // Total Cost Calculation
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
@@ -50,13 +62,10 @@ const ProposalScreen = ({ route, navigation }) => {
 
   // Modal Control
   const closeModal = () => {
-    setModal1Visible(false)
-    setModal2Visible(false)
-    setModal3Visible(false)
-    setModal4Visible(false)
+    setModalVisible(closedModals)
   }
   const openLineSelectionModal = () => {
-    setModal1Visible(true)
+    toggleModal('modal1', true)
   }
 
   // Add Line Item Modal Settings
@@ -64,23 +73,23 @@ const ProposalScreen = ({ route, navigation }) => {
     setmodal2isPhase(true)
     setPhaseName('')
     setPhaseDate('')
-    setModal1Visible(false)
-    setModal2Visible(true)
+    setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
   const openLineItemModal = () => {
     setmodal2isPhase(false)
     setLineItem('')
     setCost('')
-    setModal1Visible(false)
-    setModal2Visible(true)
+    setModalVisible(closedModals)
+    setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
   const addLineItem = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: lineItem, value2: cost}])
-    setModal2Visible(false)
+    toggleModal('modal2', false)  
   }
   const addPhase = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: phaseName, value2: phaseDate}])
-    setModal2Visible(false)
+    setModalVisible(closedModals)
+    toggleModal('modal2', false)  
   }
 
   // Edit Line Item Modal Settings
@@ -90,7 +99,7 @@ const ProposalScreen = ({ route, navigation }) => {
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setPhaseName(lineData.value1)
     setPhaseDate(lineData.value2)
-    setModal3Visible(true)
+    toggleModal('modal3', true)  
   }
   const openEditLineItemModal = (lineKey) => {
     setmodal3isPhase(false)
@@ -98,31 +107,31 @@ const ProposalScreen = ({ route, navigation }) => {
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setLineItem(lineData.value1)
     setCost(lineData.value2)
-    setModal3Visible(true)
+    toggleModal('modal3', true)  
   }
   const editPhase = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet[currentLineIndex].value1 = phaseName
     copiedProposalSheet[currentLineIndex].value2 = phaseDate
     setProposalSheet(copiedProposalSheet)
-    setModal3Visible(false)
+    toggleModal('modal3', false)  
   }
   const editLineItem = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet[currentLineIndex].value1 = lineItem
     copiedProposalSheet[currentLineIndex].value2 = cost
     setProposalSheet(copiedProposalSheet)
-    setModal3Visible(false)
+    toggleModal('modal3', false)  
   }
   const deleteLineItem = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet.splice(currentLineIndex, 1)
-    setModal3Visible(false)
+    toggleModal('modal3', false)  
   }
 
   // Save Proposal Modal Settings
   const openSaveProposal = () => {
-    setModal4Visible(true)
+    toggleModal('modal4', true)  
   }
   const saveProposal = () => {
     addProposal(clientID, proposalID, description, totalCost, proposalSheet)
@@ -169,7 +178,7 @@ const ProposalScreen = ({ route, navigation }) => {
             <TextInput 
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
-              keyboardType="numeric"
+              keyboardType={modal2isPhase ? "default" : "numeric"}
               value={modal2isPhase ? phaseDate : cost}
               onChangeText={text => modal2isPhase ? setPhaseDate(text) : setCost(text)}></TextInput>
           </View>
@@ -282,8 +291,8 @@ const ProposalScreen = ({ route, navigation }) => {
 
         {/* --- Modal 1 --- */}
         <ModalCenterBG
-          modalVisible={modal1Visible}
-          modalOnRequestClose={() => setModal1Visible(false)}
+          modalVisible={modalVisible.modal1}
+          modalOnRequestClose={closeModal}
           screenWidth={width}
           closeModalButton={closeModal}
           modalContent={modal1Content}
@@ -291,8 +300,8 @@ const ProposalScreen = ({ route, navigation }) => {
 
         {/* --- Modal 2 --- */}
         <ModalCenterBG
-          modalVisible={modal2Visible}
-          modalOnRequestClose={() => setModal2Visible(false)}
+          modalVisible={modalVisible.modal2}
+          modalOnRequestClose={closeModal}
           screenWidth={width}
           closeModalButton={closeModal}
           modalContent={modal2Content}
@@ -300,8 +309,8 @@ const ProposalScreen = ({ route, navigation }) => {
 
         {/* --- Modal 3 --- */}
         <ModalCenterBG
-          modalVisible={modal3Visible}
-          modalOnRequestClose={() => setModal3Visible(false)}
+          modalVisible={modalVisible.modal3}
+          modalOnRequestClose={closeModal}
           screenWidth={width}
           closeModalButton={closeModal}
           modalContent={modal3Content}
@@ -309,8 +318,8 @@ const ProposalScreen = ({ route, navigation }) => {
 
         {/* --- Modal 4 --- */}
         <ModalCenterBG
-          modalVisible={modal4Visible}
-          modalOnRequestClose={() => setModal4Visible(false)}
+          modalVisible={modalVisible.modal4}
+          modalOnRequestClose={closeModal}
           screenWidth={width}
           closeModalButton={closeModal}
           modalContent={modal4Content}

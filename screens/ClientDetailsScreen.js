@@ -54,14 +54,15 @@ const ClientDetailsScreen = ({ route, navigation }) => {
       </View>
       
       <BottomTab3 
-        button1icon='user-alt'
+        button1icon='user-edit'
         button1text='Edit Client'
         button1function={() => navigation.navigate('EditClient', {payload})}
         button2icon='file-alt'
         button2text='Add Proposal'
         button2function={() => navigation.navigate('ProposalScreen', { isAdd: true , clientID: clients.clientID, proposalID: ''})}
-        button3icon=''
-        button3text=''
+        button3icon='tools'
+        button3text='Projects'
+        // button3function
       /> 
     </>
   )

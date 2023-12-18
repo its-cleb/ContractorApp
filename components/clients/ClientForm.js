@@ -27,7 +27,6 @@ const ClientForm = ({ initialValues, navProp, payloadProp }) => {
     city:'', 
     usState:'', 
     zip:'', 
-    description: ''
   }
  
   // Check if parent element passed initialValues prop
@@ -41,11 +40,11 @@ const ClientForm = ({ initialValues, navProp, payloadProp }) => {
 
   // Control Button functionality
   const addClientBackPage = () => {
-    addClient(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    addClient(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip )
     navigation.pop()
   }
   const saveClientBackPage = () => {
-    editClient(clientID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip, description)
+    editClient(clientID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip )
     navigation.pop()
   }
 
@@ -71,8 +70,6 @@ const ClientForm = ({ initialValues, navProp, payloadProp }) => {
   const [ city, setCity ] = useState(clientValues.city)
   const [ usState, setUsState ] = useState(clientValues.usState)
   const [ zip, setZip ] = useState(clientValues.zip)
-  const [ description, setDescription ] = useState(clientValues.description)
-
 
   // --- Date Picker ---
 
@@ -212,18 +209,6 @@ const ClientForm = ({ initialValues, navProp, payloadProp }) => {
                 keyboardType="numeric"
                 value={zip}
                 onChangeText={text => setZip(text)}></TextInput>
-            </View>
-          </View>
-          
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>Client Description</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInputMultiline} 
-                multiline
-                value={description}
-                onChangeText={text => setDescription(text)}></TextInput>
             </View>
           </View>
 
