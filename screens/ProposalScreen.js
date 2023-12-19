@@ -30,7 +30,7 @@ const ProposalScreen = ({ route, navigation }) => {
   const [ proposalSheet, setProposalSheet ] = useState(currentProposal)
 
   // Form State
-  const formData = {
+  const blankFormData = {
     phaseName: '',
     phaseDate: '',
     lineItem: '',
@@ -38,18 +38,16 @@ const ProposalScreen = ({ route, navigation }) => {
     description: editDescription
   }
 
-  const [form, setForm] = useState(formData)
+  const [form, setForm] = useState(blankFormData)
 
   const setFormState = (obj) => {
     Object.entries(obj).map(function(element) {
-      console.log('array:', element[0], element[1])
       setForm(prev => {
         return { 
           ...prev,
           [element[0]]: element[1]
       }})        
     })
-    console.log(array)
   }
 
   // --- Modal Functions ---
@@ -87,7 +85,6 @@ const ProposalScreen = ({ route, navigation }) => {
   const openLineItemModal = () => {
     setmodal2isPhase(false)
     setFormState({lineItem: '', cost: ''})
-    setModalVisible(closedModals)
     setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
   const addLineItem = () => {
@@ -96,7 +93,6 @@ const ProposalScreen = ({ route, navigation }) => {
   }
   const addPhase = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: form.phaseName, value2: form.phaseDate}])
-    setModalVisible(closedModals)
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
 
@@ -132,6 +128,14 @@ const ProposalScreen = ({ route, navigation }) => {
   const deleteLineItem = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet.splice(currentLineIndex, 1)
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
+  }
+  const moveToTopButton = () => {
+    const copiedProposalSheet = proposalSheet
+    let lineData = copiedProposalSheet[currentLineIndex]
+    copiedProposalSheet.splice(currentLineIndex, 1)
+    copiedProposalSheet.unshift({ key: Date.now(), isPhase: lineData.isPhase, value1: lineData.value1, value2: lineData.value2})
+    setProposalSheet(copiedProposalSheet)
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
 
@@ -231,6 +235,13 @@ const ProposalScreen = ({ route, navigation }) => {
         bgcolor='steelblue' 
       />
       <IconButtonHSmall 
+        pressFunction={moveToTopButton} 
+        title='Move to Top' 
+        icon='level-up-alt' 
+        textcolor='white' 
+        bgcolor='chocolate' 
+      />
+      <IconButtonHSmall 
         pressFunction={deleteLineItem} 
         title='Delete Line Item' 
         icon='backspace' 
@@ -275,12 +286,13 @@ const ProposalScreen = ({ route, navigation }) => {
             renderItem={({item}) => 
               <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
                 <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
-                <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? '' : '$'}{item.isPhase ? item.value2 : Intl.NumberFormat('en-US').format(item.value2)}</Text>
+                <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? item.value2 : 
+                  Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.value2)}</Text>
               </TouchableOpacity>
             }
           />
           <View style={styles.totalBar}>
-            <Text style={styles.totalText}>Total: ${Intl.NumberFormat('en-US').format(totalCost)}</Text>
+            <Text style={styles.totalText}>Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(totalCost)}</Text>
           </View>
         </View>
 
