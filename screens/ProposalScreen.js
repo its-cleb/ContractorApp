@@ -133,8 +133,9 @@ const ProposalScreen = ({ route, navigation }) => {
   const moveToTopButton = () => {
     const copiedProposalSheet = proposalSheet
     let lineData = copiedProposalSheet[currentLineIndex]
+    let phase = lineData.isPhase ? true : false
     copiedProposalSheet.splice(currentLineIndex, 1)
-    copiedProposalSheet.unshift({ key: Date.now(), isPhase: lineData.isPhase, value1: lineData.value1, value2: lineData.value2})
+    copiedProposalSheet.unshift({ key: Date.now(), isPhase: lineData.isPhase, value1: phase ? form.phaseName : form.lineItem, value2: phase ? form.phaseDate : form.cost})
     setProposalSheet(copiedProposalSheet)
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
