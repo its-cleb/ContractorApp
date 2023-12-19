@@ -55,7 +55,7 @@ export const { Context, Provider } = createDataContext(
   clientReducer, 
   { addClient, editClient, deleteClient },
   [{
-    clientID: Date.now(),
+    clientID: '000001',
     clientName: 'John Smith', 
     contactDate: '10/10/2023', 
     phone:'123-456-7890', 

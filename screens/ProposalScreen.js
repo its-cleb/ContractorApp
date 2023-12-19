@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TextInput, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
@@ -6,7 +6,6 @@ import ModalCenterBG from '../components/ModalCenterBG'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
 import { Context } from '../context/ProposalContext'
-
 
 // Scoped variables for line items
 let currentLineIndex = 0
@@ -130,7 +129,8 @@ const ProposalScreen = ({ route, navigation }) => {
     copiedProposalSheet.splice(currentLineIndex, 1)
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
-  const moveToTopButton = () => {
+  const moveToTopButton = () => { 
+    // Get line data, check ifPhase, copy line to top, delete original line
     const copiedProposalSheet = proposalSheet
     let lineData = copiedProposalSheet[currentLineIndex]
     let phase = lineData.isPhase ? true : false
@@ -152,7 +152,6 @@ const ProposalScreen = ({ route, navigation }) => {
     editProposal(clientID, proposalID, form.description, totalCost, proposalSheet)
     navigation.pop()
   }
-
   const deleteButton = () => {
     if (isAdd === false) {
       deleteProposal(proposalID)
@@ -357,14 +356,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     marginBottom: 120
   },
-  modalBG: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 100
-  },
-
+  
   // Modals
   contentBox: {
     flexDirection: 'row',

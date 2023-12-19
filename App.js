@@ -14,6 +14,7 @@ import AddClientScreen from './screens/AddClientScreen'
 import EditClientScreen from './screens/EditClientScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
 import ProposalScreen from './screens/ProposalScreen'
+import ProjectScreen from './screens/ProjectScreen'
 
 import AddEmployeeScreen from './screens/AddEmployeeScreen'
 import EditEmployeeScreen from './screens/EditEmployeeScreen'
@@ -22,6 +23,7 @@ import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
 import { Provider as ClientProvider } from './context/ClientContext'
 import { Provider as EmployeeProvider } from './context/EmployeeContext'
 import { Provider as ProposalProvider } from './context/ProposalContext'
+import { Provider as ProjectProvider } from './context/ProjectContext'
 
 
 const Drawer = createDrawerNavigator();
@@ -62,6 +64,11 @@ function ClientScreenStack() {
       <Stack.Screen
         name="ProposalScreen"
         component={ProposalScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProjectScreen"
+        component={ProjectScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -115,6 +122,7 @@ export default function App() {
     <ClientProvider>
     <EmployeeProvider>
     <ProposalProvider>
+    <ProjectProvider>
       <NavigationContainer theme={MyTheme}>
         <Drawer.Navigator 
           initialRouteName="Home"
@@ -175,6 +183,7 @@ export default function App() {
             />
         </Drawer.Navigator>
       </NavigationContainer>
+    </ProjectProvider>
     </ProposalProvider>
     </EmployeeProvider>
     </ClientProvider>

@@ -8,7 +8,7 @@ const ProposalsFlatlist = props => {
   const { state } = useContext(Context)
   const navigation = useNavigation()
 
-  const proposals = state.filter((clients) => clients.clientID === props.filter )
+  const proposals = state.filter((clients) => clients.clientID === props.filter)
 
   return (
     <View style={styles.flatlistbox}>

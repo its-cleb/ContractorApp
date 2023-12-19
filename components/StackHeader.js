@@ -52,7 +52,7 @@ const styles=StyleSheet.create({
   text: {
     color: 'black', 
     fontSize: 20,
-    paddingLeft: 40,
+    paddingLeft: 30,
     fontWeight: '500',
     justifyContent: 'center',
     alignSelf: 'center',

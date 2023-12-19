@@ -48,5 +48,11 @@ const deleteProposal = dispatch => {
 export const { Context, Provider } = createDataContext(
   proposalReducer, 
   { addProposal, editProposal, deleteProposal },
-  []
+  [{
+    clientID: '000001',
+    proposalID: Date.now(),
+    description: 'Kitchen Remodel',
+    proposal: [],
+    totalCost: 5000
+  }]
 )
