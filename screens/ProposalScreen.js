@@ -14,22 +14,20 @@ let currentLineIndex = 0
 const ProposalScreen = ({ route, navigation }) => {
   
   const { state, addProposal, editProposal, deleteProposal } = useContext(Context)
-
-  // Determine whether to add a new blank proposal or open existing
-  const selectedProposal = state.find(proposals => proposals.proposalID === proposalID)
-
-  // error: proposal undefined 
-  const currentProposal = isAdd ? [] : selectedProposal.proposal
-  const editDescription = isAdd ? '' : selectedProposal.description
-
-  const [ proposalSheet, setProposalSheet ] = useState(currentProposal)
-
+  
   const { width } = useWindowDimensions()
 
   // Get navigation params
   const isAdd = route.params.isAdd
   const clientID  = route.params.clientID
   const proposalID = isAdd ? `${clientID}` + '-' + Date.now() : route.params.proposalID
+
+  // Determine whether to add a new blank proposal or open existing
+  const selectedProposal = state.find(proposals => proposals.proposalID === proposalID)
+  const currentProposal = isAdd ? [] : selectedProposal.proposal
+  const editDescription = isAdd ? '' : selectedProposal.description
+
+  const [ proposalSheet, setProposalSheet ] = useState(currentProposal)
 
   // Form State
   const formData = {
@@ -42,19 +40,17 @@ const ProposalScreen = ({ route, navigation }) => {
 
   const [form, setForm] = useState(formData)
 
-  const setFormState = (key, value) => {
-    setForm({ 
-      ...form,
-      [key]: value
+  const setFormState = (obj) => {
+    Object.entries(obj).map(function(element) {
+      console.log('array:', element[0], element[1])
+      setForm(prev => {
+        return { 
+          ...prev,
+          [element[0]]: element[1]
+      }})        
     })
-    console.log(key, value, form)
+    console.log(array)
   }
-
-  // const [phaseName, setPhaseName] = useState('')
-  // const [phaseDate, setPhaseDate] = useState('')
-  // const [lineItem, setLineItem] = useState('')
-  // const [cost, setCost] = useState('')
-  // const [description, setDescription] = useState(editDescription)
 
   // --- Modal Functions ---
   const closedModals = {
@@ -68,7 +64,6 @@ const ProposalScreen = ({ route, navigation }) => {
   const [modal2isPhase, setmodal2isPhase] = useState('')
   const [modal3isPhase, setmodal3isPhase] = useState('')
 
-  console.log(proposalSheet)
   // Total Cost Calculation
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
   
@@ -86,18 +81,12 @@ const ProposalScreen = ({ route, navigation }) => {
   // Add Line Item Modal Settings
   const openPhaseModal = () => {
     setmodal2isPhase(true)
-    setFormState('phaseName', '')
-    setFormState('phaseDate', '')
-    // setPhaseName('')
-    // setPhaseDate('')
+    setFormState({phaseName: '', phaseDate: ''})
     setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
   const openLineItemModal = () => {
     setmodal2isPhase(false)
-    setFormState('lineItem', '')
-    setFormState('cost', '')
-    // setLineItem('')
-    // setCost('')
+    setFormState({lineItem: '', cost: ''})
     setModalVisible(closedModals)
     setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
@@ -116,20 +105,14 @@ const ProposalScreen = ({ route, navigation }) => {
     setmodal3isPhase(true)
     currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
     let lineData = proposalSheet.find(({key}) => key === lineKey)
-    setFormState('phaseName', lineData.value1)
-    setFormState('phaseDate', lineData.value2)
-    // setPhaseName(lineData.value1)
-    // setPhaseDate(lineData.value2)
+    setFormState({phaseName: lineData.value1, phaseDate: lineData.value2})
     setModalVisible({ modal1: false, modal2: false, modal3: true, modal4: false })
   }
   const openEditLineItemModal = (lineKey) => {
     setmodal3isPhase(false)
     currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
     let lineData = proposalSheet.find(({key}) => key === lineKey)
-    setFormState('lineItem', lineData.value1)
-    setFormState('phascosteDate', lineData.value2)
-    // setLineItem(lineData.value1)
-    // setCost(lineData.value2)
+    setFormState({lineItem: lineData.value1, cost: lineData.value2})
     setModalVisible({ modal1: false, modal2: false, modal3: true, modal4: false })
   }
   const editPhase = () => {
@@ -194,7 +177,7 @@ const ProposalScreen = ({ route, navigation }) => {
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
               value={modal2isPhase ? form.phaseName : form.lineItem}
-              onChangeText={text => modal2isPhase ? setFormState('phaseName', text) : setFormState('lineItem', text)}></TextInput>
+              onChangeText={text => modal2isPhase ? setFormState({phaseName: text}) : setFormState({lineItem: text})}></TextInput>
           </View>
           <View style={[globalStyles.formColumn, { flex: modal2isPhase ? 3 : 2 }]}>
             <Text style={globalStyles.formFieldCaption}>{modal2isPhase ? 'Date' : 'Cost'}</Text>
@@ -203,7 +186,7 @@ const ProposalScreen = ({ route, navigation }) => {
               style={globalStyles.formFieldInput}
               keyboardType={modal2isPhase ? "default" : "numeric"}
               value={modal2isPhase ? form.phaseDate : form.cost}
-              onChangeText={text => modal2isPhase ? setFormState('phaseDate', text) : setFormState('cost', text)}></TextInput>
+              onChangeText={text => modal2isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}></TextInput>
           </View>
         </View>
       </View>
@@ -227,7 +210,7 @@ const ProposalScreen = ({ route, navigation }) => {
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
               value={modal3isPhase ? form.phaseName : form.lineItem}
-              onChangeText={text => modal3isPhase ? setFormState('phaseName', text) : setFormState('lineItem', text)}></TextInput>
+              onChangeText={text => modal3isPhase ? setFormState({phaseName: text}) : setFormState({lineItem: text})}></TextInput>
           </View>
           <View style={[globalStyles.formColumn, { flex: modal3isPhase ? 3 : 2  }]}>
             <Text style={globalStyles.formFieldCaption}>{modal3isPhase ? 'Date' : 'Cost'}</Text>
@@ -236,7 +219,7 @@ const ProposalScreen = ({ route, navigation }) => {
               style={globalStyles.formFieldInput}
               keyboardType="numeric"
               value={modal3isPhase ? form.phaseDate : form.cost}
-              onChangeText={text => modal3isPhase ? setFormState('phaseDate', text) : setFormState('cost', text)}></TextInput>
+              onChangeText={text => modal3isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}></TextInput>
           </View>
         </View>
       </View>
@@ -267,7 +250,7 @@ const ProposalScreen = ({ route, navigation }) => {
               autoCorrect={false} 
               style={globalStyles.formFieldInput}
               value={form.description}
-              onChangeText={text => setFormState('description', text)}></TextInput>
+              onChangeText={text => setFormState({description: text})}></TextInput>
           </View>
         </View>
       </View>
