@@ -26,8 +26,15 @@ const ProposalScreen = ({ route, navigation }) => {
   const editDescription = isAdd ? '' : selectedProposal.description
 
   const [proposalSheet, setProposalSheet] = useState(currentProposal)
-  const [modal2isPhase, setmodal2isPhase] = useState('')
-  const [modal3isPhase, setmodal3isPhase] = useState('')
+
+  // Form State
+  const formData = {
+    phaseName: '',
+    phaseDate: '',
+    lineItem: '',
+    cost: '',
+    description: ''
+  }
   const [phaseName, setPhaseName] = useState('')
   const [phaseDate, setPhaseDate] = useState('')
   const [lineItem, setLineItem] = useState('')
@@ -45,14 +52,8 @@ const ProposalScreen = ({ route, navigation }) => {
   }
 
   const [modalVisible, setModalVisible] = useState(closedModals)
-
-  const toggleModal = (key, value) => {
-    setModalVisible({ 
-      ...modalVisible,
-      [key]: value
-    })
-    console.log(key, value, modalVisible)
-  }
+  const [modal2isPhase, setmodal2isPhase] = useState('')
+  const [modal3isPhase, setmodal3isPhase] = useState('')
 
   // Total Cost Calculation
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
@@ -65,7 +66,7 @@ const ProposalScreen = ({ route, navigation }) => {
     setModalVisible(closedModals)
   }
   const openLineSelectionModal = () => {
-    toggleModal('modal1', true)
+    setModalVisible({ modal1: true, modal2: false, modal3: false, modal4: false })
   }
 
   // Add Line Item Modal Settings
@@ -84,12 +85,12 @@ const ProposalScreen = ({ route, navigation }) => {
   }
   const addLineItem = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: lineItem, value2: cost}])
-    toggleModal('modal2', false)  
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
   const addPhase = () => {
     setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: phaseName, value2: phaseDate}])
     setModalVisible(closedModals)
-    toggleModal('modal2', false)  
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
 
   // Edit Line Item Modal Settings
@@ -99,7 +100,7 @@ const ProposalScreen = ({ route, navigation }) => {
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setPhaseName(lineData.value1)
     setPhaseDate(lineData.value2)
-    toggleModal('modal3', true)  
+    setModalVisible({ modal1: false, modal2: false, modal3: true, modal4: false })
   }
   const openEditLineItemModal = (lineKey) => {
     setmodal3isPhase(false)
@@ -107,31 +108,31 @@ const ProposalScreen = ({ route, navigation }) => {
     let lineData = proposalSheet.find(({key}) => key === lineKey)
     setLineItem(lineData.value1)
     setCost(lineData.value2)
-    toggleModal('modal3', true)  
+    setModalVisible({ modal1: false, modal2: false, modal3: true, modal4: false })
   }
   const editPhase = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet[currentLineIndex].value1 = phaseName
     copiedProposalSheet[currentLineIndex].value2 = phaseDate
     setProposalSheet(copiedProposalSheet)
-    toggleModal('modal3', false)  
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
   const editLineItem = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet[currentLineIndex].value1 = lineItem
     copiedProposalSheet[currentLineIndex].value2 = cost
     setProposalSheet(copiedProposalSheet)
-    toggleModal('modal3', false)  
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
   const deleteLineItem = () => {
     const copiedProposalSheet = proposalSheet  
     copiedProposalSheet.splice(currentLineIndex, 1)
-    toggleModal('modal3', false)  
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
 
   // Save Proposal Modal Settings
   const openSaveProposal = () => {
-    toggleModal('modal4', true)  
+    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: true })
   }
   const saveProposal = () => {
     addProposal(clientID, proposalID, description, totalCost, proposalSheet)
