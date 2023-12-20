@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
-import EmployeesFlatlist from '../components/employees/EmployeeFlatlist'
+import EmployeesFlatlist from '../components/flatlists/EmployeeFlatlist'
 import IconButtonHContent from '../components/IconButtonHContent'
 
 const EmployeeScreen = ({ navigation }) => {
@@ -14,7 +13,7 @@ const EmployeeScreen = ({ navigation }) => {
       <EmployeesFlatlist />
 
       <View style={styles.addEmployeeButton}>
-        <IconButtonHContent pressFunction={() => navigation.navigate('AddEmployee')} title="Add New Employee" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+        <IconButtonHContent pressFunction={() => navigation.navigate('EmployeeForm', {isAdd:true, payload: ''})} title="Add New Employee" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
       </View>
     </>
   )

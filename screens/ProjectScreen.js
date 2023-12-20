@@ -1,7 +1,7 @@
 import { React } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import StackHeader from '../components/StackHeader'
-import ProjectsFlatlist from '../components/projects/ProjectsFlatlist'
+import ProjectsFlatlist from '../components/flatlists/ProjectsFlatlist'
 
 
 const ProjectScreen = ({ route, navigation }) => {

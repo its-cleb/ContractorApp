@@ -46,7 +46,7 @@ const EmployeeDetailsScreen = ({ route, navigation }) => {
       </View>
       
       <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('EditEmployee', {payload})} title='Edit Employee' icon='edit' textcolor='white' bgcolor='steelblue' />
+        <IconButtonHSmall pressFunction={() => navigation.navigate('EmployeeForm', {isAdd:false, payload: payload})} title='Edit Employee' icon='edit' textcolor='white' bgcolor='steelblue' />
       </View>
     </>
   ) 

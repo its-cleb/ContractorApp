@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Context as ClientContext} from '../context/ClientContext'
 import DeleteButton from '../components/DeleteButton'
-import ProposalsFlatlist from '../components/proposals/ProposalsFlatlist'
+import ProposalsFlatlist from '../components/flatlists/ProposalsFlatlist'
 import BottomTab3 from '../components/BottomTab3'
 
 

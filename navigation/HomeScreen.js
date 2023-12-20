@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import IconButtonNavigate from '../components/IconButtonNavigate'
 import DrawerHeader from '../components/DrawerHeader'
-import ProjectsFlatlist from '../components/projects/ProjectsFlatlist'
+import ProjectsFlatlist from '../components/flatlists/ProjectsFlatlist'
 import { globalStyles } from '../styles/globalstyles'
 
 const HomeScreen = () => {

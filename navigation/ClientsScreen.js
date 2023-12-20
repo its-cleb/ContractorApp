@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Keyboard, SafeAreaView, StyleSheet, View } from 'react-native'
 import IconButtonHContent from '../components/IconButtonHContent'
-import ClientFlatlist from '../components/clients/ClientsFlatlist'
+import ClientFlatlist from '../components/flatlists/ClientsFlatlist'
 import DrawerHeader from '../components/DrawerHeader'
 import SearchBar from '../components/SearchBar'
 

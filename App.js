@@ -11,13 +11,11 @@ import ClientsScreen from './navigation/ClientsScreen'
 import EmployeeScreen from './navigation/EmployeeScreen'
 
 import ClientFormScreen from './screens/ClientFormScreen'
-import EditClientScreen from './screens/EditClientScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
 import ProposalScreen from './screens/ProposalScreen'
 import ProjectScreen from './screens/ProjectScreen'
 
-import AddEmployeeScreen from './screens/AddEmployeeScreen'
-import EditEmployeeScreen from './screens/EditEmployeeScreen'
+import EmployeeFormScreen from './screens/EmployeeFormScreen'
 import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
 
 import { Provider as ClientProvider } from './context/ClientContext'
@@ -80,14 +78,9 @@ function EmployeeScreenStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AddEmployee"
-        component={AddEmployeeScreen}
-        options={{ headerTitle: "Add New Employee" }}
-      />
-      <Stack.Screen
-        name="EditEmployee"
-        component={EditEmployeeScreen}
-        options={{ headerTitle: "Edit Employee" }}
+        name="EmployeeForm"
+        component={EmployeeFormScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="EmployeeDetails"
