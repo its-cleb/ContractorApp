@@ -58,8 +58,8 @@ const ProposalScreen = ({ route, navigation }) => {
   }
 
   const [modalVisible, setModalVisible] = useState(closedModals)
-  const [modal2isPhase, setmodal2isPhase] = useState('')
-  const [modal3isPhase, setmodal3isPhase] = useState('')
+  const [modal2isPhase, setModal2isPhase] = useState('')
+  const [modal3isPhase, setModal3isPhase] = useState('')
 
   // Total Cost Calculation
   let lineItems = proposalSheet.filter((item) => item.isPhase === false )
@@ -76,51 +76,33 @@ const ProposalScreen = ({ route, navigation }) => {
   }
 
   // Add Line Item Modal Settings
-  const openPhaseModal = () => {
-    setmodal2isPhase(true)
-    setFormState({phaseName: '', phaseDate: ''})
+  const openModal2 = (phaseModal) => {
+    setModal2isPhase( phaseModal ? true : false )
+    setFormState( phaseModal ? {phaseName: '', phaseDate: ''} : {lineItem: '', cost: ''} )
     setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
-  const openLineItemModal = () => {
-    setmodal2isPhase(false)
-    setFormState({lineItem: '', cost: ''})
-    setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
-  }
-  const addLineItem = () => {
-    setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: false, value1: form.lineItem, value2: form.cost}])
-    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
-  }
-  const addPhase = () => {
-    setProposalSheet(previousState => [...previousState, { key: Date.now(), isPhase: true, value1: form.phaseName, value2: form.phaseDate}])
+  const addLine = () => {
+    setProposalSheet(previousState => [...previousState, { 
+      key: Date.now(), 
+      isPhase: modal2isPhase ? true : false, 
+      value1: modal2isPhase ? form.phaseName : form.lineItem, 
+      value2: modal2isPhase ? form.phaseDate : form.cost
+    }])
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
 
   // Edit Line Item Modal Settings
-  const openEditPhaseModal = (lineKey) => {
-    setmodal3isPhase(true)
-    currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
-    let lineData = proposalSheet.find(({key}) => key === lineKey)
-    setFormState({phaseName: lineData.value1, phaseDate: lineData.value2})
+  const openModal3 = (data) => {
+    setModal3isPhase(data.phaseModal ? true : false)
+    currentLineIndex = proposalSheet.findIndex(({key}) => key === data.lineKey)
+    let lineData = proposalSheet.find(({key}) => key === data.lineKey)
+    setFormState(data.phaseModal ? {phaseName: lineData.value1, phaseDate: lineData.value2} : {lineItem: lineData.value1, cost: lineData.value2})
     setModalVisible({ modal1: false, modal2: false, modal3: true, modal4: false })
   }
-  const openEditLineItemModal = (lineKey) => {
-    setmodal3isPhase(false)
-    currentLineIndex = proposalSheet.findIndex(({key}) => key === lineKey)
-    let lineData = proposalSheet.find(({key}) => key === lineKey)
-    setFormState({lineItem: lineData.value1, cost: lineData.value2})
-    setModalVisible({ modal1: false, modal2: false, modal3: true, modal4: false })
-  }
-  const editPhase = () => {
+  const editLine = (isPhase) => {
     const copiedProposalSheet = proposalSheet  
-    copiedProposalSheet[currentLineIndex].value1 = form.phaseName
-    copiedProposalSheet[currentLineIndex].value2 = form.phaseDate
-    setProposalSheet(copiedProposalSheet)
-    setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
-  }
-  const editLineItem = () => {
-    const copiedProposalSheet = proposalSheet  
-    copiedProposalSheet[currentLineIndex].value1 = form.lineItem
-    copiedProposalSheet[currentLineIndex].value2 = form.cost
+    copiedProposalSheet[currentLineIndex].value1 = isPhase ? form.phaseName : form.lineItem
+    copiedProposalSheet[currentLineIndex].value2 = isPhase ? form.phaseDate : form.cost
     setProposalSheet(copiedProposalSheet)
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: false })
   }
@@ -145,13 +127,10 @@ const ProposalScreen = ({ route, navigation }) => {
     setModalVisible({ modal1: false, modal2: false, modal3: false, modal4: true })
   }
   const saveProposal = () => {
-    addProposal(clientID, proposalID, form.description, totalCost, proposalSheet)
+    isAdd ? addProposal(clientID, proposalID, form.description, totalCost, proposalSheet) : editProposal(clientID, proposalID, form.description, totalCost, proposalSheet)
     navigation.pop()
   }
-  const overwriteProposal = () => {
-    editProposal(clientID, proposalID, form.description, totalCost, proposalSheet)
-    navigation.pop()
-  }
+
   const deleteButton = () => {
     if (isAdd === false) {
       deleteProposal(proposalID)
@@ -165,8 +144,8 @@ const ProposalScreen = ({ route, navigation }) => {
   const modal1Content =
     <View style={styles.contentBox}>
       <View style={styles.lineSelectionButtonsBox}>
-        <IconButtonHSmall pressFunction={openPhaseModal} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/> 
-        <IconButtonHSmall pressFunction={openLineItemModal} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
+        <IconButtonHSmall pressFunction={() => openModal2(true)} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/> 
+        <IconButtonHSmall pressFunction={() => openModal2(false)} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
       </View>
     </View>
 
@@ -195,7 +174,7 @@ const ProposalScreen = ({ route, navigation }) => {
         </View>
       </View>
       <IconButtonHSmall 
-        pressFunction={modal2isPhase ? addPhase : addLineItem} 
+        pressFunction={addLine} 
         title={modal2isPhase ? 'Add Phase' : 'Add Line Item'} 
         icon={modal2isPhase ? 'indent' : 'list'} 
         textcolor='white' 
@@ -228,7 +207,7 @@ const ProposalScreen = ({ route, navigation }) => {
         </View>
       </View>
       <IconButtonHSmall 
-        pressFunction={modal3isPhase ? editPhase : editLineItem} 
+        pressFunction={() => editLine(modal3isPhase ? true : false)} 
         title='Save Edit' 
         icon='edit' 
         textcolor='white' 
@@ -265,7 +244,7 @@ const ProposalScreen = ({ route, navigation }) => {
           </View>
         </View>
       </View>
-      <IconButtonHSmall pressFunction={isAdd ? saveProposal : overwriteProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
+      <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
     </>
 
   // ---------- | Main Return | ----------
@@ -284,7 +263,7 @@ const ProposalScreen = ({ route, navigation }) => {
             data={proposalSheet}
             keyExtractor={item => item.key}
             renderItem={({item}) => 
-              <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => item.isPhase ? openEditPhaseModal(item.key) : openEditLineItemModal(item.key) }>
+              <TouchableOpacity style={item.isPhase ? styles.phase : styles.lineRow} onPress={() => openModal3({lineKey: item.key, phaseModal: item.isPhase ? true : false})}>
                 <Text style={item.isPhase ? styles.phaseName : styles.lineItem}>{item.value1}{item.isPhase ? '' : ' . . .'}</Text>
                 <Text style={item.isPhase ? styles.phaseDate : styles.lineCost}>{item.isPhase ? item.value2 : 
                   Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.value2)}</Text>
