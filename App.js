@@ -10,7 +10,7 @@ import CompanyScreen from './navigation/CompanyScreen'
 import ClientsScreen from './navigation/ClientsScreen'
 import EmployeeScreen from './navigation/EmployeeScreen'
 
-import AddClientScreen from './screens/AddClientScreen'
+import ClientFormScreen from './screens/ClientFormScreen'
 import EditClientScreen from './screens/EditClientScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
 import ProposalScreen from './screens/ProposalScreen'
@@ -47,14 +47,9 @@ function ClientScreenStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="AddClient"
-        component={AddClientScreen}
-        options={{ headerTitle: "Add New Client" }}
-      />
-      <Stack.Screen
-        name="EditClient"
-        component={EditClientScreen}
-        options={{ headerTitle: "Edit Client" }}
+        name="ClientForm"
+        component={ClientFormScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ClientDetails"

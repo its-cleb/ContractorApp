@@ -7,18 +7,14 @@ import { useNavigation } from '@react-navigation/native'
 const ProjectsFlatlist = props => {
  
   const { state } = useContext(Context)
-  console.log('State:', state)
 
   const test = useContext(Context)
-  console.log('Test:', test.state)
 
   const client = useContext(ClientContext)
-  console.log('Client', client.state)
-
   
   const navigation = useNavigation()
 
-  const projects = state.filter((project) => project.clientID === props.filter )
+  const projects = props.isFiltered ? state.filter((project) => project.clientID === props.filter ) : state
 
   return (
     <View style={styles.flatlistbox}>

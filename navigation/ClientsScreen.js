@@ -24,7 +24,7 @@ const ViewClientsScreen = ({ navigation }) => {
         <ClientFlatlist filterSearchTerm={searchTerm} />
 
         <View style={styles.addProjectButton}>
-          <IconButtonHContent pressFunction={() => navigation.navigate('AddClient')} title="Add New Client" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+          <IconButtonHContent pressFunction={() => navigation.navigate('ClientForm', { isAdd: true, payload: ''})} title="Add New Client" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
         </View>
 
       </SafeAreaView>

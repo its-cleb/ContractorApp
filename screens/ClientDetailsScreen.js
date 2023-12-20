@@ -56,7 +56,7 @@ const ClientDetailsScreen = ({ route, navigation }) => {
       <BottomTab3 
         button1icon='user-edit'
         button1text='Edit Client'
-        button1function={() => navigation.navigate('EditClient', {payload})}
+        button1function={() => navigation.navigate('ClientForm', {isAdd:false, payload: payload})}
         button2icon='file-alt'
         button2text='Add Proposal'
         button2function={() => navigation.navigate('ProposalScreen', { isAdd: true , clientID: clients.clientID, proposalID: ''})}

@@ -9,13 +9,13 @@ export const globalStyles = StyleSheet.create({
   },
   containerHCentered: {
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
   },
   containerVHCentered: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 10,
   },
   textTitle: {
     fontSize: 24,

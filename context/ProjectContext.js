@@ -55,7 +55,7 @@ export const { Context, Provider } = createDataContext(
     clientID: '000001',
     proposalID: '',
     title: 'Kitchen Remodel',
-    employees: ['Jim', 'Bob', 'Ken'],
+    employees: ['Jim Halpert', 'Bob McJohnson', 'Ken Salmon'],
     tasks: '',
     date: '1/29/2024'
   }]

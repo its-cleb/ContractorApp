@@ -1,10 +1,6 @@
-import { React, useState, useContext } from 'react'
+import { React } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import StackHeader from '../components/StackHeader'
-import IconButtonHSmall from '../components/IconButtonHSmall'
-import ModalCenterBG from '../components/ModalCenterBG'
-import BottomTab3 from '../components/BottomTab3'
-import { Context } from '../context/ProjectContext'
 import ProjectsFlatlist from '../components/projects/ProjectsFlatlist'
 
 
