@@ -56,15 +56,27 @@ export const { Context, Provider } = createDataContext(
   employeeReducer, 
   { addEmployee, editEmployee, deleteEmployee },
   [{
-    employeeID: 'Test employee',
-    employeeName: 'John Smith', 
-    phone:'123-456-7890', 
-    email:'test@gmail.com', 
+    employeeID: '00001',
+    employeeName: 'Adam Ivelia', 
+    phone:'123-456-0000', 
+    email:'adam@gmail.com', 
     address: '1234 Admiral Way', 
     unitNumber:'1', 
     city:'Seattle', 
     usState:'WA', 
     zip:'98231', 
     wage: '25'
+  },
+  {
+    employeeID: '00002',
+    employeeName: 'Brandon Johnson', 
+    phone:'123-456-1111', 
+    email:'brandon@gmail.com', 
+    address: '1234 Chuckanut Blvd', 
+    unitNumber:'2', 
+    city:'Bend', 
+    usState:'OR', 
+    zip:'98231', 
+    wage: '30'
   }]
 )

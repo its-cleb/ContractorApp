@@ -1,20 +1,28 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { Context } from '../../context/ProjectContext'
-import { Context as ClientContext } from '../../context/ClientContext'
+import { Context as EmployeeContext } from '../../context/EmployeeContext'
 import { useNavigation } from '@react-navigation/native'
 
 const ProjectsFlatlist = props => {
  
   const { state } = useContext(Context)
 
-  const test = useContext(Context)
-
-  const client = useContext(ClientContext)
-  
   const navigation = useNavigation()
 
   const projects = props.isFiltered ? state.filter((project) => project.clientID === props.filter ) : state
+
+  const employees = useContext(EmployeeContext)
+  const workerIDs = projects[0].employees
+
+  // Employee Flatlist content function
+  const getEmployees = (item) => {
+
+    return (
+      <Text style={styles.projectTextRight}>{item}</Text>
+    )
+  }
+  
 
   return (
     <View style={styles.flatlistbox}>
@@ -22,7 +30,7 @@ const ProjectsFlatlist = props => {
         data={projects} 
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetailsScreen', { isAdd: false, clientID: item.clientID })}>
+          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID })}>
             <View style={styles.projectContainer}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 2 }]}>
@@ -40,9 +48,7 @@ const ProjectsFlatlist = props => {
                 <View style={[styles.projectColumnRight, { flex: 2 }]}>
                   <FlatList
                     data={item.employees}
-                    renderItem={({ item }) => (
-                      <Text style={styles.projectTextRight}>{item}</Text>
-                    )}
+                    renderItem={({ item }) => getEmployees(item)}
                   />
                 </View>
                 

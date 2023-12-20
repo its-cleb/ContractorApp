@@ -14,6 +14,7 @@ import ClientFormScreen from './screens/ClientFormScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
 import ProposalScreen from './screens/ProposalScreen'
 import ProjectScreen from './screens/ProjectScreen'
+import ProjectDetailsScreen from './screens/ProjectDetailsScreen'
 
 import EmployeeFormScreen from './screens/EmployeeFormScreen'
 import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
@@ -62,6 +63,11 @@ function ClientScreenStack() {
       <Stack.Screen
         name="ProjectScreen"
         component={ProjectScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProjectDetails"
+        component={ProjectDetailsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

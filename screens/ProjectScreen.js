@@ -14,7 +14,7 @@ const ProjectScreen = ({ route, navigation }) => {
       <StackHeader title='Projects'/>
       
       <View style={styles.pageContainer}> 
-        <ProjectsFlatlist  filter={client}/>
+        <ProjectsFlatlist isFiltered={true} filter={client}/>
       </View>
     </>
   )
