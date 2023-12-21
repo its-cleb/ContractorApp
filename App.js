@@ -105,6 +105,29 @@ function EmployeeScreenStack() {
     )
 }
 
+// Project Pages
+function ProjectScreenStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ProjectScreen"
+        component={ProjectScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProjectDetails"
+        component={ProjectDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProjectForm"
+        component={ProjectFormScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+    )
+}
+
 // Estimator Pages
 function EstimatorStack() {
   return (
@@ -186,6 +209,11 @@ export default function App() {
             <Drawer.Screen
               name="ProjectDetails"
               component={ProjectDetailsScreen}
+              options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
+            />
+            <Drawer.Screen
+              name="ProjectForm"
+              component={ProjectFormScreen}
               options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
             />
         </Drawer.Navigator>

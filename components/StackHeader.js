@@ -12,7 +12,7 @@ const StackHeader = props => {
       <StatusBar hidden />
         <View style={styles.header}>
           <View style={styles.left}>
-            <TouchableOpacity style={styles.backIcon} onPress={() => props.returnHome ? navigation.navigate('Home') : navigation.pop()}> 
+            <TouchableOpacity style={styles.backIcon} onPress={() => props.fromHome ? navigation.goBack() : navigation.pop()}> 
               <Feather name="arrow-left" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.text}>{props.title}</Text>

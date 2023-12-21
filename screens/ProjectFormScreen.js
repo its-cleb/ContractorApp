@@ -8,7 +8,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
 
   return (
     <>
-      <StackHeader title={isAdd ? 'Add Project' : 'Edit Project'} />
+      <StackHeader title={isAdd ? 'Add Project' : 'Edit Project'} fromHome={true} />
 
     </>
   )

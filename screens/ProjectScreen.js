@@ -28,7 +28,8 @@ const ProjectScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   pageContainer: {
-    flex: 1
+    flex: 1,
+    paddingHorizontal: 5
   },
   addProjectButton: {
     backgroundColor: '#fafafa',

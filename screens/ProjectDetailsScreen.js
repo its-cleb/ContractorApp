@@ -34,9 +34,10 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     navigation.pop()
   }
   
+  console.log(route.params.fromHome)
   return (  
     <>
-      <StackHeader title='Project Details' returnHome={route.params.fromHome} />
+      <StackHeader title='Project Details' fromHome={route.params.fromHome} />
 
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>
