@@ -5,21 +5,22 @@ import { Context as EmployeeContext } from '../../context/EmployeeContext'
 import { useNavigation } from '@react-navigation/native'
 
 const ProjectsFlatlist = props => {
- 
-  const { state } = useContext(Context)
-
+  
   const navigation = useNavigation()
 
+  const { state } = useContext(Context)
   const projects = props.isFiltered ? state.filter((project) => project.clientID === props.filter ) : state
 
   const employees = useContext(EmployeeContext)
-  const workerIDs = projects[0].employees
+  const employeeState = employees.state
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
-
+    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
-      <Text style={styles.projectTextRight}>{item}</Text>
+      <Text style={styles.projectTextRight}>
+        {currentEmployee[0].employeeName}
+        </Text>
     )
   }
   
