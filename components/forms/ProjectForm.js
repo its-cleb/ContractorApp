@@ -1,16 +1,17 @@
 import React from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, Switch, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import BottomTab3 from '../BottomTab3'
+import DatePicker from '../DatePicker'
+import ModalCenterBG from '../ModalCenterBG'
 import { Context as ProjectContext } from '../../context/ProjectContext'
 import { Context as EmployeeContext } from '../../context/EmployeeContext'
 
 const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
-  let test = 'test'
 
   const { state, addProject, editProject } = useContext(ProjectContext)
 
@@ -27,7 +28,6 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const project = isAdd ? blankProject : state.find(project => project.projectID === payload)
   const [ projectSheet, setProjectSheet ] = useState(project)
 
-  console.log(projectSheet)
   // Set Employee Data
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
@@ -58,11 +58,26 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     }))
   }
 
+  // Date Picker & Keyboard 
+  let childRef = useRef(null)
+  console.log(childRef)
+  // const toggleDatePicker = () => {
+  // setShowPicker(!showPicker)
+  // }
+  // const closeDatePickerAndKeyboard = () => {
+  //   setShowPicker(false)
+  //   Keyboard.dismiss()
+  // }
+  // const dateKeyboardDismiss = () => {
+  //   toggleDatePicker()
+  //   Keyboard.dismiss()
+  // }
+
   return(
     <>
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
             <View style={[globalStyles.formRow, styles.row]}>
-              <View style={[globalStyles.formColumn, { flex: 1 }]}>
+              <View style={[globalStyles.formColumn, { flex: 5 }]}>
                 <Text style={globalStyles.formFieldCaption}>Project Title</Text>
                 <TextInput 
                   autoCorrect={false} 
@@ -71,6 +86,19 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                   onChangeText={(text) => setFormState('title', text)}>
                 </TextInput>
               </View>
+              <View style={[globalStyles.formColumn, { flex: 2 }]}>
+              <Pressable onPress={() => {childRef.current.dateKeyboardDismiss()}}>
+                <Text style={globalStyles.formFieldCaption}>Date</Text>
+                <TextInput 
+                  autoCorrect={false} 
+                  style={globalStyles.formFieldInput} 
+                  editable={false} 
+                  value={form.date}
+                  onPressIn={dateKeyboardDismiss}
+                  onChangeText={text => setFormState('date', text)}
+                ></TextInput>
+              </Pressable>
+            </View>
             </View>
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -98,6 +126,9 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
               value={isEnabled}
             /> */}
       </KeyboardAvoidingView>
+
+      <DatePicker ref={childRef} />
+
       <BottomTab3 
         button1icon='user-edit'
         button1text='Employees'
@@ -108,6 +139,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
         button3icon='save'
         button3text='Save'
       /> 
+
     </>
   )
 }

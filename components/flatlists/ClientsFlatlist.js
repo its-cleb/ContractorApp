@@ -65,10 +65,10 @@ const styles = StyleSheet.create({
   clientContainer: {
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'darkkhaki',
+    borderColor: 'steelblue',
     marginVertical: 5,
     marginHorizontal: 10,
-    backgroundColor: 'khaki',
+    backgroundColor: 'powderblue',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     borderBottomWidth: 1,
-    borderBottomColor: 'darkkhaki',
+    borderBottomColor: '#4682b466',
     paddingBottom: 3
   },
   clientRowBottom: {
