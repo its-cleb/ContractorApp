@@ -8,7 +8,6 @@ import StackHeader from '../components/StackHeader'
 import BottomTab3 from '../components/BottomTab3'
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
-  console.log(route.params.fromHome)
   const { state, deleteProject } = useContext(ProjectContext)
   
   const currentProject = route.params.projectID
@@ -82,7 +81,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       <BottomTab3 
         button1icon='edit'
         button1text='Edit Project'
-        // button1function={}
+        button1function={() => navigation.navigate('ProjectForm', {isAdd:false, payload: currentProject})}
         button2icon='map-marker-alt'
         button2text='Navigate'
         // button2function={}
