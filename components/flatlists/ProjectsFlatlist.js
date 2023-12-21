@@ -15,7 +15,6 @@ const ProjectsFlatlist = props => {
   const employeeState = employees.state
 
   const tasks = state[0].tasks
-  console.log('bla')
 
   // Employee Flatlist content function
   const getEmployees = (item) => {

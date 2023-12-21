@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { Context as ProjectContext} from '../context/ProjectContext'
 import { Context as ClientContext} from '../context/ClientContext'
 import { Context as EmployeeContext} from '../context/EmployeeContext'
@@ -18,11 +18,19 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const clients = useContext(ClientContext)
   const currentClient = clients.state.filter((client) => client.clientID === project.clientID)
 
-  const employees = useContext(ClientContext)
-  const workerIDs = project.employees
+  const employees = useContext(EmployeeContext)
+  const employeeState = employees.state
 
-  // const workers = 
-  console.log(workerIDs)
+  // Employee Flatlist content function
+  const getEmployees = (item) => {
+    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    console.log(currentEmployee)
+    return (
+      <Text style={styles.projectTextRight}>
+        {currentEmployee[0].employeeName}
+        </Text>
+    )
+  }
   
   const deleteProjectNavBack = () => {
     deleteProject(payload)
@@ -56,7 +64,19 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold]}>Workers:</Text>
           <View style={styles.flexOne}>
-            <Text style={styles.projectTextRight}>{employee.employeeName}</Text>
+            <FlatList
+              data={state[0].employees}
+              renderItem={({ item }) => getEmployees(item)}
+            />
+          </View>  
+        </View>
+        <View style={styles.projectRow}>
+          <Text style={[styles.projectTextBold]}>Tasks:</Text>
+          <View style={styles.flexOne}>
+            <FlatList
+              data={state[0].tasks}
+              renderItem={({ item }) => <Text style={styles.projectTextRight}>{item}</Text> }
+            />
           </View>  
         </View>
       </View>
