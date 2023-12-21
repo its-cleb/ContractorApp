@@ -4,12 +4,11 @@ import { Context as ProjectContext} from '../context/ProjectContext'
 import { Context as ClientContext} from '../context/ClientContext'
 import { Context as EmployeeContext} from '../context/EmployeeContext'
 import DeleteButton from '../components/DeleteButton'
-import IconButtonHSmall from '../components/IconButtonHSmall'
 import StackHeader from '../components/StackHeader'
 import BottomTab3 from '../components/BottomTab3'
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
-
+  console.log(route.params.fromHome)
   const { state, deleteProject } = useContext(ProjectContext)
   
   const currentProject = route.params.projectID
@@ -24,7 +23,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
-    console.log(currentEmployee)
     return (
       <Text style={styles.projectTextRight}>
         {currentEmployee[0].employeeName}
@@ -39,7 +37,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   
   return (  
     <>
-      <StackHeader title='Project Details'/>
+      <StackHeader title='Project Details' returnHome={route.params.fromHome} />
 
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>

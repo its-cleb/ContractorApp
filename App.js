@@ -175,6 +175,11 @@ export default function App() {
                 headerShown: false
               }} 
             />
+            <Drawer.Screen
+              name="ProjectDetails"
+              component={ProjectDetailsScreen}
+              options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
+            />
         </Drawer.Navigator>
       </NavigationContainer>
     </ProjectProvider>

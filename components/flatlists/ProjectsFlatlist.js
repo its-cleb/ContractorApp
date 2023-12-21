@@ -8,6 +8,8 @@ const ProjectsFlatlist = props => {
   
   const navigation = useNavigation()
 
+  const fromHome = props.fromHome
+
   const { state } = useContext(Context)
   const projects = props.isFiltered ? state.filter((project) => project.clientID === props.filter ) : state
 
@@ -33,7 +35,7 @@ const ProjectsFlatlist = props => {
         data={projects} 
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID })}>
+          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID, fromHome: fromHome })}>
             <View style={styles.projectContainer}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 2 }]}>

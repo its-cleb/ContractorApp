@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, SafeAreaView, TouchableOpacity, View, StatusBar, StyleSheet } from 'react-native'
 import { MaterialIcons, Feather } from '@expo/vector-icons'
-import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 
 const StackHeader = props => {    
@@ -13,7 +12,7 @@ const StackHeader = props => {
       <StatusBar hidden />
         <View style={styles.header}>
           <View style={styles.left}>
-            <TouchableOpacity style={styles.backIcon} onPress={() => {navigation.pop()}}> 
+            <TouchableOpacity style={styles.backIcon} onPress={() => props.returnHome ? navigation.navigate('Home') : navigation.pop()}> 
               <Feather name="arrow-left" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.text}>{props.title}</Text>

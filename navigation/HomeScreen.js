@@ -15,7 +15,7 @@ const HomeScreen = () => {
         <Text style={globalStyles.textTitle}>Upcoming Projects</Text>
       </View>
       <View style={styles.projectsContainer}> 
-        <ProjectsFlatlist isFiltered={false} />
+        <ProjectsFlatlist isFiltered={false} fromHome={true} />
       </View>
 
       <View style={styles.flexBox}>
