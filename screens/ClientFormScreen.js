@@ -16,12 +16,12 @@ const ClientFormScreen = ({ route, navigation }) => {
     <>
       <StackHeader title={isAdd ? 'Add Client' : 'Edit Client'}/>
       { isAdd ? 
-        <ClientForm navProp={navigation} /> 
+        <ClientForm nav={navigation} /> 
       :
         <ClientForm 
           initialValues={clientData} 
-          navProp={navigation} 
-          payloadProp={route.params.payload}
+          nav={navigation} 
+          payload={route.params.payload}
         /> 
       }  
     </>     

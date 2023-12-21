@@ -33,8 +33,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     deleteProject(payload)
     navigation.pop()
   }
-  
-  console.log(route.params.fromHome)
+
   return (  
     <>
       <StackHeader title='Project Details' fromHome={route.params.fromHome} />
@@ -82,7 +81,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       <BottomTab3 
         button1icon='edit'
         button1text='Edit Project'
-        button1function={() => navigation.navigate('ProjectForm', {isAdd:false, payload: currentProject})}
+        button1function={() => navigation.navigate('ProjectForm', {isAdd:false, clientID: currentClient[0].clientID, payload: currentProject})}
         button2icon='map-marker-alt'
         button2text='Navigate'
         // button2function={}

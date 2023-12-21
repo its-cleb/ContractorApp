@@ -27,7 +27,6 @@ const ProjectsFlatlist = props => {
         </Text>
     )
   }
-  
 
   return (
     <View style={styles.flatlistbox}>

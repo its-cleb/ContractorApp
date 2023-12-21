@@ -7,13 +7,13 @@ import IconButtonHSmall from '../IconButtonHSmall'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../../context/ClientContext'
 
-const ClientForm = ({ initialValues, navProp, payloadProp }) => {
+const ClientForm = ({ initialValues, nav, payload }) => {
   
   const { addClient, editClient } = useContext(Context)
   
   // Get props from parent component
-  const navigation = navProp
-  const clientID = payloadProp
+  const navigation = nav
+  const clientID = payload
 
   // Declare default values if AddClient was the parent
   const defaultClientValues = { 
