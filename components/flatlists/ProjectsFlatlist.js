@@ -14,6 +14,9 @@ const ProjectsFlatlist = props => {
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
 
+  const tasks = state[0].tasks
+  console.log('bla')
+
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
@@ -44,7 +47,12 @@ const ProjectsFlatlist = props => {
             
               <View style={styles.projectRowBottom}>
                 <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                  <Text style={styles.projectTextLeft}>{item.date}</Text>
+                  <FlatList
+                    data={tasks}
+                    renderItem={({ item }) =>
+                    <Text style={styles.projectTextLeft}>{item}</Text> 
+                  }
+                  />
                 </View>
                 <View style={[styles.projectColumnRight, { flex: 2 }]}>
                   <FlatList
