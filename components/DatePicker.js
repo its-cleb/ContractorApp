@@ -1,18 +1,17 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, TextButton, StyleSheet } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { globalStyles } from '../styles/globalstyles'
 
-const DatePicker = (props, ref) => {
-
-  useImperativeHandle(ref, () => {
-    toggleDatePicker: () => { toggleDatePicker() }
-  })
-
-  console.log(ref)
+const DatePicker = (props) => {
 
   const [date, setDate] = useState(new Date())
   const [showPicker, setShowPicker] = useState(false)
+
+  useEffect(() => {    
+    setShowPicker(!showPicker)
+    console.log(props)
+  }, [props.show])
 
   const toggleDatePicker = () => {
     setShowPicker(!showPicker)
@@ -42,11 +41,7 @@ const DatePicker = (props, ref) => {
     toggleDatePicker()
   }
 
-  const dateKeyboardDismiss = () => {
-    toggleDatePicker()
-    Keyboard.dismiss()
-  }
-
+  // --- Main Return --- 
   return (
     <View style={globalStyles.datePickerBoxIOS}>
     {showPicker && (

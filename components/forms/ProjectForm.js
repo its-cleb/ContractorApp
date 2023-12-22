@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext, useRef } from 'react'
+import { useState, useContext } from 'react'
 import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, Switch, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import TextButton from '../TextButton'
@@ -58,20 +58,13 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     }))
   }
 
-  // Date Picker & Keyboard 
-  let childRef = useRef(null)
-  console.log(childRef)
-  // const toggleDatePicker = () => {
-  // setShowPicker(!showPicker)
-  // }
-  // const closeDatePickerAndKeyboard = () => {
-  //   setShowPicker(false)
-  //   Keyboard.dismiss()
-  // }
-  // const dateKeyboardDismiss = () => {
-  //   toggleDatePicker()
-  //   Keyboard.dismiss()
-  // }
+  // Date Picker
+  const [ showDatePicker, setShowDatePicker ] = useState(false)
+
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker)
+    console.log('toggled')
+  }
 
   return(
     <>
@@ -87,14 +80,14 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                 </TextInput>
               </View>
               <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Pressable onPress={() => {childRef.current.dateKeyboardDismiss()}}>
+              <Pressable onPress={toggleDatePicker}>
                 <Text style={globalStyles.formFieldCaption}>Date</Text>
                 <TextInput 
                   autoCorrect={false} 
                   style={globalStyles.formFieldInput} 
                   editable={false} 
                   value={form.date}
-                  onPressIn={dateKeyboardDismiss}
+                  onPressIn={toggleDatePicker}
                   onChangeText={text => setFormState('date', text)}
                 ></TextInput>
               </Pressable>
@@ -127,7 +120,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
             /> */}
       </KeyboardAvoidingView>
 
-      <DatePicker ref={childRef} />
+      <DatePicker show={showDatePicker} />
 
       <BottomTab3 
         button1icon='user-edit'
