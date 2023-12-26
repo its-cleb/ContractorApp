@@ -61,7 +61,6 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker)
   }
-
   function getDate(data) { // Receive Date from child component
     setFormState('date', data)
   }

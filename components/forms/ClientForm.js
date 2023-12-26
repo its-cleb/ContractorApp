@@ -2,13 +2,11 @@ import React from 'react'
 import { useState, useContext } from 'react'
 import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
-import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
 import DatePicker from '../DatePicker'
-import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../../context/ClientContext'
 
-const ClientForm = ({ initialValues, nav, payload }) => {
+const ClientForm = ({ initialValues, nav, payload, isAdd }) => {
   
   const { addClient, editClient } = useContext(Context)
   
@@ -16,114 +14,56 @@ const ClientForm = ({ initialValues, nav, payload }) => {
   const navigation = nav
   const clientID = payload
 
-  // Declare default values if AddClient was the parent
-  const defaultClientValues = { 
-    clientID: '',
-    clientName: '', 
-    contactDate: '', 
-    phone:'', 
-    email:'', 
-    address: '', 
-    unitNumber:'', 
-    city:'', 
-    usState:'', 
-    zip:'', 
+  // --- Form Data ---
+  const blankForm = {
+      clientID: '',
+      clientName: '', 
+      contactDate: '', 
+      phone:'', 
+      email:'', 
+      address: '', 
+      unitNumber:'', 
+      city:'', 
+      usState:'', 
+      zip:'', 
   }
- 
-  // Check if parent element passed initialValues prop
-  if (initialValues === undefined) {
-    clientValues = defaultClientValues
-    clientEmpty = true
-  } else {
-    clientValues = Object.fromEntries(initialValues)
-    clientEmpty = false
+
+  const formData = isAdd ? blankForm : Object.fromEntries(initialValues)
+
+  const [ form, setForm ] = useState(formData)
+  const setFormState = (key, value) => {
+    setForm(prev => ({
+      ...prev,
+      [key]: value
+    }))
   }
 
   // Control Button functionality
-  const addClientBackPage = () => {
-    addClient(clientName, contactDate, phone, email, address, unitNumber, city, usState, zip )
-    navigation.pop()
-  }
   const saveClientBackPage = () => {
-    editClient(clientID, clientName, contactDate, phone, email, address, unitNumber, city, usState, zip )
+    isAdd ? 
+    addClient(form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) : 
+    editClient(clientID, form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
     navigation.pop()
-  }
-
-  // Change buttons based on page
-  let controlButtons
-  if (clientEmpty === true) {
-    controlButtons = <IconButtonHSmall pressFunction={addClientBackPage} title='Add Client' icon='plus' textcolor='white' bgcolor='steelblue' />
-  } else {
-    controlButtons = 
-    <>
-      <IconButtonHSmall pressFunction={saveClientBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-      <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
-    </>
   }
   
-  // --- Form Inputs ---
-  const [ clientName, setClientName ] = useState(clientValues.clientName)
-  const [ contactDate, setContactDate ] = useState(clientValues.contactDate)
-  const [ phone, setPhone ] = useState(clientValues.phone)
-  const [ email, setEmail ] = useState(clientValues.email)
-  const [ address, setAddress ] = useState(clientValues.address)
-  const [ unitNumber, setUnitNumber ] = useState(clientValues.unitNumber)
-  const [ city, setCity ] = useState(clientValues.city)
-  const [ usState, setUsState ] = useState(clientValues.usState)
-  const [ zip, setZip ] = useState(clientValues.zip)
-
   // Date Picker
   const [ showDatePicker, setShowDatePicker ] = useState(true)
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker)
   }
-
   function getDate(data) { // Receive Date from child component
-    setFormState('date', data)
+    setFormState('contactDate', data)
   }
 
-  // // --- Date Picker ---
-  // const [date, setDate] = useState(new Date())
-  // const [showPicker, setShowPicker] = useState(false)
-
-  // const toggleDatePicker = () => {
-  //   setShowPicker(!showPicker)
-  // }
-
-  // const closeDatePickerAndKeyboard = () => {
-  //   setShowPicker(false)
-  //   Keyboard.dismiss()
-  // }
-
-  // const onChange = ({ type }, selectedDate) => {
-  //   if (type == 'set') {
-  //     const currentDate = selectedDate
-  //     setDate(currentDate)
-
-  //     if (Platform.OS === 'android') {
-  //       toggleDatePicker()
-  //       setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
-  //     }
-  //   } else {
-  //     toggleDatePicker()
-  //   }
-  // }
-
-  // const confirmIOSDate = () => {
-  //   setContactDate(Intl.DateTimeFormat('en-US').format(date))
-  //   toggleDatePicker()
-  // }
-
-  const dateKeyboardDismiss = () => {
-    toggleDatePicker()
+  const keyboardDismiss = () => {
     Keyboard.dismiss()
   }
 
   return (
     <>    
     {/* --- Client Details --- */}
-      <Pressable onPress={dateKeyboardDismiss} style={globalStyles.pressableBox}>
+      <Pressable onPress={keyboardDismiss} style={globalStyles.pressableBox}>
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
@@ -133,20 +73,20 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
-                value={clientName}
-                onChangeText={text => setClientName(text)}></TextInput>
+                value={form.clientName}
+                onChangeText={(text) => setFormState('clientName', text)}></TextInput>
             </View>
             
             <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Pressable onPress={dateKeyboardDismiss}>
+              <Pressable onPress={toggleDatePicker}>
                 <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
                 <TextInput 
                   autoCorrect={false} 
                   style={globalStyles.formFieldInput} 
                   editable={false} 
-                  value={contactDate}
-                  onPressIn={dateKeyboardDismiss}
-                  onChangeText={text => setDate(text)}
+                  value={form.contactDate}
+                  onPressIn={toggleDatePicker}
+                  onChangeText={(text) => setFormState('contactDate', text)}
                 ></TextInput>
               </Pressable>
             </View>
@@ -159,8 +99,8 @@ const ClientForm = ({ initialValues, nav, payload }) => {
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput} 
                 keyboardType="numeric"
-                value={phone}
-                onChangeText={text => setPhone(text)}></TextInput>
+                value={form.phone}
+                onChangeText={(text) => setFormState('phone', text)}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
@@ -168,8 +108,8 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
-                value={email}
-                onChangeText={text => setEmail(text)}></TextInput>
+                value={form.email}
+                onChangeText={(text) => setFormState('email', text)}></TextInput>
             </View>
           </View>
 
@@ -179,8 +119,8 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
-                value={address}
-                onChangeText={text => setAddress(text)}></TextInput>
+                value={form.address}
+                onChangeText={(text) => setFormState('address', text)}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -188,8 +128,8 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
-                value={unitNumber}
-                onChangeText={text => setUnitNumber(text)}></TextInput>
+                value={form.unitNumber}
+                onChangeText={(text) => setFormState('unitNumber', text)}></TextInput>
             </View>
           </View>
 
@@ -199,8 +139,8 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
-                value={city}
-                onChangeText={text => setCity(text)}></TextInput>
+                value={form.city}
+                onChangeText={(text) => setFormState('city', text)}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -208,8 +148,8 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
-                value={usState}
-                onChangeText={text => setUsState(text)}></TextInput>
+                value={form.usState}
+                onChangeText={(text) => setFormState('usState', text)}></TextInput>
             </View>
 
             <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -218,42 +158,26 @@ const ClientForm = ({ initialValues, nav, payload }) => {
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput} 
                 keyboardType="numeric"
-                value={zip}
-                onChangeText={text => setZip(text)}></TextInput>
+                value={form.zip}
+                onChangeText={(text) => setFormState('zip', text)}></TextInput>
             </View>
           </View>
 
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
-            {controlButtons}
+            {isAdd ? 
+              <IconButtonHSmall pressFunction={saveClientBackPage} title='Add Client' icon='plus' textcolor='white' bgcolor='steelblue' />
+            : 
+              <>
+                <IconButtonHSmall pressFunction={saveClientBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
+                <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+              </>
+            }
           </View>    
        
         </KeyboardAvoidingView>
 
-        <DatePicker getDate={getDate} data={contactDate} show={showDatePicker} />
-        {/* --- Date Picker --- */}
-        {/* <View style={globalStyles.datePickerBoxIOS}>
-        {showPicker && (
-          <DateTimePicker 
-            mode='date'
-            display='spinner'
-            value={date}
-            onChange={onChange}
-            style={globalStyles.datePicker}
-            textColor='black'
-          />
-          )}
+        <DatePicker getDate={getDate} data={form.contactDate} show={showDatePicker} />
 
-          {showPicker &&  Platform.OS === 'ios' && (
-            <View style={[globalStyles.datePickerButtonsIOS, { flexDirection: 'row', gap: 10, marginHorizontal: 20}]}>
-              <View style={[globalStyles.formColumn, { flex: 1 }]}>
-                <TextButton  pressFunction={toggleDatePicker} bgcolor="maroon" text="Close Date Picker"/>
-              </View>
-              <View style={[globalStyles.formColumn, { flex: 1 }]}>
-                <TextButton  style={[globalStyles.formColumn, { flex: 1 }]} pressFunction={confirmIOSDate} bgcolor="steelblue" text="Add Date"/>
-              </View>
-            </View>
-          )}
-        </View> */}
       </Pressable>
     </>
   ) 
