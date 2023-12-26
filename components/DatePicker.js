@@ -27,8 +27,7 @@ const DatePicker = props => {
     setRenderCount(renderCount + 1)
     if (renderCount > 0) {
       setShowPicker(!showPicker)
-      console.log('useEffect:', renderCount)
-    } else { console.log('useEffect:', renderCount) }    
+    } else {}    
   }, [props.show])
 
   // Send date on change

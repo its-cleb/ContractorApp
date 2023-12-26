@@ -12,7 +12,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
   const { state, addProject, editProject } = useContext(ProjectContext)
 
-  // Set Project Data
+  // Project Data
   const blankProject = {
     projectID: Date.now(),
     proposalID: '',
@@ -25,22 +25,13 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const project = isAdd ? blankProject : state.find(project => project.projectID === payload)
   const [ projectSheet, setProjectSheet ] = useState(project)
 
-  // Set Employee Data
+  // Employee Data
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
 
-  // Employee Flatlist content function
-  const getEmployees = (item) => {
-    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
-    return (
-    <View style={styles.employeeRow}>
-      <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
-      <Text style={styles.textRight}>{currentEmployee[0].phone}</Text>
-    </View>
-    )
-  }
 
-  // Set Form Data
+
+  // Form Data
   const blankForm = {
     title: '',
     taskName: '',
@@ -55,6 +46,36 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     }))
   }
 
+  // Employees List Content
+  let employeesEmpty = Boolean(projectSheet.employees.length > 0)
+  const employeesList = 
+    employeesEmpty ?
+    <FlatList data={projectSheet.employees} renderItem={({ item }) => getEmployees(item)} />
+    :
+    <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
+
+  // Tasks List Content
+  let tasksEmpty = Boolean(projectSheet.tasks.length > 0)
+  const tasksList = 
+    tasksEmpty ?
+    <FlatList
+      data={projectSheet.tasks}
+      renderItem={({ item }) => <View style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></View> }
+    />
+    :
+    <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
+  
+    // Employee Flatlist content function
+  const getEmployees = (item) => {
+    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    return (
+    <View style={styles.employeeRow}>
+      <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
+      <Text style={styles.textRight}>{currentEmployee[0].phone}</Text>
+    </View>
+    )
+  }
+  
   // Date Picker
   const [ showDatePicker, setShowDatePicker ] = useState(true)
 
@@ -96,19 +117,13 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Assigned Employees</Text>
-                <FlatList
-                  data={projectSheet.employees}
-                  renderItem={({ item }) => getEmployees(item)}
-                />
+                {employeesList}
               </View>
             </View>
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Project Tasks</Text>
-                <FlatList
-                  data={projectSheet.tasks}
-                  renderItem={({ item }) => <View style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></View> }
-                />
+                {tasksList}
               </View>
             </View>
 
@@ -141,6 +156,21 @@ const styles = StyleSheet.create({
   row: {
     marginBottom: 5
   }, 
+  blankRow: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingBottom: 8,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: 'gray',
+    marginVertical: 3,
+    backgroundColor: '#eeeeee',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // flex: 1
+  },
   employeeRow: {
     flexDirection: 'row',
     gap: 10,
@@ -165,6 +195,13 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'black',
     textAlign: 'right',
+    fontSize: 16,
+    flexWrap: 'wrap'
+  },
+  textCenter: {
+    flex: 1,
+    color: 'gray',
+    textAlign: 'center',
     fontSize: 16,
     flexWrap: 'wrap'
   },
