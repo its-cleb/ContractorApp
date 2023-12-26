@@ -74,6 +74,7 @@ const DatePicker = props => {
       />
       )}
 
+      {/* Problem is here */}
       {showPicker &&  Platform.OS === 'ios' && (
         <View style={[globalStyles.datePickerButtonsIOS, { flexDirection: 'row', gap: 10, marginHorizontal: 20}]}>
           <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -88,8 +89,8 @@ const DatePicker = props => {
   )
 }
 
-const styles = StyleSheet.create({
+// const styles = StyleSheet.create({
 
-})
+// })
 
 export default DatePicker

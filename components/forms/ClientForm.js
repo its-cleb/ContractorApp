@@ -4,6 +4,7 @@ import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingV
 import { globalStyles } from '../../styles/globalstyles'
 import TextButton from '../TextButton'
 import IconButtonHSmall from '../IconButtonHSmall'
+import DatePicker from '../DatePicker'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Context } from '../../context/ClientContext'
 
@@ -71,38 +72,48 @@ const ClientForm = ({ initialValues, nav, payload }) => {
   const [ usState, setUsState ] = useState(clientValues.usState)
   const [ zip, setZip ] = useState(clientValues.zip)
 
-  // --- Date Picker ---
-
-  const [date, setDate] = useState(new Date())
-  const [showPicker, setShowPicker] = useState(false)
+  // Date Picker
+  const [ showDatePicker, setShowDatePicker ] = useState(true)
 
   const toggleDatePicker = () => {
-    setShowPicker(!showPicker)
+    setShowDatePicker(!showDatePicker)
   }
 
-  const closeDatePickerAndKeyboard = () => {
-    setShowPicker(false)
-    Keyboard.dismiss()
+  function getDate(data) { // Receive Date from child component
+    setFormState('date', data)
   }
 
-  const onChange = ({ type }, selectedDate) => {
-    if (type == 'set') {
-      const currentDate = selectedDate
-      setDate(currentDate)
+  // // --- Date Picker ---
+  // const [date, setDate] = useState(new Date())
+  // const [showPicker, setShowPicker] = useState(false)
 
-      if (Platform.OS === 'android') {
-        toggleDatePicker()
-        setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
-      }
-    } else {
-      toggleDatePicker()
-    }
-  }
+  // const toggleDatePicker = () => {
+  //   setShowPicker(!showPicker)
+  // }
 
-  const confirmIOSDate = () => {
-    setContactDate(Intl.DateTimeFormat('en-US').format(date))
-    toggleDatePicker()
-  }
+  // const closeDatePickerAndKeyboard = () => {
+  //   setShowPicker(false)
+  //   Keyboard.dismiss()
+  // }
+
+  // const onChange = ({ type }, selectedDate) => {
+  //   if (type == 'set') {
+  //     const currentDate = selectedDate
+  //     setDate(currentDate)
+
+  //     if (Platform.OS === 'android') {
+  //       toggleDatePicker()
+  //       setContactDate(Intl.DateTimeFormat('en-US').format(currentDate))
+  //     }
+  //   } else {
+  //     toggleDatePicker()
+  //   }
+  // }
+
+  // const confirmIOSDate = () => {
+  //   setContactDate(Intl.DateTimeFormat('en-US').format(date))
+  //   toggleDatePicker()
+  // }
 
   const dateKeyboardDismiss = () => {
     toggleDatePicker()
@@ -112,7 +123,7 @@ const ClientForm = ({ initialValues, nav, payload }) => {
   return (
     <>    
     {/* --- Client Details --- */}
-      <Pressable onPress={closeDatePickerAndKeyboard} style={globalStyles.pressableBox}>
+      <Pressable onPress={dateKeyboardDismiss} style={globalStyles.pressableBox}>
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
@@ -218,8 +229,9 @@ const ClientForm = ({ initialValues, nav, payload }) => {
        
         </KeyboardAvoidingView>
 
+        <DatePicker getDate={getDate} data={contactDate} show={showDatePicker} />
         {/* --- Date Picker --- */}
-        <View style={globalStyles.datePickerBoxIOS}>
+        {/* <View style={globalStyles.datePickerBoxIOS}>
         {showPicker && (
           <DateTimePicker 
             mode='date'
@@ -241,7 +253,7 @@ const ClientForm = ({ initialValues, nav, payload }) => {
               </View>
             </View>
           )}
-        </View>
+        </View> */}
       </Pressable>
     </>
   ) 
