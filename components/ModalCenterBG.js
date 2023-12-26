@@ -4,8 +4,16 @@ import ModalCloseButton from './ModalCloseButton'
 
 // --- Component Usage --- 
 {/* 
+  // ScreenWidth requires witdh from useWindowDimensions import
+  
+  const closedModals = {
+    modal1: false,
+  }
+
+  const [modalVisible, setModalVisible] = useState(closedModals)
+
   <ModalCenterBG
-    modalVisible={}
+    modalVisible={modal1}
     modalOnRequestClose={}
     screenWidth={}
     closeModalButton={}

@@ -1,16 +1,19 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, Switch, FlatList, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, KeyboardAvoidingView, Switch, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import BottomTab3 from '../BottomTab3'
 import DatePicker from '../DatePicker'
 import ModalCenterBG from '../ModalCenterBG'
+import IconButtonHSmall from '../IconButtonHSmall'
 import { Context as ProjectContext } from '../../context/ProjectContext'
 import { Context as EmployeeContext } from '../../context/EmployeeContext'
 
 const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
   const navigation = nav
+  const { width } = useWindowDimensions()
+
   const { state, addProject, editProject } = useContext(ProjectContext)
 
   // Project Data
@@ -67,7 +70,53 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     )
   }
 
-  // Date Picker
+  // --- Modals ---
+  const closedModals = {
+    modal1: false,
+    modal2: false,
+    modal3: false,
+    modal4: false
+  }
+
+  const [modalVisible, setModalVisible] = useState(closedModals)
+
+  const closeModal = () => {
+    setModalVisible(closedModals)
+  }
+  const openLineSelectionModal = () => {
+    setModalVisible({ modal1: true, modal2: false, modal3: false, modal4: false })
+  }
+
+  // Modal 1 Content
+  const modal1content = 
+    <>
+    </>
+
+  // Modal 2 Content
+  const modal2content = 
+    <>
+      <View style={styles.contentBox}>
+        <View style={globalStyles.formRow}>
+          <View style={[globalStyles.formColumn, { flex: 5 }]}>
+            <Text style={globalStyles.formFieldCaption}>Add Task</Text>
+            <TextInput 
+              autoCorrect={false} 
+              style={globalStyles.formFieldInput}
+              value={form.tasks}
+              onChangeText={(text) => setFormState({tasks: text})}></TextInput>
+          </View>
+        </View>
+      </View>
+      {/* <IconButtonHSmall 
+        pressFunction={addLine} 
+        title={modal2isPhase ? 'Add Phase' : 'Add Line Item'} 
+        icon={modal2isPhase ? 'indent' : 'list'} 
+        textcolor='white' 
+        bgcolor='steelblue' 
+      /> */}
+    </>
+
+  // --- Date Picker ---
   const [ showDatePicker, setShowDatePicker ] = useState(true)
 
   const toggleDatePicker = () => {
@@ -133,13 +182,31 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
       <DatePicker getDate={getDate} data={form.date} show={showDatePicker} />
 
+      {/* Modal 1 (Employee List) */}
+      <ModalCenterBG
+        modalVisible={modalVisible.modal1}
+        modalOnRequestClose={closeModal}
+        screenWidth={width}
+        closeModalButton={closeModal}
+        modalContent={modal1content}
+      /> 
+
+      {/* Modal 2 (Task List) */}
+      <ModalCenterBG
+        modalVisible={modalVisible.modal2}
+        modalOnRequestClose={closeModal}
+        screenWidth={width}
+        closeModalButton={closeModal}
+        modalContent={modal2content}
+      /> 
+
       <BottomTab3 
         button1icon='user-edit'
         button1text='Employees'
-        // button1function={}
+        button1function={() => setModalVisible({ modal1: true})}
         button2icon='edit'
         button2text='Tasks'
-        // button2function={}
+        button2function={() => setModalVisible({ modal2: true})}
         button3icon='save'
         button3text='Save'
         button3function={saveProject}
@@ -222,6 +289,43 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1
   },
+
+  // Modals
+  contentBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+
+  // Modal 1 
+
+  lineSelectionBox: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+  },
+  lineSelectionButtonsBox: {
+    marginBottom: -10,
+    marginTop: 10,
+    width: '100%'
+  },
+
+  // Modal 2 & 3
+  modalBox: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    padding: 5,
+    paddingBottom: 20,
+    borderRadius: 5,
+  },
+  
 })
 
 export default ProjectForm
