@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextButton, StyleSheet } from 'react-native'
+import { View, StyleSheet, Keyboard } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { globalStyles } from '../styles/globalstyles'
+import TextButton from './TextButton'
 
 // Required code in Parent:
   // // Date Picker
@@ -56,32 +56,31 @@ const DatePicker = props => {
   }
 
   const confirmIOSDate = () => {
-    setNewDate(Intl.DateTimeFormat('en-US').format(date))
+    setNewDate(Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'numeric', day: 'numeric'}).format(date))
     toggleDatePicker()
   }
 
   // --- Main Return --- 
   return (
-    <View style={globalStyles.datePickerBoxIOS}>
+    <View style={styles.datePickerBoxIOS}>
     {showPicker && (
       <DateTimePicker 
         mode='date'
         display='spinner'
         value={date}
         onChange={onChange}
-        style={globalStyles.datePicker}
+        style={styles.datePicker}
         textColor='black'
       />
       )}
 
-      {/* Problem is here */}
       {showPicker &&  Platform.OS === 'ios' && (
-        <View style={[globalStyles.datePickerButtonsIOS, { flexDirection: 'row', gap: 10, marginHorizontal: 20}]}>
-          <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <TextButton  pressFunction={() => toggleDatePicker} bgcolor="maroon" text="Close Date Picker"/>
+        <View style={styles.datePickerButtonsIOS}>
+          <View style={{ flex: 1 }}>
+            <TextButton pressFunction={closeDatePickerAndKeyboard} bgcolor="maroon" text="Close Date Picker"/>
           </View>
-          <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <TextButton style={[globalStyles.formColumn, { flex: 1 }]} pressFunction={confirmIOSDate} bgcolor="steelblue" text="Add Date"/>
+          <View style={{ flex: 1 }}>
+            <TextButton style={{ flex: 1 }} pressFunction={confirmIOSDate} bgcolor="steelblue" text="Add Date"/>
           </View>
         </View>
       )}
@@ -89,8 +88,28 @@ const DatePicker = props => {
   )
 }
 
-// const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  datePickerBoxIOS: {
+    backgroundColor: '#eeeeff',
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderColor: '#999999',
+    zIndex: 100
+  },
+  datePicker: {
+    height: 140,
+    marginTop: -10,
+    marginBottom: -20,
+    zIndex: 100,
+    paddingBottom: 200
 
-// })
+  },
+  datePickerButtonsIOS: {
+    paddingBottom: 40,
+    flexDirection: 'row', 
+    gap: 10, 
+    marginHorizontal: 20
+  }
+})
 
 export default DatePicker

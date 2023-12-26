@@ -89,7 +89,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                   editable={false} 
                   value={form.date}
                   onPressIn={toggleDatePicker}
-                  onChangeText={text => toggleDatePicker}
+                  onChangeText={(text) => toggleDatePicker}
                 ></TextInput>
               </Pressable>
             </View>

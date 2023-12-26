@@ -93,19 +93,5 @@ export const globalStyles = StyleSheet.create({
     minHeight: 80,
     textAlignVertical: 'top'
   },
-  // Date Picker Styles
-  datePickerBoxIOS: {
-    backgroundColor: '#eeeeff',
-    borderStyle: 'solid',
-    borderTopWidth: 1,
-    borderColor: '#999999',
-  },
-  datePicker: {
-    height: 140,
-    marginTop: -10,
-    marginBottom: -20
-  },
-  datePickerButtonsIOS: {
-    paddingBottom: 40
-  }
+
 })
