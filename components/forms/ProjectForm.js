@@ -10,6 +10,7 @@ import { Context as EmployeeContext } from '../../context/EmployeeContext'
 
 const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
+  const navigation = nav
   const { state, addProject, editProject } = useContext(ProjectContext)
 
   // Project Data
@@ -19,8 +20,8 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     clientID: clientID,
     title: '',
     date: '', 
-    employees: '',
-    tasks: '', 
+    employees: [],
+    tasks: [], 
   }
   const project = isAdd ? blankProject : state.find(project => project.projectID === payload)
   const [ projectSheet, setProjectSheet ] = useState(project)
@@ -29,13 +30,13 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
 
-
-
   // Form Data
   const blankForm = {
     title: '',
     taskName: '',
-    employee: ''
+    employee: '',
+    tasks: '',
+    date: '',
   }
   const formData = isAdd ? blankForm : project  
   const [ form, setForm ] = useState(formData)
@@ -45,27 +46,17 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       [key]: value
     }))
   }
-
-  // Employees List Content
-  let employeesEmpty = Boolean(projectSheet.employees.length > 0)
-  const employeesList = 
-    employeesEmpty ?
-    <FlatList data={projectSheet.employees} renderItem={({ item }) => getEmployees(item)} />
-    :
-    <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
-
-  // Tasks List Content
-  let tasksEmpty = Boolean(projectSheet.tasks.length > 0)
-  const tasksList = 
-    tasksEmpty ?
-    <FlatList
-      data={projectSheet.tasks}
-      renderItem={({ item }) => <View style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></View> }
-    />
-    :
-    <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
   
-    // Employee Flatlist content function
+  // Form Functions
+  const saveProject = () => {
+    isAdd ? 
+      addProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date)
+    :
+      editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date) 
+    navigation.pop()
+  }
+
+  // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
@@ -75,7 +66,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     </View>
     )
   }
-  
+
   // Date Picker
   const [ showDatePicker, setShowDatePicker ] = useState(true)
 
@@ -117,13 +108,24 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Assigned Employees</Text>
-                {employeesList}
+                { Boolean(projectSheet.employees.length > 0) ?
+                  <FlatList data={projectSheet.employees} renderItem={({ item }) => getEmployees(item)} />
+                  :
+                  <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
+                }
               </View>
             </View>
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Project Tasks</Text>
-                {tasksList}
+                { Boolean(projectSheet.tasks.length > 0) ?
+                  <FlatList
+                    data={projectSheet.tasks}
+                    renderItem={({ item }) => <View style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></View> }
+                  />
+                  :
+                  <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
+                }
               </View>
             </View>
 
@@ -140,6 +142,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
         // button2function={}
         button3icon='save'
         button3text='Save'
+        button3function={saveProject}
       /> 
 
     </>
