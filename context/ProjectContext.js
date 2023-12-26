@@ -57,6 +57,6 @@ export const { Context, Provider } = createDataContext(
     title: 'Kitchen Remodel',
     employees: ['00001', '00002'],
     tasks: ['Kitchen Sink', 'Tile Backsplash'],
-    date: '1/29/2024'
+    date: '01/29/2024'
   }]
 )

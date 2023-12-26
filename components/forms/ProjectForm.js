@@ -2,9 +2,6 @@ import React from 'react'
 import { useState, useContext } from 'react'
 import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, Switch, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
-import TextButton from '../TextButton'
-import IconButtonHSmall from '../IconButtonHSmall'
-import DateTimePicker from '@react-native-community/datetimepicker'
 import BottomTab3 from '../BottomTab3'
 import DatePicker from '../DatePicker'
 import ModalCenterBG from '../ModalCenterBG'
@@ -59,14 +56,18 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   }
 
   // Date Picker
-  const [ showDatePicker, setShowDatePicker ] = useState(false)
+  const [ showDatePicker, setShowDatePicker ] = useState(true)
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker)
-    console.log('toggled')
   }
 
-  return(
+  function getDate(data) { // Receive Date from child component
+    setFormState('date', data)
+  }
+
+  // -----| Main Return |-----
+  return (
     <>
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
             <View style={[globalStyles.formRow, styles.row]}>
@@ -88,7 +89,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                   editable={false} 
                   value={form.date}
                   onPressIn={toggleDatePicker}
-                  onChangeText={text => setFormState('date', text)}
+                  onChangeText={text => toggleDatePicker}
                 ></TextInput>
               </Pressable>
             </View>
@@ -120,7 +121,11 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
             /> */}
       </KeyboardAvoidingView>
 
-      <DatePicker show={showDatePicker} />
+      <DatePicker 
+        getDate={getDate} 
+        // data={form.date} 
+        show={showDatePicker} 
+        />
 
       <BottomTab3 
         button1icon='user-edit'
