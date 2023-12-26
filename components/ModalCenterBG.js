@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, View, KeyboardAvoidingView, useWindowDimensions, Text, StyleSheet } from 'react-native'
+import { Modal, View, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import ModalCloseButton from './ModalCloseButton'
 
 // --- Component Usage --- 

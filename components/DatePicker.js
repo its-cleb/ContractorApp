@@ -17,13 +17,18 @@ import TextButton from './TextButton'
 
 const DatePicker = props => {
 
-  const [date, setDate] = useState(new Date())
-  const [newDate, setNewDate] = useState(props.data)
-  const [showPicker, setShowPicker] = useState(props.show)
+  const [ date, setDate] = useState(new Date())
+  const [ newDate, setNewDate] = useState(props.data)
+  const [ showPicker, setShowPicker] = useState(false)
+  const [ renderCount, setRenderCount ] = useState(0)
 
   // Toggle on parent state change
-  useEffect(() => {    
-    setShowPicker(!showPicker)
+  useEffect(() => {
+    setRenderCount(renderCount + 1)
+    if (renderCount > 0) {
+      setShowPicker(!showPicker)
+      console.log('useEffect:', renderCount)
+    } else { console.log('useEffect:', renderCount) }    
   }, [props.show])
 
   // Send date on change

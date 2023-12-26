@@ -59,7 +59,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const [ showDatePicker, setShowDatePicker ] = useState(true)
 
   const toggleDatePicker = () => {
-    setShowDatePicker(!showDatePicker)
+    setShowDatePicker(() => !showDatePicker)
   }
   function getDate(data) { // Receive Date from child component
     setFormState('date', data)
@@ -88,7 +88,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                   editable={false} 
                   value={form.date}
                   onPressIn={toggleDatePicker}
-                  onChangeText={(text) => toggleDatePicker}
+                  onChangeText={(text) => setFormState('date', text)}
                 ></TextInput>
               </Pressable>
             </View>
