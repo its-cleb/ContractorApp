@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, KeyboardAvoidingView, Switch, FlatList, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, KeyboardAvoidingView, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import BottomTab3 from '../BottomTab3'
 import DatePicker from '../DatePicker'
@@ -28,8 +28,6 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   }
   const project = isAdd ? blankProject : state.find(project => project.projectID === payload)
   const [ projectSheet, setProjectSheet ] = useState(project)
-
-  console.log('projectSheet: ', projectSheet)
 
   // Employee Data
   const employees = useContext(EmployeeContext)
@@ -61,21 +59,31 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   }
 
   const addTask = () => {
-    let currentTasks = projectSheet.tasks
-    currentTasks.push(form.task)
-    form.task = ''
+    setProjectSheet(previousState => ({
+      ...previousState,
+      tasks: [...previousState.tasks, form.task]
+    }))
+    setForm(({ task: '' }))
     setModalVisible(closedModals)
-    console.log(projectSheet.tasks)
+  }
+
+  const editTask = (taskRef) => {
+    // Save taskRef to variable, then splice array for matching and replace
+    console.log('Edit:', taskRef)
+  }
+
+  const removeEmployee = (employeeRef) => {
+    console.log('Remove:', employeeRef)
   }
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
-    <View style={styles.employeeRow}>
+    <TouchableOpacity onPress={() => removeEmployee(currentEmployee[0].employeeID)}style={styles.employeeRow}>
       <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
       <Text style={styles.textRight}>{currentEmployee[0].phone}</Text>
-    </View>
+    </TouchableOpacity>
     )
   }
 
@@ -187,7 +195,9 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                 { Boolean(projectSheet.tasks.length > 0) ?
                   <FlatList
                     data={projectSheet.tasks}
-                    renderItem={({ item }) => <View style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></View> }
+                    renderItem={({ item }) => 
+                      <TouchableOpacity onPress={() => editTask(item)} style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></TouchableOpacity> 
+                    }
                   />
                   :
                   <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
