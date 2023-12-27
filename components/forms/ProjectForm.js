@@ -32,6 +32,9 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   // --- Employee Data
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
+  let allEmployeeIDs = []
+  employeeState.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
+  const [ unassignedEmployeeIDs, setUnassignedEmployeeIDs ] = useState([])
 
   // --- Form Data
   const blankForm = {
@@ -95,18 +98,34 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     setModalVisible(closedModals)
   }
 
+  const addEmployee = (employeeRef) => {
+    setProjectSheet(previousState => ({
+      ...previousState,
+      employees: [...previousState.employees, employeeRef]
+    }))
+    setModalVisible(closedModals)
+  }
   const removeEmployee = (employeeRef) => {
     console.log('Remove:', employeeRef)
   }
 
-  // --- Employee Flatlist content function
+  // --- Employee Flatlists content functions
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
-    <TouchableOpacity onPress={() => removeEmployee(currentEmployee[0].employeeID)}style={styles.employeeRow}>
+    <TouchableOpacity onPress={() => removeEmployee(currentEmployee[0].employeeID)} style={styles.employeeRow}>
       <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
       <Text style={styles.textRight}>{currentEmployee[0].phone}</Text>
     </TouchableOpacity>
+    )
+  }
+
+  const getUnassignedEmployees = (item) => {
+    const unassignedEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    return (
+      <TouchableOpacity onPress={() => addEmployee(unassignedEmployee[0].employeeID)} style={styles.addEmployeeRow}>
+        <Text style={styles.textCenterBlack}>{unassignedEmployee[0].employeeName}</Text>
+      </TouchableOpacity>
     )
   }
 
@@ -115,6 +134,8 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     setModalVisible(closedModals)
   }
   const openEmployeeModal = () => {
+    let unassignedEmployees = allEmployeeIDs.filter(val => !projectSheet.employees.includes(val))
+    setUnassignedEmployeeIDs(unassignedEmployees)
     setModalVisible({ modal1: true, modal2: false, modal3: false, modal4: false })
   }
   const openTaskModal = (edit, item) => {
@@ -127,7 +148,22 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   // Modal 1 Content
   const modal1content = 
     <>
-      <View><Text>TEst</Text></View>
+      <View style={styles.modalContainer}>
+        <View style={[globalStyles.formRow]}>
+          <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Available Employees</Text>
+        </View>
+        <View style={[globalStyles.formRow, {marginBottom: -10}]}>
+
+        { Boolean(unassignedEmployeeIDs.length > 0) ?
+          <FlatList 
+            data={unassignedEmployeeIDs} 
+            renderItem={({ item }) => getUnassignedEmployees(item)} 
+          />
+          :
+          <View style={[styles.blankRow, {flex: 1}]}><Text style={styles.textCenter}>None</Text></View>
+        }
+        </View>
+      </View>
     </>
 
   // Modal 2 Content
@@ -240,6 +276,18 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
       <DatePicker getDate={getDate} data={form.date} show={showDatePicker} />
 
+      <BottomTab3 
+        button1icon='user-edit'
+        button1text='Employees'
+        button1function={openEmployeeModal}
+        button2icon='edit'
+        button2text='Tasks'
+        button2function={() => openTaskModal(false)}
+        button3icon='save'
+        button3text='Save'
+        button3function={saveProject}
+      /> 
+
       {/* Modal 1 (Employee List) */}
       <ModalCenterBG
         modalVisible={modalVisible.modal1}
@@ -258,17 +306,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
         modalContent={modal2content}
       /> 
 
-      <BottomTab3 
-        button1icon='user-edit'
-        button1text='Employees'
-        button1function={openEmployeeModal}
-        button2icon='edit'
-        button2text='Tasks'
-        button2function={() => openTaskModal(false)}
-        button3icon='save'
-        button3text='Save'
-        button3function={saveProject}
-      /> 
+
 
     </>
   )
@@ -313,6 +351,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  addEmployeeRow: {
+    gap: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'steelblue',
+    marginVertical: 3,
+    backgroundColor: 'powderblue',
+    padding: 10,
+    width: '100%',
+    flex: 1,
+    alignSelf: 'stretch'
+  },
   textLeft: {
     flex: 1,
     color: 'black',
@@ -327,8 +377,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   textCenter: {
-    flex: 1,
+    // flex: 1,
     color: 'gray',
+    textAlign: 'center',
+    fontSize: 16,
+    flexWrap: 'wrap'
+  },
+  textCenterBlack: {
+    flex: 1,
+    color: 'black',
     textAlign: 'center',
     fontSize: 16,
     flexWrap: 'wrap'
@@ -350,10 +407,10 @@ const styles = StyleSheet.create({
 
   // Modals
   modalContainer: {
-    flexDirection: 'column',
     alignItems: 'center',
     paddingHorizontal: 10,
     width: '100%',
+    alignSelf: 'stretch',
   },
 
   // Modal 1 

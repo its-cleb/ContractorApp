@@ -70,13 +70,25 @@ export const { Context, Provider } = createDataContext(
   {
     employeeID: '00002',
     employeeName: 'Brandon Johnson', 
+    phone:'123-456-0000', 
+    email:'adam@gmail.com', 
+    address: '1234 Admiral Way', 
+    unitNumber:'1', 
+    city:'Seattle', 
+    usState:'WA', 
+    zip:'98231', 
+    wage: '25'
+  },
+  {
+    employeeID: '00003',
+    employeeName: 'Carson Shithead', 
     phone:'123-456-1111', 
-    email:'brandon@gmail.com', 
+    email:'carson@gmail.com', 
     address: '1234 Chuckanut Blvd', 
     unitNumber:'2', 
     city:'Bend', 
     usState:'OR', 
     zip:'98231', 
-    wage: '30'
+    wage: '5'
   }]
 )
