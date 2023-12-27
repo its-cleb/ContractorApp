@@ -18,7 +18,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
   // Project Data
   const blankProject = {
-    projectID: Date.now(),
+    projectID: '',
     proposalID: '',
     clientID: clientID,
     title: '',
@@ -28,6 +28,8 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   }
   const project = isAdd ? blankProject : state.find(project => project.projectID === payload)
   const [ projectSheet, setProjectSheet ] = useState(project)
+
+  console.log('projectSheet: ', projectSheet)
 
   // Employee Data
   const employees = useContext(EmployeeContext)
@@ -52,22 +54,18 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   // Form Functions
   const saveProject = () => {
     isAdd ? 
-      addProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date)
+      addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date)
     :
       editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date) 
-    navigation.pop()
+    navigation.pop() // Needs to add change for if accessed from homeScreen
   }
 
   const addTask = () => {
     let currentTasks = projectSheet.tasks
     currentTasks.push(form.task)
-    console.log(form)
-    // setProjectSheet(previousState => [...previousState, { 
-    // }])
-    // const copiedProposalSheet = proposalSheet  
-    // copiedProposalSheet[currentLineIndex].value1 = isPhase ? form.phaseName : form.lineItem
-    // setProposalSheet(copiedProposalSheet)
+    form.task = ''
     setModalVisible(closedModals)
+    console.log(projectSheet.tasks)
   }
 
   // Employee Flatlist content function
@@ -118,7 +116,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
             autoCorrect={false} 
             style={globalStyles.formFieldInput}
             value={form.task}
-            onChangeText={(text) => setFormState({'task': text})}></TextInput>
+            onChangeText={(text) => setFormState('task', text)}></TextInput>
         </View>
         
       </View>
@@ -240,7 +238,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 20,
-    flex: 1
+    flex: 1,
+    zIndex: 1
   },
   row: {
     marginBottom: 5
@@ -258,7 +257,6 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1
   },
   employeeRow: {
     flexDirection: 'row',
@@ -314,7 +312,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     paddingHorizontal: 10,
-    width: '100%'
+    width: '100%',
   },
 
   // Modal 1 
@@ -331,19 +329,8 @@ const styles = StyleSheet.create({
 
   // Modal 2 & 3
   modalBox: {
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 20,
-    padding: 5,
-    paddingBottom: 20,
-    borderRadius: 5,
-    flex: 1
   },
   
 })

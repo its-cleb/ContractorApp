@@ -62,7 +62,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           <Text style={[styles.projectTextBold]}>Workers:</Text>
           <View style={styles.flexOne}>
             <FlatList
-              data={state[0].employees}
+              data={project.employees}
               renderItem={({ item }) => getEmployees(item)}
             />
           </View>  
@@ -71,7 +71,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           <Text style={[styles.projectTextBold]}>Tasks:</Text>
           <View style={styles.flexOne}>
             <FlatList
-              data={state[0].tasks}
+              data={project.tasks}
               renderItem={({ item }) => <Text style={styles.projectTextRight}>{item}</Text> }
             />
           </View>  

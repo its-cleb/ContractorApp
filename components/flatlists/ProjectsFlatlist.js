@@ -48,7 +48,7 @@ const ProjectsFlatlist = props => {
               <View style={styles.projectRowBottom}>
                 <View style={[styles.projectColumnLeft, { flex: 1 }]}>
                   <FlatList
-                    data={tasks}
+                    data={item.tasks}
                     renderItem={({ item }) =>
                     <Text style={styles.projectTextLeft}>{item}</Text> 
                   }
