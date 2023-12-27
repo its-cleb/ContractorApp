@@ -36,9 +36,8 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   // Form Data
   const blankForm = {
     title: '',
-    taskName: '',
     employee: '',
-    tasks: '',
+    task: '',
     date: '',
   }
   const formData = isAdd ? blankForm : project  
@@ -57,6 +56,18 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     :
       editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date) 
     navigation.pop()
+  }
+
+  const addTask = () => {
+    let currentTasks = projectSheet.tasks
+    currentTasks.push(form.task)
+    console.log(form)
+    // setProjectSheet(previousState => [...previousState, { 
+    // }])
+    // const copiedProposalSheet = proposalSheet  
+    // copiedProposalSheet[currentLineIndex].value1 = isPhase ? form.phaseName : form.lineItem
+    // setProposalSheet(copiedProposalSheet)
+    setModalVisible(closedModals)
   }
 
   // Employee Flatlist content function
@@ -83,37 +94,45 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const closeModal = () => {
     setModalVisible(closedModals)
   }
-  const openLineSelectionModal = () => {
+  const openEmployeeModal = () => {
     setModalVisible({ modal1: true, modal2: false, modal3: false, modal4: false })
+  }
+  const openTaskModal = () => {
+    setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
 
   // Modal 1 Content
   const modal1content = 
     <>
+      <View><Text>TEst</Text></View>
     </>
 
   // Modal 2 Content
-  const modal2content = 
-    <>
-      <View style={styles.contentBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 5 }]}>
-            <Text style={globalStyles.formFieldCaption}>Add Task</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={form.tasks}
-              onChangeText={(text) => setFormState({tasks: text})}></TextInput>
-          </View>
+  const modal2content =
+  <>
+    <View style={styles.modalContainer}>
+      <View style={[globalStyles.formRow]}>
+        <View style={[globalStyles.formColumn, { paddingHorizontal: 10, flex: 5 }]}>
+          <Text style={globalStyles.formFieldCaption}>Add Task</Text>
+          <TextInput 
+            autoCorrect={false} 
+            style={globalStyles.formFieldInput}
+            value={form.task}
+            onChangeText={(text) => setFormState({'task': text})}></TextInput>
         </View>
+        
       </View>
-      {/* <IconButtonHSmall 
-        pressFunction={addLine} 
-        title={modal2isPhase ? 'Add Phase' : 'Add Line Item'} 
-        icon={modal2isPhase ? 'indent' : 'list'} 
-        textcolor='white' 
-        bgcolor='steelblue' 
-      /> */}
+
+      <View style={{alignSelf: 'stretch' }}>
+        <IconButtonHSmall 
+          pressFunction={addTask} 
+          title={'Add Task'} 
+          icon={'list'} 
+          textcolor='white' 
+          bgcolor='steelblue' 
+        />
+      </View>
+    </View>
     </>
 
   // --- Date Picker ---
@@ -151,8 +170,8 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                   onPressIn={toggleDatePicker}
                   onChangeText={(text) => setFormState('date', text)}
                 ></TextInput>
-              </Pressable>
-            </View>
+                </Pressable>
+              </View>
             </View>
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
@@ -203,10 +222,10 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       <BottomTab3 
         button1icon='user-edit'
         button1text='Employees'
-        button1function={() => setModalVisible({ modal1: true})}
+        button1function={openEmployeeModal}
         button2icon='edit'
         button2text='Tasks'
-        button2function={() => setModalVisible({ modal2: true})}
+        button2function={openTaskModal}
         button3icon='save'
         button3text='Save'
         button3function={saveProject}
@@ -221,7 +240,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 20,
-    flex: 1,
+    flex: 1
   },
   row: {
     marginBottom: 5
@@ -239,7 +258,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    // flex: 1
+    flex: 1
   },
   employeeRow: {
     flexDirection: 'row',
@@ -253,7 +272,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1
+    flex: 1,
   },
   textLeft: {
     flex: 1,
@@ -291,14 +310,14 @@ const styles = StyleSheet.create({
   },
 
   // Modals
-  contentBox: {
-    flexDirection: 'row',
+  modalContainer: {
+    flexDirection: 'column',
     alignItems: 'center',
     paddingHorizontal: 10,
+    width: '100%'
   },
 
   // Modal 1 
-
   lineSelectionBox: {
     flex: 1,
     width: '100%',
@@ -312,7 +331,7 @@ const styles = StyleSheet.create({
 
   // Modal 2 & 3
   modalBox: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -324,6 +343,7 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingBottom: 20,
     borderRadius: 5,
+    flex: 1
   },
   
 })

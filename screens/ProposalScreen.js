@@ -362,15 +362,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalContent: {
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 20,
-    padding: 5,
-    paddingBottom: 20,
-    borderRadius: 5,
-  },
 
   // Proposal Sheet
   phase: {
