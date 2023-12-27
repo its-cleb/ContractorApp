@@ -29,11 +29,11 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const project = isAdd ? blankProject : state.find(project => project.projectID === payload)
   const [ projectSheet, setProjectSheet ] = useState(project)
 
-  // Employee Data
+  // --- Employee Data
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
 
-  // Form Data
+  // --- Form Data
   const blankForm = {
     title: '',
     employee: '',
@@ -48,8 +48,20 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       [key]: value
     }))
   }
+
+  // --- Modal Data
+  const closedModals = {
+    modal1: false,
+    modal2: false,
+    modal3: false,
+    modal4: false
+  }
+
+  const [isEdit, setIsEdit] = useState(null)
+  const [currentTask, setCurrentTask] = useState(null)
+  const [modalVisible, setModalVisible] = useState(closedModals)
   
-  // Form Functions
+  // --- Form Functions
   const saveProject = () => {
     isAdd ? 
       addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date)
@@ -67,16 +79,27 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     setModalVisible(closedModals)
   }
 
-  const editTask = (taskRef) => {
-    // Save taskRef to variable, then splice array for matching and replace
-    console.log('Edit:', taskRef)
+  const editTask = () => {
+    let index = projectSheet.tasks.indexOf(currentTask)
+    let copiedProjectSheet = projectSheet
+    copiedProjectSheet.tasks[index] = form.task
+    setProjectSheet(copiedProjectSheet)
+    setModalVisible(closedModals)
+  }
+
+  const deleteTask = () => {
+    let index = projectSheet.tasks.indexOf(currentTask)
+    let copiedProjectSheet = projectSheet
+    copiedProjectSheet.tasks.splice(index, 1)
+    setProjectSheet(copiedProjectSheet)
+    setModalVisible(closedModals)
   }
 
   const removeEmployee = (employeeRef) => {
     console.log('Remove:', employeeRef)
   }
 
-  // Employee Flatlist content function
+  // --- Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
@@ -87,23 +110,17 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     )
   }
 
-  // --- Modals ---
-  const closedModals = {
-    modal1: false,
-    modal2: false,
-    modal3: false,
-    modal4: false
-  }
-
-  const [modalVisible, setModalVisible] = useState(closedModals)
-
+  // --- Modal Functions
   const closeModal = () => {
     setModalVisible(closedModals)
   }
   const openEmployeeModal = () => {
     setModalVisible({ modal1: true, modal2: false, modal3: false, modal4: false })
   }
-  const openTaskModal = () => {
+  const openTaskModal = (edit, item) => {
+    setIsEdit(edit)
+    setCurrentTask(item)
+    setForm(({ task: item }))
     setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
   }
 
@@ -119,7 +136,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     <View style={styles.modalContainer}>
       <View style={[globalStyles.formRow]}>
         <View style={[globalStyles.formColumn, { paddingHorizontal: 10, flex: 5 }]}>
-          <Text style={globalStyles.formFieldCaption}>Add Task</Text>
+          <Text style={globalStyles.formFieldCaption}>{isEdit ? 'Edit Task' : 'Add Task'}</Text>
           <TextInput 
             autoCorrect={false} 
             style={globalStyles.formFieldInput}
@@ -131,13 +148,27 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
 
       <View style={{alignSelf: 'stretch' }}>
         <IconButtonHSmall 
-          pressFunction={addTask} 
-          title={'Add Task'} 
+          pressFunction={isEdit ? editTask : addTask} 
+          title={isEdit ? 'Edit Task' : 'Add Task'} 
           icon={'list'} 
           textcolor='white' 
           bgcolor='steelblue' 
         />
       </View>
+
+      { isEdit ?
+      <View style={{alignSelf: 'stretch' }}>
+        <IconButtonHSmall 
+          pressFunction={deleteTask} 
+          title='Delete Task' 
+          icon={'backspace'} 
+          textcolor='white' 
+          bgcolor='maroon' 
+        />
+      </View>
+      : ''
+      }
+      
     </View>
     </>
 
@@ -196,7 +227,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
                   <FlatList
                     data={projectSheet.tasks}
                     renderItem={({ item }) => 
-                      <TouchableOpacity onPress={() => editTask(item)} style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></TouchableOpacity> 
+                      <TouchableOpacity onPress={() => openTaskModal(true, item)} style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></TouchableOpacity> 
                     }
                   />
                   :
@@ -233,7 +264,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
         button1function={openEmployeeModal}
         button2icon='edit'
         button2text='Tasks'
-        button2function={openTaskModal}
+        button2function={() => openTaskModal(false)}
         button3icon='save'
         button3text='Save'
         button3function={saveProject}
