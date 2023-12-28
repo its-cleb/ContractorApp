@@ -32,7 +32,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   }
   
   const deleteProjectNavBack = () => {
-    deleteProject(payload)
+    console.log(currentProject)
+    deleteProject(currentProject)
     navigation.pop()
   }
 

@@ -16,8 +16,6 @@ const ProjectsFlatlist = props => {
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
 
-  const tasks = state[0].tasks
-
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
