@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, KeyboardAvoidingView, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import BottomTab3 from '../BottomTab3'
 import DatePicker from '../DatePicker'
@@ -9,7 +9,7 @@ import IconButtonHSmall from '../IconButtonHSmall'
 import { Context as ProjectContext } from '../../context/ProjectContext'
 import { Context as EmployeeContext } from '../../context/EmployeeContext'
 
-const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
+const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
 
   const navigation = nav
   const { width } = useWindowDimensions()
@@ -36,7 +36,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   employeeState.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
 
   const [ unassignedEmployeeIDs, setUnassignedEmployeeIDs ] = useState([])
-  const [ currentEmployee, setCurrentEmployee ] = useState()
+  const [ currentEmployee, setCurrentEmployee ] = useState(null)
 
   // --- Form Data
   const blankForm = {
@@ -54,6 +54,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     }))
   }
 
+  console.log(isAdd, form)
   // --- Modal Data
   const closedModals = {
     modal1: false,
@@ -71,7 +72,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date)
     :
       editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date) 
-    navigation.pop() // Needs to add change for if accessed from homeScreen
+    fromHome ? navigation.navigate('ProjectDetails', { isAdd: false, projectID: projectSheet.projectID, fromHome: true }) : navigation.pop() // Needs to add change for if accessed from homeScreen
   }
 
   const addTask = () => {
@@ -79,18 +80,18 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       ...previousState,
       tasks: [...previousState.tasks, form.task]
     }))
-    setForm(({ task: '' }))
+    setFormState('task', '')    
+    Keyboard.dismiss()
     setModalVisible(closedModals)
   }
-
   const editTask = () => {
     let index = projectSheet.tasks.indexOf(currentTask)
     let copiedProjectSheet = projectSheet
     copiedProjectSheet.tasks[index] = form.task
     setProjectSheet(copiedProjectSheet)
+    Keyboard.dismiss()
     setModalVisible(closedModals)
   }
-
   const deleteTask = () => {
     let index = projectSheet.tasks.indexOf(currentTask)
     let copiedProjectSheet = projectSheet
@@ -124,7 +125,6 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     </TouchableOpacity>
     )
   }
-
   const getUnassignedEmployees = (item) => {
     const unassignedEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
@@ -146,10 +146,9 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const openTaskModal = (edit, item) => {
     setIsEdit(edit)
     setCurrentTask(item)
-    setForm(({ task: item }))
+    setFormState('task', item)    
     setModalVisible({ modal1: false, modal2: true, modal3: false })
   }
-
   const openRemoveEmployeeModal = (employeeRef) => {
     const employee = employeeState.filter((employeeState) => employeeState.employeeID === employeeRef )
     setCurrentEmployee(employee[0])
@@ -215,7 +214,6 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       </View>
       : ''
       }
-      
     </View>
   </>
 
@@ -227,7 +225,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
         <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Selected Employee</Text>
       </View>
       <View style={[globalStyles.formRow, styles.removeEmployeeRow]}>
-        <Text style={[styles.textCenterBlack, {paddingBottom: 5,}]}>{currentEmployee.employeeName}</Text>
+        <Text style={[styles.textCenterBlack, {paddingBottom: 5,}]}>{Boolean(currentEmployee == null) ? '' : currentEmployee.employeeName}</Text>
       </View>
       <View style={{alignSelf: 'stretch' }}>
         <IconButtonHSmall 

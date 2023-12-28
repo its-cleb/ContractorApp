@@ -4,6 +4,9 @@ import { Entypo } from '@expo/vector-icons'
 import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 
+// Component Usage:
+// <DrawerHeader title='' />
+
 const DrawerHeader = props => {    
   
   const navigation = useNavigation()

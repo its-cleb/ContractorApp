@@ -3,6 +3,9 @@ import { Text, SafeAreaView, TouchableOpacity, View, StatusBar, StyleSheet } fro
 import { MaterialIcons, Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
+// Component Usage
+// <StackHeader title='' fromHome={} />
+
 const StackHeader = props => {    
   
   const navigation = useNavigation()

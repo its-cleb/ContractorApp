@@ -19,6 +19,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const employees = useContext(EmployeeContext)
   const employeeState = employees.state
 
+  const fromHome = route.params.fromHome
+
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
@@ -81,7 +83,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       <BottomTab3 
         button1icon='edit'
         button1text='Edit Project'
-        button1function={() => navigation.navigate('ProjectForm', {isAdd:false, clientID: currentClient[0].clientID, payload: currentProject})}
+        button1function={() => navigation.navigate('ProjectForm', {isAdd:false, clientID: currentClient[0].clientID, payload: currentProject, fromHome: fromHome})}
         button2icon='map-marker-alt'
         button2text='Navigate'
         // button2function={}

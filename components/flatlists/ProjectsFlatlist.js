@@ -34,7 +34,7 @@ const ProjectsFlatlist = props => {
         data={projects} 
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID, fromHome: fromHome })}>
+          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID, fromHome })}>
             <View style={styles.projectContainer}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 2 }]}>
