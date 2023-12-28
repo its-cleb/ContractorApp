@@ -26,6 +26,7 @@ import { Provider as ClientProvider } from './context/ClientContext'
 import { Provider as EmployeeProvider } from './context/EmployeeContext'
 import { Provider as ProposalProvider } from './context/ProposalContext'
 import { Provider as ProjectProvider } from './context/ProjectContext'
+import { Provider as CompanyProvider } from './context/CompanyContext'
 
 
 const Drawer = createDrawerNavigator();
@@ -148,6 +149,7 @@ export default function App() {
     <EmployeeProvider>
     <ProposalProvider>
     <ProjectProvider>
+    <CompanyProvider>
       <NavigationContainer theme={MyTheme}>
         <Drawer.Navigator 
           initialRouteName="Home"
@@ -218,6 +220,7 @@ export default function App() {
             />
         </Drawer.Navigator>
       </NavigationContainer>
+    </CompanyProvider>
     </ProjectProvider>
     </ProposalProvider>
     </EmployeeProvider>

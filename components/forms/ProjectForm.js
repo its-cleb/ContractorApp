@@ -32,7 +32,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
   // --- Employee Data
   const employees = useContext(EmployeeContext)
   
-  let allEmployeeIDs = []
+  let allEmployeeIDs = [] // Push Employee IDs into this array
   employees.state.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
 
   const [ unassignedEmployeeIDs, setUnassignedEmployeeIDs ] = useState([])
