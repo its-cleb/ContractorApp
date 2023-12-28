@@ -34,7 +34,9 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const employeeState = employees.state
   let allEmployeeIDs = []
   employeeState.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
+
   const [ unassignedEmployeeIDs, setUnassignedEmployeeIDs ] = useState([])
+  const [ currentEmployee, setCurrentEmployee ] = useState()
 
   // --- Form Data
   const blankForm = {
@@ -56,8 +58,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const closedModals = {
     modal1: false,
     modal2: false,
-    modal3: false,
-    modal4: false
+    modal3: false
   }
 
   const [isEdit, setIsEdit] = useState(null)
@@ -105,15 +106,19 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
     }))
     setModalVisible(closedModals)
   }
-  const removeEmployee = (employeeRef) => {
-    console.log('Remove:', employeeRef)
+  const removeEmployee = () => {
+    let index = projectSheet.employees.indexOf(currentEmployee.employeeID)
+    let copiedProjectSheet = projectSheet
+    copiedProjectSheet.employees.splice(index, 1)
+    setProjectSheet(copiedProjectSheet)
+    setModalVisible(closedModals)
   }
 
   // --- Employee Flatlists content functions
   const getEmployees = (item) => {
     const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
     return (
-    <TouchableOpacity onPress={() => removeEmployee(currentEmployee[0].employeeID)} style={styles.employeeRow}>
+    <TouchableOpacity onPress={() => openRemoveEmployeeModal(currentEmployee[0].employeeID)} style={styles.employeeRow}>
       <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
       <Text style={styles.textRight}>{currentEmployee[0].phone}</Text>
     </TouchableOpacity>
@@ -136,13 +141,19 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
   const openEmployeeModal = () => {
     let unassignedEmployees = allEmployeeIDs.filter(val => !projectSheet.employees.includes(val))
     setUnassignedEmployeeIDs(unassignedEmployees)
-    setModalVisible({ modal1: true, modal2: false, modal3: false, modal4: false })
+    setModalVisible({ modal1: true, modal2: false, modal3: false })
   }
   const openTaskModal = (edit, item) => {
     setIsEdit(edit)
     setCurrentTask(item)
     setForm(({ task: item }))
-    setModalVisible({ modal1: false, modal2: true, modal3: false, modal4: false })
+    setModalVisible({ modal1: false, modal2: true, modal3: false })
+  }
+
+  const openRemoveEmployeeModal = (employeeRef) => {
+    const employee = employeeState.filter((employeeState) => employeeState.employeeID === employeeRef )
+    setCurrentEmployee(employee[0])
+    setModalVisible({ modal1: false, modal2: false, modal3: true })
   }
 
   // Modal 1 Content
@@ -185,7 +196,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       <View style={{alignSelf: 'stretch' }}>
         <IconButtonHSmall 
           pressFunction={isEdit ? editTask : addTask} 
-          title={isEdit ? 'Edit Task' : 'Add Task'} 
+          title={isEdit ? 'Save Edit' : 'Add Task'} 
           icon={'list'} 
           textcolor='white' 
           bgcolor='steelblue' 
@@ -206,7 +217,30 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
       }
       
     </View>
-    </>
+  </>
+
+  // Modal 3 Content
+  const modal3content =
+  <>
+    <View style={styles.modalContainer}>
+      <View style={[globalStyles.formRow]}>
+        <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Selected Employee</Text>
+      </View>
+      <View style={[globalStyles.formRow, styles.removeEmployeeRow]}>
+        <Text style={[styles.textCenterBlack, {paddingBottom: 5,}]}>{currentEmployee.employeeName}</Text>
+      </View>
+      <View style={{alignSelf: 'stretch' }}>
+        <IconButtonHSmall 
+          pressFunction={removeEmployee} 
+          title='Remove Employee' 
+          icon={'backspace'} 
+          textcolor='white' 
+          bgcolor='maroon' 
+        />
+      </View>
+
+    </View>
+  </>
 
   // --- Date Picker ---
   const [ showDatePicker, setShowDatePicker ] = useState(true)
@@ -306,7 +340,14 @@ const ProjectForm = ({ isAdd, nav, clientID, payload }) => {
         modalContent={modal2content}
       /> 
 
-
+      {/* Modal 3 (Task List) */}
+      <ModalCenterBG
+        modalVisible={modalVisible.modal3}
+        modalOnRequestClose={closeModal}
+        screenWidth={width}
+        closeModalButton={closeModal}
+        modalContent={modal3content}
+      /> 
 
     </>
   )
@@ -362,6 +403,17 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     alignSelf: 'stretch'
+  },
+  removeEmployeeRow: {
+    paddingBottom: 8,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'steelblue',
+    marginVertical: 3,
+    backgroundColor: 'powderblue',
+    marginBottom: 10,
+    padding: 10,
+    marginHorizontal: 10
   },
   textLeft: {
     flex: 1,
