@@ -18,6 +18,12 @@ const projectReducer = (state, action) => {
       return state.map((projects) => {
         return projects.projectID === action.payload.projectID ? action.payload : projects
       })
+    case 'remove_employee':
+      state.map((projects) =>  {
+        let filteredEmployees = projects.employees.filter(id => { return id != action.payload })
+        return projects.employees = filteredEmployees
+      })
+      return state
     default:
       return state
   }
@@ -47,9 +53,15 @@ const deleteProject = dispatch => {
   }
 }
 
+const removeEmployee = dispatch => {
+  return employeeID => {
+    dispatch({ type: 'remove_employee', payload: employeeID })
+  }
+}
+
 export const { Context, Provider } = createDataContext(
   projectReducer, 
-  { addProject, editProject, deleteProject },
+  { addProject, editProject, deleteProject, removeEmployee },
   [{
     projectID: '0001',
     clientID: '000001',

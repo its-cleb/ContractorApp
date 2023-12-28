@@ -31,9 +31,8 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
 
   // --- Employee Data
   const employees = useContext(EmployeeContext)
-  const employeeState = employees.state
   let allEmployeeIDs = []
-  employeeState.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
+  employees.state.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
 
   const [ unassignedEmployeeIDs, setUnassignedEmployeeIDs ] = useState([])
   const [ currentEmployee, setCurrentEmployee ] = useState(null)
@@ -54,7 +53,6 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     }))
   }
 
-  console.log(isAdd, form)
   // --- Modal Data
   const closedModals = {
     modal1: false,
@@ -117,7 +115,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
 
   // --- Employee Flatlists content functions
   const getEmployees = (item) => {
-    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    const currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     return (
     <TouchableOpacity onPress={() => openRemoveEmployeeModal(currentEmployee[0].employeeID)} style={styles.employeeRow}>
       <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
@@ -126,7 +124,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     )
   }
   const getUnassignedEmployees = (item) => {
-    const unassignedEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    const unassignedEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     return (
       <TouchableOpacity onPress={() => addEmployee(unassignedEmployee[0].employeeID)} style={styles.addEmployeeRow}>
         <Text style={styles.textCenterBlack}>{unassignedEmployee[0].employeeName}</Text>
@@ -150,7 +148,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     setModalVisible({ modal1: false, modal2: true, modal3: false })
   }
   const openRemoveEmployeeModal = (employeeRef) => {
-    const employee = employeeState.filter((employeeState) => employeeState.employeeID === employeeRef )
+    const employee = employees.state.filter((employeeState) => employeeState.employeeID === employeeRef )
     setCurrentEmployee(employee[0])
     setModalVisible({ modal1: false, modal2: false, modal3: true })
   }

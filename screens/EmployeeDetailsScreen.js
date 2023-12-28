@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Context } from '../context/EmployeeContext'
+import { Context as ProjectContext } from '../context/ProjectContext'
 import DeleteButton from '../components/DeleteButton'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 
@@ -12,7 +13,12 @@ const EmployeeDetailsScreen = ({ route, navigation }) => {
   
   const employees = state.find(employees => employees.employeeID === payload)
 
+  // Get Project references
+  const projects = useContext(ProjectContext)
+
   const deleteEmployeeNavBack = () => {
+    projects.removeEmployee(payload)
+    // console.log(payload)
     deleteEmployee(payload)
     navigation.pop()
   }
