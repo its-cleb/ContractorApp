@@ -17,13 +17,12 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const currentClient = clients.state.filter((client) => client.clientID === project.clientID)
 
   const employees = useContext(EmployeeContext)
-  const employeeState = employees.state
 
   const fromHome = route.params.fromHome
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
-    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    const currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     return (
       <Text style={styles.projectTextRight}>
         {currentEmployee[0].employeeName}

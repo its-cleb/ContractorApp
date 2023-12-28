@@ -14,11 +14,10 @@ const ProjectsFlatlist = props => {
   const projects = props.isFiltered ? state.filter((project) => project.clientID === props.filter ) : state
 
   const employees = useContext(EmployeeContext)
-  const employeeState = employees.state
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
-    const currentEmployee = employeeState.filter((employeeState) => employeeState.employeeID === item )
+    let currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     return (
       <Text style={styles.projectTextRight}>
         {currentEmployee[0].employeeName}
@@ -32,8 +31,8 @@ const ProjectsFlatlist = props => {
         data={projects} 
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID, fromHome })}>
-            <View style={styles.projectContainer}>
+          <TouchableOpacity disabled={fromHome ? true : false} onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID, fromHome })}>
+            <View style={[styles.projectContainer, {backgroundColor: fromHome ? '#eeeedd' : 'khaki'}]}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 2 }]}>
                   <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.title}</Text>

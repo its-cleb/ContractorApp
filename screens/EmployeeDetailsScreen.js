@@ -18,7 +18,6 @@ const EmployeeDetailsScreen = ({ route, navigation }) => {
 
   const deleteEmployeeNavBack = () => {
     projects.removeEmployee(payload)
-    // console.log(payload)
     deleteEmployee(payload)
     navigation.pop()
   }

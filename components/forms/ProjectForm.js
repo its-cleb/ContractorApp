@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import BottomTab3 from '../BottomTab3'
@@ -31,6 +31,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
 
   // --- Employee Data
   const employees = useContext(EmployeeContext)
+  
   let allEmployeeIDs = []
   employees.state.map(function(obj){allEmployeeIDs.push(obj.employeeID)})
 
@@ -115,16 +116,16 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
 
   // --- Employee Flatlists content functions
   const getEmployees = (item) => {
-    const currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
+    let getEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     return (
-    <TouchableOpacity onPress={() => openRemoveEmployeeModal(currentEmployee[0].employeeID)} style={styles.employeeRow}>
-      <Text style={styles.textLeft}>{currentEmployee[0].employeeName}</Text>
-      <Text style={styles.textRight}>{currentEmployee[0].phone}</Text>
-    </TouchableOpacity>
+      <TouchableOpacity onPress={() => openRemoveEmployeeModal(getEmployee[0].employeeID)} style={styles.employeeRow}>
+        <Text style={styles.textLeft}>{getEmployee[0].employeeName}</Text>
+        <Text style={styles.textRight}>{getEmployee[0].phone}</Text>
+      </TouchableOpacity>
     )
   }
   const getUnassignedEmployees = (item) => {
-    const unassignedEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
+    let unassignedEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     return (
       <TouchableOpacity onPress={() => addEmployee(unassignedEmployee[0].employeeID)} style={styles.addEmployeeRow}>
         <Text style={styles.textCenterBlack}>{unassignedEmployee[0].employeeName}</Text>
@@ -404,9 +405,10 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: 'steelblue',
+    borderColor: 'gray',
+    borderStyle: 'dashed',
     marginVertical: 3,
-    backgroundColor: 'powderblue',
+    backgroundColor: '#eeeeee',
     marginBottom: 10,
     padding: 10,
     marginHorizontal: 10
