@@ -33,7 +33,8 @@ const ProjectsFlatlist = props => {
         renderItem={({ item }) => (
           <TouchableOpacity 
             // disabled={fromHome ? true : false} 
-            onPress={() => navigation.navigate('ProjectDetails', { isAdd: false, projectID: item.projectID, fromHome })}
+            onPress={() => navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome}})
+          }
           >
             <View style={[styles.projectContainer, {backgroundColor: fromHome ? '#eeeedd' : 'khaki'}]}>
               <View style={styles.projectRowTop}>

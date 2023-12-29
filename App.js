@@ -215,7 +215,7 @@ export default function App() {
               }} 
             />
             <Drawer.Screen
-              name="ProjectDetails"
+              name="ProjectStack"
               component={ProjectStack}
               options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
             />
