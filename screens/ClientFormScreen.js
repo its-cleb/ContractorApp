@@ -14,7 +14,7 @@ const ClientFormScreen = ({ route, navigation }) => {
 
   return (  
     <>
-      <StackHeader title={isAdd ? 'Add Client' : 'Edit Client'}/>
+      <StackHeader title={isAdd ? 'Add Client' : 'Edit Client'} navFunction={() => navigation.pop()}/>
       { isAdd ? 
         <ClientForm nav={navigation} isAdd={isAdd} /> 
       :

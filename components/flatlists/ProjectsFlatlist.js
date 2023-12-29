@@ -36,7 +36,7 @@ const ProjectsFlatlist = props => {
             onPress={() => navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome}})
           }
           >
-            <View style={[styles.projectContainer, {backgroundColor: fromHome ? '#eeeedd' : 'khaki'}]}>
+            <View style={[styles.projectContainer]}>
               <View style={styles.projectRowTop}>
                 <View style={[styles.projectColumnLeft, { flex: 2 }]}>
                   <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.title}</Text>

@@ -23,7 +23,7 @@ const HomeScreen = () => {
           <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
         </View>
         <View style={styles.flexItem}>
-          <IconButtonNavigate navpage="Clients" title="Clients" icon="tools" bgcolor="steelblue" /> 
+          <IconButtonNavigate navpage="ClientsStack" title="Clients" icon="tools" bgcolor="steelblue" /> 
         </View>
         <View style={styles.flexItem}>
          <IconButtonNavigate navpage="Employees" title="Employees" icon="users" bgcolor="chocolate" /> 
@@ -35,7 +35,8 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   projectsContainer: {
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
+    marginTop: -15
   },
   flexBox: {
     flexDirection: 'row',

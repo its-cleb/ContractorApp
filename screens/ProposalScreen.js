@@ -252,6 +252,7 @@ const ProposalScreen = ({ route, navigation }) => {
     <>
       <StackHeader 
         title={isAdd ? 'Add Proposal' : 'Edit Proposal'}
+        navFunction={() => navigation.pop()}
         rightIcon='delete-forever'
         pressFunction={deleteButton}
       />

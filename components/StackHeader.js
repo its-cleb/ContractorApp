@@ -1,21 +1,18 @@
 import React from 'react'
 import { Text, SafeAreaView, TouchableOpacity, View, StatusBar, StyleSheet } from 'react-native'
 import { MaterialIcons, Feather } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
 
 // Component Usage
-// <StackHeader title='' fromHome={} />
+// <StackHeader title='' navFunction={} />
 
 const StackHeader = props => {    
   
-  const navigation = useNavigation()
-
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar hidden />
         <View style={styles.header}>
           <View style={styles.left}>
-            <TouchableOpacity style={styles.backIcon} onPress={() => props.fromHome ? navigation.goBack() : navigation.pop()}> 
+            <TouchableOpacity style={styles.backIcon} onPress={props.navFunction}> 
               <Feather name="arrow-left" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.text}>{props.title}</Text>

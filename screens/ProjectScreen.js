@@ -7,18 +7,29 @@ import IconButtonHContent from '../components/IconButtonHContent'
 
 const ProjectScreen = ({ route, navigation }) => {
 
-  const clientID = route.params.clientID
+  const isDrawer = Boolean(route.params ===  undefined)
+  const clientID = isDrawer ? null : route.params.clientID
+
+  
+  console.log(route)
 
   return (
     <>
-      <StackHeader title='Projects'/>
+      <StackHeader title={Boolean(clientID != null) ? 'Projects of Client' : 'Projects'} navFunction={() => isDrawer ? navigation.navigate('Home') : navigation.pop()}/>
       
       <View style={styles.pageContainer}> 
-        <ProjectsFlatlist isFiltered={true} filter={clientID} fromHome={route.params.fromHome}/>
+        <ProjectsFlatlist isFiltered={isDrawer ? false : true} filter={isDrawer ? null : clientID} fromHome={isDrawer ? true : route.params.fromHome}/>
  
         <View style={styles.addProjectButton}>
-          <IconButtonHContent pressFunction={() => navigation.navigate('ProjectForm', { isAdd: true, clientID: clientID, payload: ''})} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
-        </View>
+          { isDrawer ?
+          <>
+            <Text style={styles.noticeText}>New projects must be added through the Client page</Text>
+            <IconButtonHContent pressFunction={() => navigation.navigate('ClientsStack', { screen: 'ViewClients'})} title="Go to Clients" icon="user-alt" bgcolor="#00000000" textcolor="steelblue"/>
+          </> 
+          :
+          <IconButtonHContent pressFunction={() => navigation.navigate('ProjectForm', { isAdd: true, clientID: isDrawer ? null : clientID, payload: ''})} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+          }
+          </View>
       </View>
 
     </>
@@ -29,6 +40,12 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
     paddingHorizontal: 5
+  },
+  noticeText: {
+    fontSize: 18,
+    color: '#666666',
+    width: '70%',
+    textAlign: 'center'
   },
   addProjectButton: {
     backgroundColor: '#fafafa',

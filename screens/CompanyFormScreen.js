@@ -14,7 +14,7 @@ const CompanyFormScreen = ({ route, navigation }) => {
 
   return (  
     <>
-      <StackHeader title={isAdd ? 'Add Company' : 'Edit Company'}/>
+      <StackHeader title={isAdd ? 'Add Company' : 'Edit Company'} navFunction={() => navigation.pop()}/>
       { isAdd ? 
         <CompanyForm nav={navigation} isAdd={isAdd} /> 
       :

@@ -14,7 +14,7 @@ const EmployeeFormScreen = ({ route, navigation }) => {
 
   return (  
     <>
-      <StackHeader title={isAdd ? 'Add Employee' : 'Edit Employee'}/>
+      <StackHeader title={isAdd ? 'Add Employee' : 'Edit Employee'} navFunction={() => navigation.pop()}/>
 
       { isAdd ?
       <EmployeeForm navProp={navigation} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import BottomTab3 from '../BottomTab3'
@@ -16,7 +16,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
 
   const { state, addProject, editProject } = useContext(ProjectContext)
 
-  // Project Data
+  // --- Project Data
   const blankProject = {
     projectID: '',
     proposalID: '',
@@ -64,7 +64,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
   const [isEdit, setIsEdit] = useState(null)
   const [currentTask, setCurrentTask] = useState(null)
   const [modalVisible, setModalVisible] = useState(closedModals)
-  
+ 
   // --- Form Functions
   const saveProject = () => {
     isAdd ? 
@@ -154,7 +154,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     setModalVisible({ modal1: false, modal2: false, modal3: true })
   }
 
-  // Modal 1 Content
+  // --- Modal 1 Content (Add Employee)
   const modal1content = 
     <>
       <View style={styles.modalContainer}>
@@ -175,7 +175,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
       </View>
     </>
 
-  // Modal 2 Content
+  // --- Modal 2 Content (Task)
   const modal2content =
   <>
     <View style={styles.modalContainer}>
@@ -216,7 +216,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     </View>
   </>
 
-  // Modal 3 Content
+  // --- Modal 3 Content (Remove Employee)
   const modal3content =
   <>
     <View style={styles.modalContainer}>

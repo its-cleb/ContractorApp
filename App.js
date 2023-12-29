@@ -40,8 +40,8 @@ const MyTheme = {
   }
 }
 
-// Projects Pages
-function ClientScreenStack() {
+// Client Pages
+function ClientStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -60,7 +60,7 @@ function ClientScreenStack() {
         options={{ headerTitle: "Client Details" }}
       />
       <Stack.Screen
-        name="ProposalScreenStack"
+        name="ProposalScreen"
         component={ProposalScreen}
         options={{ headerShown: false }}
       />
@@ -99,7 +99,11 @@ function EmployeeScreenStack() {
 // Project Pages
 function ProjectStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator 
+      initialRouteName="ProjectScreen"
+      detachInactiveScreens={true}
+      detachPreviousScreen={true}
+    >
       <Stack.Screen
         name="ProjectScreen"
         component={ProjectScreen}
@@ -157,6 +161,16 @@ export default function App() {
                 drawerLabel: "Home",
                 headerShown: false
               }} 
+            />            
+            <Drawer.Screen 
+              name="ProjectStack" 
+              component={ProjectStack} 
+              options={{ 
+                drawerIcon: () => (<FontAwesome5 name="briefcase" size={22} color="#222" style={{paddingLeft: 2, marginRight: -2}} />),
+                headerTitle: "ProjectScreen",
+                drawerLabel: "Projects",
+                headerShown: false
+              }} 
             />
             <Drawer.Screen 
               name="Estimator" 
@@ -169,8 +183,8 @@ export default function App() {
               }} 
             />
             <Drawer.Screen 
-              name="Clients" 
-              component={ClientScreenStack} 
+              name="ClientsStack" 
+              component={ClientStack} 
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="user-alt" size={22} color="black" />),
                 headerTitle: "Your Clients",
@@ -198,11 +212,7 @@ export default function App() {
                 headerShown: false
               }} 
             />
-            <Drawer.Screen
-              name="ProjectStack"
-              component={ProjectStack}
-              options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
-            />
+
         </Drawer.Navigator>
       </NavigationContainer>
     </CompanyProvider>

@@ -10,7 +10,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
 
   return (
     <>
-      <StackHeader title={isAdd ? 'Add Project' : 'Edit Project'} fromHome={fromHome} />
+      <StackHeader title={isAdd ? 'Add Project' : 'Edit Project'} navFunction={() => navigation.pop()} />
         <ProjectForm 
           isAdd={isAdd}  
           nav={navigation}
