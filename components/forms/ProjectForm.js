@@ -1,6 +1,6 @@
 import React from 'react'
-import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
+import { useState, useContext, useEffect } from 'react'
+import { View, Text, TextInput, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, Switch, FlatList, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import BottomTab3 from '../BottomTab3'
 import DatePicker from '../DatePicker'
@@ -23,6 +23,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     clientID: clientID,
     title: '',
     date: '', 
+    status: 'Upcoming',
     employees: [],
     tasks: [], 
   }
@@ -44,6 +45,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     employee: '',
     task: '',
     date: '',
+    status: ''
   }
   const formData = isAdd ? blankForm : project  
   const [ form, setForm ] = useState(formData)
@@ -65,12 +67,20 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
   const [currentTask, setCurrentTask] = useState(null)
   const [modalVisible, setModalVisible] = useState(closedModals)
  
+  // --- Project Status Switch
+  const [ isComplete, setIsComplete ] = useState(isAdd ? false : Boolean(project.status === 'Complete') ? true : false)
+  
+  useEffect(() => {    
+    setFormState('status', isComplete ? 'Complete' : 'Upcoming')
+  }, [isComplete])
+
   // --- Form Functions
+    
   const saveProject = () => {
     isAdd ? 
-      addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date)
+      addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status)
     :
-      editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date) 
+      editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status) 
     fromHome ? navigation.navigate('ProjectDetails', { isAdd: false, projectID: projectSheet.projectID, fromHome: true }) : navigation.pop() // Needs to add change for if accessed from homeScreen
   }
 
@@ -278,6 +288,20 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
               </View>
             </View>
             <View style={[globalStyles.formRow, styles.row]}>
+              <View style={[globalStyles.formColumn, { flex: 5 }]}>
+                <Text style={globalStyles.formFieldCaption}>Project Status</Text>
+                <View style={[styles.statusRow, {backgroundColor: isComplete ? '#aaffaaaa' : '#fadfb9aa', borderColor: isComplete ? 'limegreen' : 'darkkhaki'}]}>
+                  <Text style={[{fontWeight: 'bold', fontSize: 16, color: isComplete ? 'green' : 'chocolate'}]}>{form.status}</Text>
+                </View>
+              </View>
+              <View style={[globalStyles.formColumn, { flex: 2, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: Platform.OS === 'ios' ? 6 : 0 }]}>
+                <Switch 
+                  onValueChange={(value) => setIsComplete(value)}
+                  value={isComplete}
+                />
+              </View>
+            </View>
+            <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Assigned Employees</Text>
                 { Boolean(projectSheet.employees.length > 0) ?
@@ -361,6 +385,17 @@ const styles = StyleSheet.create({
   row: {
     marginBottom: 5
   }, 
+  statusRow: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingBottom: 8,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    marginVertical: 3,
+    padding: 8,
+    alignItems: 'center',
+  },
   blankRow: {
     flexDirection: 'row',
     gap: 10,
