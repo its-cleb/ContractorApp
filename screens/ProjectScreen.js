@@ -7,7 +7,6 @@ import IconButtonHContent from '../components/IconButtonHContent'
 
 const ProjectScreen = ({ route, navigation }) => {
 
-  // const { state } = useContext(Context)
   const clientID = route.params.clientID
 
   return (
@@ -16,7 +15,7 @@ const ProjectScreen = ({ route, navigation }) => {
       
       <View style={styles.pageContainer}> 
         <ProjectsFlatlist isFiltered={true} filter={clientID} fromHome={route.params.fromHome}/>
-
+ 
         <View style={styles.addProjectButton}>
           <IconButtonHContent pressFunction={() => navigation.navigate('ProjectForm', { isAdd: true, clientID: clientID, payload: ''})} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
         </View>

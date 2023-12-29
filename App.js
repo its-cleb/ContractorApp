@@ -60,11 +60,17 @@ function ClientScreenStack() {
         options={{ headerTitle: "Client Details" }}
       />
       <Stack.Screen
-        name="ProposalScreen"
+        name="ProposalScreenStack"
         component={ProposalScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="ProjectStack"
+        component={ProjectStack}
+        options={{ headerShown: false }}
+      />
+      
+      {/* <Stack.Screen
         name="ProjectScreen"
         component={ProjectScreen}
         options={{ headerShown: false }}
@@ -78,7 +84,7 @@ function ClientScreenStack() {
         name="ProjectForm"
         component={ProjectFormScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
     </Stack.Navigator>
     )
 }
@@ -107,7 +113,7 @@ function EmployeeScreenStack() {
 }
 
 // Project Pages
-function ProjectScreenStack() {
+function ProjectStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -210,6 +216,12 @@ export default function App() {
             />
             <Drawer.Screen
               name="ProjectDetails"
+              component={ProjectStack}
+              options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
+            />
+            {/* Fake Drawer Screens */}
+            {/* <Drawer.Screen
+              name="ProjectDetails"
               component={ProjectDetailsScreen}
               options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
             />
@@ -217,7 +229,7 @@ export default function App() {
               name="ProjectForm"
               component={ProjectFormScreen}
               options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
-            />
+            /> */}
         </Drawer.Navigator>
       </NavigationContainer>
     </CompanyProvider>
