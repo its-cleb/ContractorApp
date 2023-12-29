@@ -8,6 +8,7 @@ const CompanyScreen = () => {
 
   const { state, editCompany } = useContext(CompanyContext)
   console.log(state)
+  
   return (
     <>
       <DrawerHeader title="Company" />

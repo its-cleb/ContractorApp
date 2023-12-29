@@ -12,7 +12,8 @@ const projectReducer = (state, action) => {
         title: action.payload.title,
         employees: action.payload.employees,
         tasks: action.payload.tasks,
-        date: action.payload.date
+        date: action.payload.date,
+        status: action.payload.status
       }]
     case 'edit_project':
       return state.map((projects) => {
@@ -30,19 +31,19 @@ const projectReducer = (state, action) => {
 }
 
 const addProject = dispatch => {
-  return (projectID, clientID, proposalID, title, employees, tasks, date) => {
+  return (projectID, clientID, proposalID, title, employees, tasks, date, status) => {
     dispatch({ 
       type: 'add_project', 
-      payload: { projectID, clientID, proposalID, title, employees, tasks, date } 
+      payload: { projectID, clientID, proposalID, title, employees, tasks, date, status } 
     })
   }
 }
 
 const editProject = dispatch => {
-  return (projectID, clientID, proposalID, title, employees, tasks, date) => {
+  return (projectID, clientID, proposalID, title, employees, tasks, date, status) => {
     dispatch({ 
       type: 'edit_project', 
-      payload: { projectID, clientID, proposalID, title, employees, tasks, date } 
+      payload: { projectID, clientID, proposalID, title, employees, tasks, date, status } 
     })
   }
 }
@@ -69,6 +70,7 @@ export const { Context, Provider } = createDataContext(
     title: 'Kitchen Remodel',
     employees: ['00001', '00002'],
     tasks: ['Kitchen Sink', 'Tile Backsplash'],
-    date: '01/29/2024'
+    date: '01/29/2024',
+    status: 'Upcoming'
   }]
 )

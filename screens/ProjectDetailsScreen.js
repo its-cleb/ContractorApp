@@ -19,6 +19,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const employees = useContext(EmployeeContext)
 
   const fromHome = route.params.fromHome
+  console.log(fromHome)
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
@@ -38,7 +39,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   return (  
     <>
-      <StackHeader title='Project Details' navFunction={() => navigation.pop()} />
+      <StackHeader title='Project Details' navFunction={() => fromHome ? navigation.replace('ProjectScreen') : navigation.pop()} />
 
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>
@@ -48,6 +49,12 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Start Date:</Text>
           <Text style={styles.projectTextRight}>{project.date}</Text>
+        </View>
+        <View style={styles.projectRow}>
+          <Text style={[styles.projectTextBold, styles.flexOne]}>Status:</Text>
+          <Text style={[styles.projectTextRight, {fontWeight: 'bold', color: Boolean(project.status === 'Upcoming') ? 'orange' : 'green'}]}>
+            {project.status}
+          </Text>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Client:</Text>

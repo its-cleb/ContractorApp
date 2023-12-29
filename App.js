@@ -107,12 +107,12 @@ function ProjectStack() {
       <Stack.Screen
         name="ProjectScreen"
         component={ProjectScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, animationTypeForReplace: 'pop' }}
       />
       <Stack.Screen
         name="ProjectDetails"
         component={ProjectDetailsScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, animationTypeForReplace: 'pop' }}
       />
       <Stack.Screen
         name="ProjectForm"
@@ -147,6 +147,7 @@ export default function App() {
       <NavigationContainer theme={MyTheme}>
         <Drawer.Navigator 
           initialRouteName="Home"
+          unmountOnBlur={true}
           screenOptions={{
               drawerActiveBackgroundColor: "wheat",
               drawerActiveTintColor: "#222",
@@ -164,9 +165,10 @@ export default function App() {
             />            
             <Drawer.Screen 
               name="ProjectStack" 
-              component={ProjectStack} 
+              component={ProjectStack}
+              
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="briefcase" size={22} color="#222" style={{paddingLeft: 2, marginRight: -2}} />),
+                drawerIcon: () => (<FontAwesome5 name="tools" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />),
                 headerTitle: "ProjectScreen",
                 drawerLabel: "Projects",
                 headerShown: false
@@ -186,7 +188,7 @@ export default function App() {
               name="ClientsStack" 
               component={ClientStack} 
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="user-alt" size={22} color="black" />),
+                drawerIcon: () => (<FontAwesome5 name="user-alt" size={22} color="black" style={{marginRight: -2}} />),
                 headerTitle: "Your Clients",
                 drawerLabel: "Clients",
                 headerShown: false
@@ -196,7 +198,7 @@ export default function App() {
               name="Employees"
               component={EmployeeScreenStack} 
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="users-cog" size={22} color="#222" style={{marginRight: -4, marginLeft: -2}} />),
+                drawerIcon: () => (<FontAwesome5 name="users-cog" size={22} color="#222" style={{marginRight: -4, marginLeft: -3}} />),
                 headerTitle: "Employees",
                 drawerLabel: "Employees",
                 headerShown: false

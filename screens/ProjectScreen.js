@@ -10,9 +10,6 @@ const ProjectScreen = ({ route, navigation }) => {
   const isDrawer = Boolean(route.params ===  undefined)
   const clientID = isDrawer ? null : route.params.clientID
 
-  
-  console.log(route)
-
   return (
     <>
       <StackHeader title={Boolean(clientID != null) ? 'Projects of Client' : 'Projects'} navFunction={() => isDrawer ? navigation.navigate('Home') : navigation.pop()}/>
