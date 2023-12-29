@@ -12,10 +12,11 @@ import EmployeeScreen from './navigation/EmployeeScreen'
 
 import ClientFormScreen from './screens/ClientFormScreen'
 import ClientDetailsScreen from './screens/ClientDetailsScreen'
+import ClientProjectsScreen from './screens/ClientProjectsScreen'
 
 import ProposalScreen from './screens/ProposalScreen'
 
-import ProjectScreen from './screens/ProjectScreen'
+import ProjectsScreen from './navigation/ProjectsScreen'
 import ProjectDetailsScreen from './screens/ProjectDetailsScreen'
 import ProjectFormScreen from './screens/ProjectFormScreen'
 
@@ -100,13 +101,18 @@ function EmployeeScreenStack() {
 function ProjectStack() {
   return (
     <Stack.Navigator 
-      initialRouteName="ProjectScreen"
+      initialRouteName="ProjectsScreen"
       detachInactiveScreens={true}
       detachPreviousScreen={true}
     >
       <Stack.Screen
-        name="ProjectScreen"
-        component={ProjectScreen}
+        name="ProjectsScreen"
+        component={ProjectsScreen}
+        options={{ headerShown: false, animationTypeForReplace: 'pop' }}
+      />
+      <Stack.Screen
+        name="ClientProjectsScreen"
+        component={ClientProjectsScreen}
         options={{ headerShown: false, animationTypeForReplace: 'pop' }}
       />
       <Stack.Screen
@@ -166,10 +172,9 @@ export default function App() {
             <Drawer.Screen 
               name="ProjectStack" 
               component={ProjectStack}
-              
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="tools" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />),
-                headerTitle: "ProjectScreen",
+                headerTitle: "Client Projects",
                 drawerLabel: "Projects",
                 headerShown: false
               }} 

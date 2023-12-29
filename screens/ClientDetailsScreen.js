@@ -62,7 +62,7 @@ const ClientDetailsScreen = ({ route, navigation }) => {
         button2function={() => navigation.navigate('ProposalScreen', { isAdd: true , clientID: clients.clientID, proposalID: ''})}
         button3icon='tools'
         button3text='Projects'
-        button3function={() => navigation.navigate('ProjectStack', { screen: 'ProjectScreen', params: {clientID: clients.clientID, fromHome: false}})}
+        button3function={() => navigation.navigate('ProjectStack', { screen: 'ClientProjectsScreen', params: {clientID: clients.clientID, fromHome: false}})}
       /> 
     </>
   )

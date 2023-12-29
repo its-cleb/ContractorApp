@@ -39,7 +39,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   return (  
     <>
-      <StackHeader title='Project Details' navFunction={() => fromHome ? navigation.replace('ProjectScreen') : navigation.pop()} />
+      <StackHeader title='Project Details' navFunction={() => fromHome ? navigation.replace('ClientProjectsScreen') : navigation.pop()} />
 
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>
