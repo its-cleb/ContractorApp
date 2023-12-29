@@ -69,22 +69,6 @@ function ClientScreenStack() {
         component={ProjectStack}
         options={{ headerShown: false }}
       />
-      
-      {/* <Stack.Screen
-        name="ProjectScreen"
-        component={ProjectScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ProjectDetails"
-        component={ProjectDetailsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ProjectForm"
-        component={ProjectFormScreen}
-        options={{ headerShown: false }}
-      /> */}
     </Stack.Navigator>
     )
 }
@@ -219,17 +203,6 @@ export default function App() {
               component={ProjectStack}
               options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
             />
-            {/* Fake Drawer Screens */}
-            {/* <Drawer.Screen
-              name="ProjectDetails"
-              component={ProjectDetailsScreen}
-              options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
-            />
-            <Drawer.Screen
-              name="ProjectForm"
-              component={ProjectFormScreen}
-              options={{ headerShown: false, drawerItemStyle:{display: 'none'}}}
-            /> */}
         </Drawer.Navigator>
       </NavigationContainer>
     </CompanyProvider>
