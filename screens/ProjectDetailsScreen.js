@@ -19,7 +19,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const employees = useContext(EmployeeContext)
 
   const fromHome = route.params.fromHome
-  console.log(fromHome)
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
@@ -32,7 +31,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   }
   
   const deleteProjectNavBack = () => {
-    console.log(currentProject)
     deleteProject(currentProject)
     navigation.pop()
   }

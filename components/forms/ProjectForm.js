@@ -290,11 +290,11 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
             <View style={[globalStyles.formRow, styles.row]}>
               <View style={[globalStyles.formColumn, { flex: 5 }]}>
                 <Text style={globalStyles.formFieldCaption}>Project Status</Text>
-                <View style={[styles.statusRow, {backgroundColor: isComplete ? '#aaffaaaa' : '#fadfb9aa', borderColor: isComplete ? 'limegreen' : 'darkkhaki'}]}>
+                <View style={[styles.statusRow, {backgroundColor: isComplete ? '#aaffaaaa' : '#fadfb9aa'}]}>
                   <Text style={[{fontWeight: 'bold', fontSize: 16, color: isComplete ? 'green' : 'chocolate'}]}>{form.status}</Text>
                 </View>
               </View>
-              <View style={[globalStyles.formColumn, { flex: 2, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: Platform.OS === 'ios' ? 6 : 0 }]}>
+              <View style={[globalStyles.formColumn, { flex: 2, alignItems: 'center', justifyContent: 'flex-end', marginBottom: Platform.OS === 'ios' ? 4 : -2 }]}>
                 <Switch 
                   onValueChange={(value) => setIsComplete(value)}
                   value={isComplete}
@@ -390,8 +390,6 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingBottom: 8,
     borderRadius: 5,
-    borderWidth: 1,
-    borderStyle: 'dashed',
     marginVertical: 3,
     padding: 8,
     alignItems: 'center',

@@ -30,11 +30,8 @@ const ProjectsScreen = ({ navigation }) => {
 
   const getClient = (item) => {
     let currentClient = clients.state.filter((clientState) => clientState.clientID === item.clientID )
-    console.log(currentClient)
     return <Text style={styles.projectTextLeft}>{currentClient[0].clientName}</Text>
   }
-
-  // console.log(projects)
 
   return (
     <>

@@ -1,8 +1,9 @@
 import React from 'react'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import { Text } from 'react-native'
 
 import HomeScreen from './navigation/HomeScreen'
 import EstimatorScreen from './navigation/EstimatorScreen'
@@ -142,6 +143,21 @@ function EstimatorStack() {
   )
 }
 
+// Custom Drawer Content
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem 
+        label={() => <Text style={{fontSize: 18, color: '#666', fontWeight: "500", marginLeft: 1}}>Projects</Text>}
+        activeBackgroundColor="wheat"
+        activeTintColor="#222"
+        icon={() => (<FontAwesome5 name="tools" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />)}
+        onPress={() => props.navigation.navigate('ProjectStack', { screen: 'ProjectsScreen'})} 
+      />
+    </DrawerContentScrollView>
+  );
+}
 export default function App() {
   
   return (
@@ -154,6 +170,7 @@ export default function App() {
         <Drawer.Navigator 
           initialRouteName="Home"
           unmountOnBlur={true}
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
           screenOptions={{
               drawerActiveBackgroundColor: "wheat",
               drawerActiveTintColor: "#222",
@@ -176,7 +193,8 @@ export default function App() {
                 drawerIcon: () => (<FontAwesome5 name="tools" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />),
                 headerTitle: "Client Projects",
                 drawerLabel: "Projects",
-                headerShown: false
+                headerShown: false,
+                drawerItemStyle: { display: 'none' }
               }} 
             />
             <Drawer.Screen 
@@ -211,12 +229,12 @@ export default function App() {
             />
             <Drawer.Screen 
               name="Company" 
-              component={CompanyScreen} 
+              component={CompanyScreen}
               options={{ 
-                drawerIcon: () => (<FontAwesome5 name="briefcase" size={22} color="#222" style={{paddingLeft: 2, marginRight: -2}} />),
+                drawerIcon: () => (<FontAwesome5 name="briefcase" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />),
                 headerTitle: "Company Details",
                 drawerLabel: "Company",
-                headerShown: false
+                headerShown: false,
               }} 
             />
 

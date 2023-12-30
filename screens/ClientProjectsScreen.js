@@ -5,14 +5,14 @@ import ProjectsFlatlist from '../components/flatlists/ProjectsFlatlist'
 import IconButtonHContent from '../components/IconButtonHContent'
 
 
-const ProjectScreen = ({ route, navigation }) => {
+const ClientProjectsScreen = ({ route, navigation }) => {
 
   const isDrawer = Boolean(route.params ===  undefined)
   const clientID = isDrawer ? null : route.params.clientID
 
   return (
     <>
-      <StackHeader title={Boolean(clientID != null) ? 'Projects of Client' : 'Projects'} navFunction={() => isDrawer ? navigation.navigate('Home') : navigation.pop()}/>
+      <StackHeader title='Projects of Client' navFunction={() => isDrawer ? navigation.navigate('Home') : navigation.pop()}/>
       
       <View style={styles.pageContainer}> 
         <ProjectsFlatlist isFiltered={isDrawer ? false : true} filter={isDrawer ? null : clientID} fromHome={isDrawer ? true : route.params.fromHome}/>
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ProjectScreen
+export default ClientProjectsScreen
