@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Keyboard, SafeAreaView, StyleSheet, Text, TouchableOpacity, Switch, FlatList, View } from 'react-native'
 import { Context } from '../context/ProjectContext'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
+import { Context as ClientContext } from '../context/ClientContext'
 import DrawerHeader from '../components/DrawerHeader'
 import SearchBar from '../components/SearchBar'
 
@@ -11,6 +12,7 @@ const ProjectsScreen = ({ navigation }) => {
   const projects = state
 
   const employees = useContext(EmployeeContext)
+  const clients = useContext(ClientContext)
   
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -25,6 +27,14 @@ const ProjectsScreen = ({ navigation }) => {
         </Text>
     )
   }
+
+  const getClient = (item) => {
+    let currentClient = clients.state.filter((clientState) => clientState.clientID === item.clientID )
+    console.log(currentClient)
+    return <Text style={styles.projectTextLeft}>{currentClient[0].clientName}</Text>
+  }
+
+  // console.log(projects)
 
   return (
     <>
@@ -57,14 +67,20 @@ const ProjectsScreen = ({ navigation }) => {
                   <View style={styles.projectRowTop}>
                     <View style={[styles.projectColumnLeft, { flex: 2 }]}>
                       <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.title}</Text>
+                      <FlatList
+                        data={projects}
+                        renderItem={({ item }) => getClient(item)}
+                      /> 
                     </View>
                     <View style={[styles.projectColumnRight, { flex: 1 }]}>
                       <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>{item.date}</Text>
+                      <Text style={[styles.projectTextRight]}>{item.status}</Text>
                     </View>
                   </View>
-                
+
                   <View style={styles.projectRowBottom}>
                     <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>Tasks:</Text>
                       <FlatList
                         data={item.tasks}
                         renderItem={({ item }) =>
@@ -72,14 +88,15 @@ const ProjectsScreen = ({ navigation }) => {
                       }
                       />
                     </View>
-                    <View style={[styles.projectColumnRight, { flex: 2 }]}>
+                    <View style={[styles.projectColumnRight, { flex: 1 }]}>
+                      <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>Workers:</Text>
                       <FlatList
                         data={item.employees}
                         renderItem={({ item }) => getEmployees(item)}
                       />
                     </View>
-                    
                   </View>
+
                 </View>
               </TouchableOpacity>
             )}
@@ -103,6 +120,7 @@ const styles = StyleSheet.create({
   },
   flatlistbox: {
     marginTop: 10,
+    marginHorizontal: 5
   },
   projectContainer: {
     borderRadius: 5,
@@ -121,7 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     gap: 10,
-    paddingBottom: 3,
+    paddingBottom: 8,
     borderBottomWidth: 1,
     borderColor: 'darkkhaki',
   },
@@ -129,7 +147,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     gap: 10,
-    paddingTop: 5
+    paddingTop: 5, 
+
   },
   projectTextLeft: {
     color: 'black',
