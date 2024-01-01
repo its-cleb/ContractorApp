@@ -16,14 +16,14 @@ const ClientFormScreen = ({ route, navigation }) => {
     <>
       <StackHeader title={isAdd ? 'Add Client' : 'Edit Client'} navFunction={() => navigation.pop()}/>
       { isAdd ? 
-        <ClientForm nav={navigation} isAdd={isAdd} /> 
-      :
-        <ClientForm 
-          initialValues={clientData} 
-          nav={navigation} 
-          payload={route.params.payload}
-          isAdd={isAdd} 
-        /> 
+          <ClientForm nav={navigation} isAdd={isAdd} /> 
+        :
+          <ClientForm 
+            initialValues={clientData} 
+            nav={navigation} 
+            payload={route.params.payload}
+            isAdd={isAdd} 
+          /> 
       }  
     </>     
   ) 

@@ -19,12 +19,12 @@ const ClientProjectsScreen = ({ route, navigation }) => {
  
         <View style={styles.addProjectButton}>
           { isDrawer ?
-          <>
-            <Text style={styles.noticeText}>New projects must be added through the Client page</Text>
-            <IconButtonHContent pressFunction={() => navigation.navigate('ClientsStack', { screen: 'ViewClients'})} title="Go to Clients" icon="user-alt" bgcolor="#00000000" textcolor="steelblue"/>
-          </> 
-          :
-          <IconButtonHContent pressFunction={() => navigation.navigate('ProjectForm', { isAdd: true, clientID: isDrawer ? null : clientID, payload: ''})} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+              <>
+                <Text style={styles.noticeText}>New projects must be added through the Client page</Text>
+                <IconButtonHContent pressFunction={() => navigation.navigate('ClientsStack', { screen: 'ViewClients'})} title="Go to Clients" icon="user-alt" bgcolor="#00000000" textcolor="steelblue"/>
+              </> 
+            :
+              <IconButtonHContent pressFunction={() => navigation.navigate('ProjectForm', { isAdd: true, clientID: isDrawer ? null : clientID, payload: ''})} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
           }
           </View>
       </View>
