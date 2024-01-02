@@ -14,15 +14,16 @@ const ProjectsScreen = ({ navigation }) => {
   const employees = useContext(EmployeeContext)
   const clients = useContext(ClientContext)
   
-  const [searchTerm, setSearchTerm] = useState('')
+  // Get Search Bar Value and convert it to string
+  const [searchTerm, setSearchTerm] = useState('')  
+  const searchText = Object.values(searchTerm).join('')
 
-  const [ isComplete, setIsComplete ] = useState('')
-
-  const [ searchPanel, setSearchPanel ] = useState(false)
+  // Search Panel
+  const [ searchPanel, setSearchPanel ] = useState(true)
+  const [ completedToggle, setCompletedToggle ] = useState('')
 
   const toggleSearchPanel = () => {
     setSearchPanel(!searchPanel)
-    console.log(searchPanel)
   }
 
   // Employee Flatlist content function
@@ -35,77 +36,87 @@ const ProjectsScreen = ({ navigation }) => {
     )
   }
 
-  const getClient = (item) => {
+  // Main Project Flatlist Content (Needs to be a function to retrieve client name)
+  const getCurrentProject = (item) => {
+    let isComplete = Boolean(item.status === 'Complete')
     let currentClient = clients.state.filter((clientState) => clientState.clientID === item.clientID )
-    return <Text style={styles.projectTextLeft}>{currentClient[0].clientName}</Text>
+
+    if (( // Search Function
+      item.title.toLowerCase().includes(searchText.toLowerCase()) || 
+      searchText === "" ) &&
+      (isComplete === completedToggle || isComplete === false) 
+    ) {
+      return (
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome}})
+        }
+        >
+          <View style={[styles.projectContainer, { backgroundColor: isComplete ? '#44ee44' : 'khaki'}]}>
+            <View style={styles.projectRowTop}>
+              <View style={[styles.projectColumnLeft, { flex: 2 }]}>
+                <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.title}</Text>
+                <Text style={styles.projectTextLeft}>{currentClient[0].clientName}</Text>
+              </View>
+              <View style={[styles.projectColumnRight, { flex: 1 }]}>
+                <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>{item.date}</Text>
+                <Text style={[styles.projectTextRight]}>{item.status}</Text>
+              </View>
+            </View>
+
+            <View style={styles.projectRowBottom}>
+              <View style={[styles.projectColumnLeft, { flex: 1 }]}>
+                <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>Tasks:</Text>
+                <FlatList
+                  data={item.tasks}
+                  renderItem={({ item }) =>
+                  <Text style={styles.projectTextLeft}>{item}</Text> 
+                }
+                />
+              </View>
+              <View style={[styles.projectColumnRight, { flex: 1 }]}>
+                <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>Workers:</Text>
+                <FlatList
+                  data={item.employees}
+                  renderItem={({ item }) => getEmployees(item)}
+                />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      )
+    } else { return }
   }
 
+  // ----- | Main Return | -----
   return (
     <>
       <DrawerHeader title='Projects' rightIcon='search' pressFunction={toggleSearchPanel}/>
+
       <SafeAreaView style={styles.pageContainer}>
         
-      <View style={[styles.searchPanel, { backgroundColor: searchPanel ? 'red' : 'green', display: searchPanel ? 'none' : 'flex', transition: "display 1s ease-in-out"}]}>
-        <SearchBar B
+      <View style={[styles.searchPanel, { display: searchPanel ? 'none' : 'flex' }]}>
+        <SearchBar
           placeholderText='Search Projects' 
           searchTerm={searchTerm} 
           onTermChange={newSearchTerm => setSearchTerm(newSearchTerm)} 
           onTermSubmit={() => Keyboard.dismiss()} 
         />
-        <Switch 
-          onValueChange={(value) => setIsComplete(value)}
-          value={isComplete}
-        />
-      </View>
-
-        <View style={styles.flatlistbox}>
-          <FlatList 
-            data={projects} 
-            keyExtractor={(item) => item.projectID}
-            renderItem={({ item }) => (
-              <TouchableOpacity 
-                onPress={() => navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome}})
-              }
-              >
-                <View style={[styles.projectContainer]}>
-                  <View style={styles.projectRowTop}>
-                    <View style={[styles.projectColumnLeft, { flex: 2 }]}>
-                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>{item.title}</Text>
-                      <FlatList
-                        data={projects}
-                        renderItem={({ item }) => getClient(item)}
-                      /> 
-                    </View>
-                    <View style={[styles.projectColumnRight, { flex: 1 }]}>
-                      <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>{item.date}</Text>
-                      <Text style={[styles.projectTextRight]}>{item.status}</Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.projectRowBottom}>
-                    <View style={[styles.projectColumnLeft, { flex: 1 }]}>
-                      <Text style={[styles.projectTextLeft, { fontWeight: 'bold' }]}>Tasks:</Text>
-                      <FlatList
-                        data={item.tasks}
-                        renderItem={({ item }) =>
-                        <Text style={styles.projectTextLeft}>{item}</Text> 
-                      }
-                      />
-                    </View>
-                    <View style={[styles.projectColumnRight, { flex: 1 }]}>
-                      <Text style={[styles.projectTextRight, { fontWeight: 'bold' }]}>Workers:</Text>
-                      <FlatList
-                        data={item.employees}
-                        renderItem={({ item }) => getEmployees(item)}
-                      />
-                    </View>
-                  </View>
-
-                </View>
-              </TouchableOpacity>
-            )}
+        <View style={[styles.toggleBar, {paddingVertical: Platform.OS === 'ios' ? 10 : 0}]}>
+          <Text style={{fontSize: 16, paddingRight: 10}}>Show Completed Projects</Text>
+          <Switch 
+            onValueChange={(value) => setCompletedToggle(value)}
+            value={completedToggle}
           />
         </View>
+      </View>
+
+      <View style={styles.flatlistbox}>
+        <FlatList 
+          data={projects} 
+          keyExtractor={(item) => item.projectID}
+          renderItem={({ item }) => getCurrentProject(item)}
+        />
+      </View>
 
       </SafeAreaView>
     </>
@@ -121,6 +132,12 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderBottomWidth: 1,
   },
+  toggleBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -10
+  },
   flatlistbox: {
     marginTop: 10,
     marginHorizontal: 5
@@ -131,7 +148,6 @@ const styles = StyleSheet.create({
     borderColor: 'darkkhaki',
     marginVertical: 5,
     marginHorizontal: 5,
-    backgroundColor: 'khaki',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
