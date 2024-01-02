@@ -5,10 +5,11 @@ import { Context as EmployeeContext } from '../../context/EmployeeContext'
 import { useNavigation } from '@react-navigation/native'
 
 const ProjectsFlatlist = props => {
-  
+    
   const navigation = useNavigation()
 
   const fromHome = props.fromHome
+  const fromClient = props.fromClient
 
   const { state } = useContext(Context)
   const projects = props.isFiltered ? state.filter((project) => project.clientID === props.filter ) : state
@@ -32,8 +33,10 @@ const ProjectsFlatlist = props => {
         keyExtractor={(item) => item.projectID}
         renderItem={({ item }) => (
           <TouchableOpacity 
-            // disabled={fromHome ? true : false} 
-            onPress={() => navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome}})
+            onPress={() => fromClient ? 
+              navigation.navigate('ClientProjectDetails', { isAdd: false, projectID: item.projectID, fromHome, fromClient })
+              :
+              navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome, fromClient}})
           }
           >
             <View style={[styles.projectContainer]}>

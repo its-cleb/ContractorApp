@@ -41,8 +41,9 @@ const CompanyForm = ({ initialValues, nav, payload, isAdd }) => {
   // Control Button functionality
   const saveCompanyBackPage = () => {
     isAdd ? 
-    addCompany(form.companyName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) : 
-    editCompany(companyID, form.companyName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
+      addCompany(form.companyName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) 
+      : 
+      editCompany(companyID, form.companyName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
     navigation.pop()
   }
   
@@ -166,7 +167,7 @@ const CompanyForm = ({ initialValues, nav, payload, isAdd }) => {
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
             {isAdd ? 
               <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Add Company' icon='plus' textcolor='white' bgcolor='steelblue' />
-            : 
+              : 
               <>
                 <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
                 <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />

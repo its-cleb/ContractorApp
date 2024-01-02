@@ -18,6 +18,13 @@ const ProjectsScreen = ({ navigation }) => {
 
   const [ isComplete, setIsComplete ] = useState('')
 
+  const [ searchPanel, setSearchPanel ] = useState(false)
+
+  const toggleSearchPanel = () => {
+    setSearchPanel(!searchPanel)
+    console.log(searchPanel)
+  }
+
   // Employee Flatlist content function
   const getEmployees = (item) => {
     let currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
@@ -35,12 +42,12 @@ const ProjectsScreen = ({ navigation }) => {
 
   return (
     <>
-      <DrawerHeader title="Projects" />
+      <DrawerHeader title='Projects' rightIcon='search' pressFunction={toggleSearchPanel}/>
       <SafeAreaView style={styles.pageContainer}>
         
-      <View style={styles.searchPanel}>
-        <SearchBar 
-          placeholderText="Search Projects" 
+      <View style={[styles.searchPanel, { backgroundColor: searchPanel ? 'red' : 'green', display: searchPanel ? 'none' : 'flex', transition: "display 1s ease-in-out"}]}>
+        <SearchBar B
+          placeholderText='Search Projects' 
           searchTerm={searchTerm} 
           onTermChange={newSearchTerm => setSearchTerm(newSearchTerm)} 
           onTermSubmit={() => Keyboard.dismiss()} 
@@ -113,7 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#ccc',
     borderBottomWidth: 1,
-
   },
   flatlistbox: {
     marginTop: 10,

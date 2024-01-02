@@ -7,7 +7,6 @@ import DrawerHeader from '../components/DrawerHeader'
 const CompanyScreen = () => {
 
   const { state, editCompany } = useContext(CompanyContext)
-  console.log(state)
   
   return (
     <>

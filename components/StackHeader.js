@@ -3,7 +3,7 @@ import { Text, SafeAreaView, TouchableOpacity, View, StatusBar, StyleSheet } fro
 import { MaterialIcons, Feather } from '@expo/vector-icons'
 
 // Component Usage
-// <StackHeader title='' navFunction={} />
+// <StackHeader title='' navFunction={} rightIcon={} pressfunction{}/>
 
 const StackHeader = props => {    
   
@@ -51,7 +51,7 @@ const styles=StyleSheet.create({
   text: {
     color: 'black', 
     fontSize: 20,
-    paddingLeft: 30,
+    paddingLeft: 20,
     fontWeight: '500',
     justifyContent: 'center',
     alignSelf: 'center',

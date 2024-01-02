@@ -16,14 +16,14 @@ const EmployeeFormScreen = ({ route, navigation }) => {
     <>
       <StackHeader title={isAdd ? 'Add Employee' : 'Edit Employee'} navFunction={() => navigation.pop()}/>
 
-      { isAdd ?
-          <EmployeeForm navProp={navigation} />
+      {isAdd ?
+        <EmployeeForm navProp={navigation} />
         :
-          <EmployeeForm
-            initialValues={employeeData} 
-            navProp={navigation} 
-            payloadProp={route.params.payload}
-          />
+        <EmployeeForm
+          initialValues={employeeData} 
+          navProp={navigation} 
+          payloadProp={route.params.payload}
+        />
       }
     </>
   ) 

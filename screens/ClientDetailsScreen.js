@@ -7,7 +7,7 @@ import BottomTab3 from '../components/BottomTab3'
 
 
 const ClientDetailsScreen = ({ route, navigation }) => {
-  
+    
   const { state, deleteClient } = useContext(ClientContext)
 
   const { payload } = route.params
@@ -62,7 +62,7 @@ const ClientDetailsScreen = ({ route, navigation }) => {
         button2function={() => navigation.navigate('ProposalScreen', { isAdd: true , clientID: clients.clientID, proposalID: ''})}
         button3icon='tools'
         button3text='Projects'
-        button3function={() => navigation.navigate('ProjectStack', { screen: 'ClientProjectsScreen', params: {clientID: clients.clientID, fromHome: false}})}
+        button3function={() => navigation.navigate('ClientProjects', { clientID: clients.clientID, fromHome: false })}
       /> 
     </>
   )

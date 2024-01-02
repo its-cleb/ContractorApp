@@ -8,6 +8,7 @@ import StackHeader from '../components/StackHeader'
 import BottomTab3 from '../components/BottomTab3'
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
+
   const { state, deleteProject } = useContext(ProjectContext)
   
   const currentProject = route.params.projectID
@@ -19,6 +20,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const employees = useContext(EmployeeContext)
 
   const fromHome = route.params.fromHome
+  const fromClient = route.params.fromClient
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
@@ -37,7 +39,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   return (  
     <>
-      <StackHeader title='Project Details' navFunction={() => fromHome ? navigation.replace('ClientProjectsScreen') : navigation.pop()} />
+      <StackHeader title='Project Details' navFunction={() => fromHome ? navigation.replace('ProjectsScreen') : navigation.pop()} />
 
       <View style={styles.projectContainer}>
         <View style={styles.projectHeader}>
@@ -88,7 +90,11 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       <BottomTab3 
         button1icon='edit'
         button1text='Edit Project'
-        button1function={() => navigation.navigate('ProjectForm', {isAdd:false, clientID: currentClient[0].clientID, payload: currentProject, fromHome: fromHome})}
+        button1function={() => fromClient ? 
+          navigation.navigate('ClientProjectForm', {isAdd:false, clientID: currentClient[0].clientID, payload: currentProject, fromHome, fromClient})        
+          :
+          navigation.navigate('ProjectForm', {isAdd:false, clientID: currentClient[0].clientID, payload: currentProject, fromHome, fromClient})
+        }
         button2icon='map-marker-alt'
         button2text='Navigate'
         // button2function={}

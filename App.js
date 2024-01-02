@@ -67,8 +67,18 @@ function ClientStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="ProjectStack"
-        component={ProjectStack}
+        name="ClientProjects"
+        component={ClientProjectsScreen}
+        options={{ headerShown: false, animationTypeForReplace: 'pop' }}
+      />
+      <Stack.Screen
+        name="ClientProjectDetails"
+        component={ProjectDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ClientProjectForm"
+        component={ProjectFormScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -103,17 +113,10 @@ function ProjectStack() {
   return (
     <Stack.Navigator 
       initialRouteName="ProjectsScreen"
-      detachInactiveScreens={true}
-      detachPreviousScreen={true}
     >
       <Stack.Screen
         name="ProjectsScreen"
         component={ProjectsScreen}
-        options={{ headerShown: false, animationTypeForReplace: 'pop' }}
-      />
-      <Stack.Screen
-        name="ClientProjectsScreen"
-        component={ClientProjectsScreen}
         options={{ headerShown: false, animationTypeForReplace: 'pop' }}
       />
       <Stack.Screen
@@ -148,13 +151,13 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      <DrawerItem 
+      {/* <DrawerItem 
         label={() => <Text style={{fontSize: 18, color: '#666', fontWeight: "500", marginLeft: 1}}>Projects</Text>}
         activeBackgroundColor="wheat"
         activeTintColor="#222"
         icon={() => (<FontAwesome5 name="tools" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />)}
         onPress={() => props.navigation.navigate('ProjectStack', { screen: 'ProjectsScreen'})} 
-      />
+      /> */}
     </DrawerContentScrollView>
   );
 }
@@ -191,10 +194,9 @@ export default function App() {
               component={ProjectStack}
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="tools" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />),
-                headerTitle: "Client Projects",
+                headerTitle: "Projects",
                 drawerLabel: "Projects",
-                headerShown: false,
-                drawerItemStyle: { display: 'none' }
+                headerShown: false
               }} 
             />
             <Drawer.Screen 

@@ -6,27 +6,32 @@ import IconButtonHContent from '../components/IconButtonHContent'
 
 
 const ClientProjectsScreen = ({ route, navigation }) => {
-
-  const isDrawer = Boolean(route.params ===  undefined)
-  const clientID = isDrawer ? null : route.params.clientID
+  
+  const isDrawer = Boolean(route.params === undefined)
+  const clientID = route.params.clientID
 
   return (
     <>
-      <StackHeader title='Projects of Client' navFunction={() => isDrawer ? navigation.navigate('Home') : navigation.pop()}/>
+      <StackHeader title='Projects of Client' navFunction={() => navigation.pop()}/>
       
       <View style={styles.pageContainer}> 
-        <ProjectsFlatlist isFiltered={isDrawer ? false : true} filter={isDrawer ? null : clientID} fromHome={isDrawer ? true : route.params.fromHome}/>
+        <ProjectsFlatlist 
+          isFiltered={true} 
+          filter={clientID} 
+          fromHome={false}
+          fromClient={true}
+          client
+        />
  
         <View style={styles.addProjectButton}>
-          { isDrawer ?
-              <>
-                <Text style={styles.noticeText}>New projects must be added through the Client page</Text>
-                <IconButtonHContent pressFunction={() => navigation.navigate('ClientsStack', { screen: 'ViewClients'})} title="Go to Clients" icon="user-alt" bgcolor="#00000000" textcolor="steelblue"/>
-              </> 
-            :
-              <IconButtonHContent pressFunction={() => navigation.navigate('ProjectForm', { isAdd: true, clientID: isDrawer ? null : clientID, payload: ''})} title="Add New Project" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
-          }
-          </View>
+          <IconButtonHContent 
+            pressFunction={() => navigation.navigate('ClientProjectForm', { isAdd: true, clientID, payload: ''})} 
+            title="Add New Project" 
+            icon="plus" 
+            bgcolor="#00000000" 
+            textcolor="steelblue"
+          />
+        </View>
       </View>
 
     </>

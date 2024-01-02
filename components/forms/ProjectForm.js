@@ -78,13 +78,13 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
     
   const saveProject = () => {
     isAdd ? 
-        addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status)
+      addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status)
       :
-        editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status) 
+      editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status) 
     fromHome ? 
-        navigation.navigate('ProjectDetails', { isAdd: false, projectID: projectSheet.projectID, fromHome: true }) 
+      navigation.navigate('ProjectDetails', { isAdd: false, projectID: projectSheet.projectID, fromHome: true }) 
       : 
-        navigation.pop() // Needs to add change for if accessed from homeScreen
+      navigation.pop() // Needs to add change for if accessed from homeScreen
   }
 
   const addTask = () => {
@@ -308,9 +308,9 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Assigned Employees</Text>
                 {!!projectSheet.employees.length > 0 ?
-                    <FlatList data={projectSheet.employees} renderItem={({ item }) => getEmployees(item)} />
+                  <FlatList data={projectSheet.employees} renderItem={({ item }) => getEmployees(item)} />
                   :
-                    <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
+                  <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
                 }
               </View>
             </View>
@@ -318,14 +318,14 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
               <View style={[globalStyles.formColumn, { flex: 1 }]}>
                 <Text style={globalStyles.formFieldCaption}>Project Tasks</Text>
                 {!!projectSheet.tasks.length > 0 ?
-                    <FlatList
-                      data={projectSheet.tasks}
-                      renderItem={({ item }) => 
-                        <TouchableOpacity onPress={() => openTaskModal(true, item)} style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></TouchableOpacity> 
-                      }
-                    />
+                  <FlatList
+                    data={projectSheet.tasks}
+                    renderItem={({ item }) => 
+                      <TouchableOpacity onPress={() => openTaskModal(true, item)} style={styles.tasksRow}><Text style={styles.textLeft}>{item}</Text></TouchableOpacity> 
+                    }
+                  />
                   :
-                    <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
+                  <View style={styles.blankRow}><Text style={styles.textCenter}>None</Text></View>
                 }
               </View>
             </View>

@@ -41,8 +41,9 @@ const ClientForm = ({ initialValues, nav, payload, isAdd }) => {
   // Control Button functionality
   const saveClientBackPage = () => {
     isAdd ? 
-    addClient(form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) : 
-    editClient(clientID, form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
+      addClient(form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) 
+      : 
+      editClient(clientID, form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
     navigation.pop()
   }
   
@@ -166,7 +167,7 @@ const ClientForm = ({ initialValues, nav, payload, isAdd }) => {
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
             {isAdd ? 
               <IconButtonHSmall pressFunction={saveClientBackPage} title='Add Client' icon='plus' textcolor='white' bgcolor='steelblue' />
-            : 
+              : 
               <>
                 <IconButtonHSmall pressFunction={saveClientBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
                 <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
