@@ -68,7 +68,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
   const [modalVisible, setModalVisible] = useState(closedModals)
  
   // --- Project Status Switch
-  const [ isComplete, setIsComplete ] = useState(isAdd ? false : !!project.status === 'Complete' ? true : false)
+  const [ isComplete, setIsComplete ] = useState(isAdd ? false : Boolean(project.status === 'Complete') ? true : false)
   
   useEffect(() => {    
     setFormState('status', isComplete ? 'Complete' : 'Upcoming')

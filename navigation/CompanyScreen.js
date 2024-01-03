@@ -3,8 +3,9 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Context as CompanyContext } from '../context/CompanyContext'
 import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
+import IconButtonHContent from '../components/IconButtonHContent'
 
-const CompanyScreen = () => {
+const CompanyScreen = ({ navigation }) => {
 
   const { state, editCompany } = useContext(CompanyContext)
   
@@ -32,6 +33,11 @@ const CompanyScreen = () => {
           </View>  
         </View>
       </View>
+
+      <View style={styles.addProjectButton}>
+        <IconButtonHContent pressFunction={() => navigation.navigate('CompanyForm', { isAdd: true, payload: ''})} title="Edit Company" icon="edit" bgcolor="#00000000" textcolor="steelblue"/>
+      </View>
+
     </>
   )
 }

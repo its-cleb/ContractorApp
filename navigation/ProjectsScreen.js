@@ -48,7 +48,7 @@ const ProjectsScreen = ({ navigation }) => {
     ) {
       return (
         <TouchableOpacity 
-          onPress={() => navigation.navigate('ProjectStack', { screen: 'ProjectDetails', params: {isAdd: false, projectID: item.projectID, fromHome}})
+          onPress={() => navigation.navigate('ProjectDetails', {isAdd: false, projectID: item.projectID, fromHome: false})
         }
         >
           <View style={[styles.projectContainer, { backgroundColor: isComplete ? '#44ee44' : 'khaki'}]}>

@@ -33,11 +33,11 @@ export const { Context, Provider } = createDataContext(
   [{
     companyName: 'Stark Industries', 
     phone:'123-456-7890', 
-    email:'test@gmail.com', 
-    address: '1234 Admiral Way', 
+    email:'starkindustries@gmail.com', 
+    address: '1234 Avengers Tower', 
     unitNumber:'1', 
-    city:'Seattle', 
-    usState:'WA', 
-    zip:'98231' 
+    city:'Manhattan', 
+    usState:'NY', 
+    zip:'28548' 
   }]
 )

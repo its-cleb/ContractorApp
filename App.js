@@ -7,7 +7,7 @@ import { Text } from 'react-native'
 
 import HomeScreen from './navigation/HomeScreen'
 import EstimatorScreen from './navigation/EstimatorScreen'
-import CompanyScreen from './navigation/CompanyScreen'
+
 import ClientsScreen from './navigation/ClientsScreen'
 import EmployeeScreen from './navigation/EmployeeScreen'
 
@@ -23,6 +23,9 @@ import ProjectFormScreen from './screens/ProjectFormScreen'
 
 import EmployeeFormScreen from './screens/EmployeeFormScreen'
 import EmployeeDetailsScreen from './screens/EmployeeDetailsScreen'
+
+import CompanyScreen from './navigation/CompanyScreen'
+import CompanyFormScreen from './screens/CompanyFormScreen'
 
 import { Provider as ClientProvider } from './context/ClientContext'
 import { Provider as EmployeeProvider } from './context/EmployeeContext'
@@ -146,6 +149,26 @@ function EstimatorStack() {
   )
 }
 
+// Company Pages
+function CompanyStack() {
+  return (
+    <Stack.Navigator 
+      initialRouteName="CompanyScreen"
+    >
+      <Stack.Screen
+        name="CompanyScreen"
+        component={CompanyScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CompanyForm"
+        component={CompanyFormScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 // Custom Drawer Content
 function CustomDrawerContent(props) {
   return (
@@ -231,7 +254,7 @@ export default function App() {
             />
             <Drawer.Screen 
               name="Company" 
-              component={CompanyScreen}
+              component={CompanyStack}
               options={{ 
                 drawerIcon: () => (<FontAwesome5 name="briefcase" size={22} color="#222" style={{paddingLeft: 2, marginRight: -4}} />),
                 headerTitle: "Company Details",

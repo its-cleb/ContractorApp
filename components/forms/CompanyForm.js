@@ -3,34 +3,16 @@ import { useState, useContext } from 'react'
 import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import IconButtonHSmall from '../IconButtonHSmall'
-import DatePicker from '../DatePicker'
 import { Context } from '../../context/CompanyContext'
 
-const CompanyForm = ({ initialValues, nav, payload, isAdd }) => {
+const CompanyForm = (props) => {
   
-  const { addCompany, editCompany } = useContext(Context)
+  const navigation = props.navigation
+  const { state, editCompany } = useContext(Context)
   
-  // Get props from parent component
-  const navigation = nav
-  const companyID = payload
+  const company = state[0]
 
-  // --- Form Data ---
-  const blankForm = {
-      companyID: '',
-      companyName: '', 
-      contactDate: '', 
-      phone:'', 
-      email:'', 
-      address: '', 
-      unitNumber:'', 
-      city:'', 
-      usState:'', 
-      zip:'', 
-  }
-
-  const formData = isAdd ? blankForm : Object.fromEntries(initialValues)
-
-  const [ form, setForm ] = useState(formData)
+  const [ form, setForm ] = useState(company)
   const setFormState = (key, value) => {
     setForm(prev => ({
       ...prev,
@@ -40,21 +22,8 @@ const CompanyForm = ({ initialValues, nav, payload, isAdd }) => {
 
   // Control Button functionality
   const saveCompanyBackPage = () => {
-    isAdd ? 
-      addCompany(form.companyName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) 
-      : 
-      editCompany(companyID, form.companyName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
+    editCompany(form.companyName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip)
     navigation.pop()
-  }
-  
-  // Date Picker
-  const [ showDatePicker, setShowDatePicker ] = useState(true)
-
-  const toggleDatePicker = () => {
-    setShowDatePicker(!showDatePicker)
-  }
-  function getDate(data) { // Receive Date from child component
-    setFormState('contactDate', data)
   }
 
   const keyboardDismiss = () => {
@@ -78,19 +47,6 @@ const CompanyForm = ({ initialValues, nav, payload, isAdd }) => {
                 onChangeText={(text) => setFormState('companyName', text)}></TextInput>
             </View>
             
-            <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Pressable onPress={toggleDatePicker}>
-                <Text style={globalStyles.formFieldCaption}>Date of Contact</Text>
-                <TextInput 
-                  autoCorrect={false} 
-                  style={globalStyles.formFieldInput} 
-                  editable={false} 
-                  value={form.contactDate}
-                  onPressIn={toggleDatePicker}
-                  onChangeText={(text) => setFormState('contactDate', text)}
-                ></TextInput>
-              </Pressable>
-            </View>
           </View>
 
           <View style={globalStyles.formRow}>
@@ -165,19 +121,11 @@ const CompanyForm = ({ initialValues, nav, payload, isAdd }) => {
           </View>
 
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
-            {isAdd ? 
-              <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Add Company' icon='plus' textcolor='white' bgcolor='steelblue' />
-              : 
-              <>
-                <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-                <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
-              </>
-            }
+            <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
+            <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
           </View>    
        
         </KeyboardAvoidingView>
-
-        <DatePicker getDate={getDate} data={form.contactDate} show={showDatePicker} />
 
       </Pressable>
     </>
