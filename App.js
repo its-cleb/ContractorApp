@@ -136,19 +136,6 @@ function ProjectStack() {
     )
 }
 
-// Estimator Pages
-function EstimatorStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="View"
-        component={EstimatorScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  )
-}
-
 // Company Pages
 function CompanyStack() {
   return (
@@ -224,10 +211,10 @@ export default function App() {
             />
             <Drawer.Screen 
               name="Estimator" 
-              component={EstimatorStack} 
+              component={EstimatorScreen} 
               options={{ 
                 drawerIcon: () => (<FontAwesome name="calculator" size={22} color="#222" style={{marginRight: -2}} />),
-                headerTitle: "Quotes & Estimator",
+                headerTitle: "Estimator",
                 drawerLabel: "Estimator",
                 headerShown: false
               }} 
