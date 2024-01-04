@@ -7,7 +7,6 @@ import IconButtonHContent from '../components/IconButtonHContent'
 
 const ClientProjectsScreen = ({ route, navigation }) => {
   
-  const isDrawer = Boolean(route.params === undefined)
   const clientID = route.params.clientID
 
   return (

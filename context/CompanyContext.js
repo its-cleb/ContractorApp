@@ -2,17 +2,9 @@ import createDataContext from './createDataContext'
 
 const companyReducer = (state, action) => {
   switch (action.type) {
-    case 'edit':
-      return [...state, { 
-        companyName: action.payload.companyName, 
-        phone: action.payload.phone,
-        email: action.payload.email, 
-        address: action.payload.address, 
-        unitNumber: action.payload.unitNumber, 
-        city: action.payload.city, 
-        usState: action.payload.usState, 
-        zip: action.payload.zip, 
-      }]
+    case 'edit_company':
+      return state.map(() => {
+        return action.payload})
     default:
       return state
   }

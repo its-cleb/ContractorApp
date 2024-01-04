@@ -7,7 +7,7 @@ import { Context } from '../../context/CompanyContext'
 
 const CompanyForm = (props) => {
   
-  const navigation = props.navigation
+  const navigation = props.nav
   const { state, editCompany } = useContext(Context)
   
   const company = state[0]
@@ -22,7 +22,9 @@ const CompanyForm = (props) => {
 
   // Control Button functionality
   const saveCompanyBackPage = () => {
+    console.log(form)
     editCompany(form.companyName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip)
+    console.log(state)
     navigation.pop()
   }
 

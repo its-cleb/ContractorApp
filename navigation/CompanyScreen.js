@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Context as CompanyContext } from '../context/CompanyContext'
-import { globalStyles } from '../styles/globalstyles'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHContent from '../components/IconButtonHContent'
 
 const CompanyScreen = ({ navigation }) => {
 
-  const { state, editCompany } = useContext(CompanyContext)
-  
+  const { state } = useContext(CompanyContext)
+  console.log(state)
   return (
     <>
       <DrawerHeader title="Company" />
