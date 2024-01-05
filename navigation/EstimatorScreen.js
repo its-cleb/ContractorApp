@@ -1,22 +1,26 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, Switch, useWindowDimensions } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Switch, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
 import { globalStyles } from '../styles/globalstyles'
 import BottomTab3 from '../components/BottomTab3'
 import ModalCenterBG from '../components/ModalCenterBG'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHSmall from '../components/IconButtonHSmall'
+import { FontAwesome5 } from '@expo/vector-icons'
+
 
 const EstimatorScreen = () => {
 
   const { width } = useWindowDimensions()
 
+  const [ estimatorSheet, setEstimatorSheet ] = useState([])
 
   // Form Control
   const blankFormData = {
+    key: '',
     costType: '',
     name: '',
     cost: '',
-    multiplier: 1,
+    multiplier: '1',
     lineTotal: ''
   }
 
@@ -33,6 +37,9 @@ const EstimatorScreen = () => {
     })
   }
 
+  let totalCost = estimatorSheet.reduce(function(previousValue, currentValue) 
+  { return previousValue + +currentValue.lineTotal }, 0)
+
   // Modal Control
   const closedModals = {
     modal1: false,
@@ -47,13 +54,21 @@ const EstimatorScreen = () => {
   }
 
   const openModal2 = (value) => {
+    setForm(blankFormData)
     setFormState({costType: value})
     setModalVisible({ modal1: false, modal2: true, modal3: false})
-    console.log(value)
   }
 
   const saveModal2 = () => {
-
+    setEstimatorSheet(previousState => [...previousState, { 
+      key: Date.now(),
+      costType: form.costType,
+      name: form.name,
+      cost: form.cost,
+      multiplier: switchValue ? 1 : form.multiplier,
+      lineTotal: form.cost * (switchValue ? 1 : form.multiplier)
+    }])
+    setModalVisible({ modal1: false, modal2: false, modal3: false})
   }
 
   const closeModal = () => {
@@ -105,8 +120,8 @@ const EstimatorScreen = () => {
                 autoCorrect={false}
                 keyboardType='numeric'
                 style={globalStyles.formFieldInput}
-                value={form.value1}
-                onChangeText={text => setFormState({value1: text})}></TextInput>
+                value={form.cost}
+                onChangeText={text => setFormState({cost: text})}></TextInput>
             </View>
             {switchValue ?
               ''
@@ -117,35 +132,96 @@ const EstimatorScreen = () => {
                   autoCorrect={false}
                   keyboardType='numeric'
                   style={globalStyles.formFieldInput}
-                  value={form.value2}
-                  onChangeText={text => setFormState({value2: text})}></TextInput>
+                  value={form.multiplier}
+                  onChangeText={text => setFormState({multiplier: text})}></TextInput>
               </View>
             } 
           </View>
-          <Text style={styles.lineTotal}>
-            Line Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(form.value1 * (switchValue ? 1 : form.value2))}
+          <Text style={styles.itemTotal}>
+            Line Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(form.cost * (switchValue ? 1 : form.multiplier))}
             </Text>
-          <IconButtonHSmall pressFunction={() => openModal2('Misc')} title="Save Line Item" icon="save" bgcolor="steelblue" textcolor="white"/>
+          <IconButtonHSmall pressFunction={saveModal2} title="Save Line Item" icon="save" bgcolor="steelblue" textcolor="white"/>
         </View>
       </View>
     </>
+
+  // Flatlist Content 
+  const getEstimates = (item) => {
+    let currentIcon
+    let currentColor
+
+    switch(item.costType) {
+      case 'Materials':
+        currentIcon = 'box'
+        currentColor = 'darkred'
+        break
+      case 'Labor':
+        currentIcon = 'hammer'
+        currentColor = 'darkgoldenrod'
+        break
+      case 'Mobilization':
+        currentIcon = 'truck'
+        currentColor = 'darkolivegreen'
+        break
+      case 'Travel':
+        currentIcon = 'plane'
+        currentColor = 'teal'
+        break
+      case 'Misc':
+        currentIcon = 'clipboard-check'
+        currentColor = 'slategray'
+        break
+      default: 
+        currentIcon = 'question-circle'
+        currentColor = 'black'
+    }
+
+    return (
+      <TouchableOpacity style={[styles.lineRow, {backgroundColor: 'white' }]} onPress={console.log('pressed')}>
+        <FontAwesome5 
+          style={styles.lineIcon} 
+          size={20} 
+          color={currentColor}
+          name={currentIcon}
+        />
+        <Text style={styles.lineName}>{item.name}</Text>
+        <Text style={styles.lineCost}>
+          {Boolean(item.multiplier > 1) ? Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.cost) : '' }
+        </Text>
+        <Text style={styles.lineMultiplier}>
+          {Boolean(item.multiplier > 1) ? Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.multiplier) : '' }
+        </Text>
+        <Text style={styles.lineTotal}>{Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.lineTotal)}</Text>
+      </TouchableOpacity>
+    )
+  }
 
   // ----- | Main Return | -----
   return (
     <>
       
-      
-
       <View style={styles.pageContainer}> 
 
         <DrawerHeader title="Estimator" />
 
-        <View style={styles.proposalSheet}>
+        <View style={styles.estimatorSheet}>
 
-          <Text>Test</Text>
-
-
-        </View>      
+        <View style={styles.headerRow}>
+          <Text style={[styles.lineName, styles.headerItem, { marginLeft: 10}]}>Item</Text>
+          <Text style={[styles.lineCost, styles.headerItem, { textAlign: 'center'}]}>Cost</Text>
+          <Text style={[styles.lineMultiplier, styles.headerItem]}>Qty</Text>
+          <Text style={[styles.lineTotal, styles.headerItem]}>Total</Text>
+        </View>
+          
+          <FlatList
+            data={estimatorSheet}
+            keyExtractor={item => item.key}
+            renderItem={({item}) => getEstimates(item)}
+          />
+          <View style={styles.totalBar}>
+            <Text style={styles.totalText}>Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(totalCost)}</Text>
+          </View>
+        </View>    
       
 
         <BottomTab3 
@@ -155,8 +231,8 @@ const EstimatorScreen = () => {
           button2icon='edit'
           button2text='Add Line'
           button2function={openModal1}
-          button3icon='save'
-          button3text='Save'
+          button3icon='envelope'
+          button3text='Email'
           // button3function={saveProject}
         /> 
 
@@ -188,7 +264,7 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
   },
-  proposalSheet: {
+  estimatorSheet: {
     marginBottom: 120
   },
   
@@ -227,7 +303,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  lineTotal: {
+  itemTotal: {
     justifyContent: 'center',
     alignContent: 'center',
     fontSize: 18,
@@ -237,42 +313,52 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
 
-  // Proposal Sheet
-  phase: {
-    flexDirection: 'row',
-    backgroundColor: 'dodgerblue', 
-    paddingVertical: 10,
-    paddingHorizontal: 10
+  // Estimator Sheet
+  headerRow: {
+    flexDirection: 'row', 
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: '#ddd'
   },
-  phaseName: {
-    alignSelf: 'flex-start',
-    color: 'white', 
-    fontSize: 20,     
-    fontWeight: 'bold',
-    flex: 1
-  },
-  phaseDate: {
-    color: 'white',
-    alignSelf: 'flex-end',
-    textAlign: 'right',
-    fontSize: 18,
-    flex: 1
+  headerItem: {
+    paddingVertical: 5,
+    paddingLeft: 5,
+    textAlign: 'left'
   },
   lineRow: {
     flexDirection: 'row',
     paddingVertical: 8,
-    paddingLeft: 20
+    paddingLeft: 5,
   },
-  lineItem: {
+  lineName: {
     alignSelf: 'flex-start',
     fontSize: 18,
-    flex: 5
+    flex: 4,
+    paddingLeft: 5
+  },
+  lineIcon: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    paddingRight: 5,
+    alignSelf: 'center',
+    minWidth: 30
   },
   lineCost: {
-    alignSelf: 'flex-end',
-    alignContent: 'flex-end',
+    alignSelf: 'center',
     fontSize: 18,
     flex: 2
+  },
+  lineMultiplier: {
+    alignSelf: 'center',
+    fontSize: 18,
+    flex: 1
+  },
+  lineTotal: {
+    alignSelf: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    fontSize: 18,
+    flex: 2,
   },
   totalBar: {
     flexDirection: 'row',
