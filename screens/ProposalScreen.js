@@ -93,6 +93,7 @@ const ProposalScreen = ({ route, navigation }) => {
 
   // Edit Line Item Modal Settings
   const openModal3 = (data) => {
+    // Refactor? 
     setModal3isPhase(data.phaseModal ? true : false)
     currentLineIndex = proposalSheet.findIndex(({key}) => key === data.lineKey)
     let lineData = proposalSheet.find(({key}) => key === data.lineKey)

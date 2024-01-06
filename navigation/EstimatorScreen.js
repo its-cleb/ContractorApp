@@ -53,21 +53,29 @@ const EstimatorScreen = () => {
     setModalVisible({ modal1: true, modal2: false, modal3: false})
   }
 
-  const openModal2 = (value) => {
-    setForm(blankFormData)
+  const [ isEdit, setIsEdit ] = useState(false)
+
+  const openModal2 = (value, edit, key) => {
+    setIsEdit(edit)
+    // let currentLineIndex = estimatorSheet.findIndex(lineKey => lineKey.key === key)
+    let lineData = estimatorSheet.find(lineKey => lineKey.key === key)
+    setForm(edit ? lineData : blankFormData)
     setFormState({costType: value})
     setModalVisible({ modal1: false, modal2: true, modal3: false})
   }
 
-  const saveModal2 = () => {
-    setEstimatorSheet(previousState => [...previousState, { 
-      key: Date.now(),
-      costType: form.costType,
-      name: form.name,
-      cost: form.cost,
-      multiplier: switchValue ? 1 : form.multiplier,
-      lineTotal: form.cost * (switchValue ? 1 : form.multiplier)
-    }])
+  const saveModal2 = () => { 
+    isEdit ?
+      console.log('isEdit:', isEdit)
+      :    
+      setEstimatorSheet(previousState => [...previousState, { 
+        key: Date.now(),
+        costType: form.costType,
+        name: form.name,  
+        cost: form.cost,
+        multiplier: switchValue ? 1 : form.multiplier,
+        lineTotal: form.cost * (switchValue ? 1 : form.multiplier)
+      }])
     setModalVisible({ modal1: false, modal2: false, modal3: false})
   }
 
@@ -81,21 +89,25 @@ const EstimatorScreen = () => {
     <View style={styles.contentBox}>
       <View style={styles.costModalButtonsBox}>
         <Text style={styles.modalHeading}>Add Cost</Text>
-        <IconButtonHSmall pressFunction={() => openModal2('Materials')} title="Materials" icon="box" bgcolor="darkred" textcolor="white"/> 
-        <IconButtonHSmall pressFunction={() => openModal2('Labor')} title="Labor" icon="hammer" bgcolor="darkgoldenrod" textcolor="white"/>
-        <IconButtonHSmall pressFunction={() => openModal2('Mobilization')} title="Mobilization" icon="truck" bgcolor="darkolivegreen" textcolor="white"/>
-        <IconButtonHSmall pressFunction={() => openModal2('Travel')} title="Travel" icon="plane" bgcolor="teal" textcolor="white"/>
-        <IconButtonHSmall pressFunction={() => openModal2('Misc')} title="Misc" icon="plus" bgcolor="slategray" textcolor="white"/>
+        <IconButtonHSmall pressFunction={() => openModal2('Materials', false)} title="Materials" icon="box" bgcolor="darkred" textcolor="white"/> 
+        <IconButtonHSmall pressFunction={() => openModal2('Labor', false)} title="Labor" icon="hammer" bgcolor="darkgoldenrod" textcolor="white"/>
+        <IconButtonHSmall pressFunction={() => openModal2('Mobilization', false)} title="Mobilization" icon="truck" bgcolor="darkolivegreen" textcolor="white"/>
+        <IconButtonHSmall pressFunction={() => openModal2('Travel', false)} title="Travel" icon="plane" bgcolor="teal" textcolor="white"/>
+        <IconButtonHSmall pressFunction={() => openModal2('Misc', false)} title="Misc" icon="plus" bgcolor="slategray" textcolor="white"/>
       </View>
     </View>
   </>
 
-    // --- Modal 2 (Select Cost Type) ---
+    // --- Modal 2 (Add/Edit Line) ---
     const modal2Content =
     <>
       <View style={styles.contentBox}>
         <View style={styles.costModalButtonsBox}>
-          <Text style={styles.modalHeading}>Add {form.costType} Expense</Text>
+          {isEdit ?
+            <Text style={styles.modalHeading}>Edit Expense</Text>
+            :
+            <Text style={styles.modalHeading}>Add {form.costType} Expense</Text>
+          }
           <View style={globalStyles.formRow}>
             <View style={[globalStyles.formColumn, { flex: 3 }]}>
               <Text style={globalStyles.formFieldCaption}>Line Title</Text>
@@ -140,7 +152,7 @@ const EstimatorScreen = () => {
           <Text style={styles.itemTotal}>
             Line Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(form.cost * (switchValue ? 1 : form.multiplier))}
             </Text>
-          <IconButtonHSmall pressFunction={saveModal2} title="Save Line Item" icon="save" bgcolor="steelblue" textcolor="white"/>
+          <IconButtonHSmall pressFunction={saveModal2} title={isEdit ? "Save Line Item" : "Add Line Item"} icon="save" bgcolor="steelblue" textcolor="white"/>
         </View>
       </View>
     </>
@@ -177,7 +189,7 @@ const EstimatorScreen = () => {
     }
 
     return (
-      <TouchableOpacity style={[styles.lineRow, {backgroundColor: 'white' }]} onPress={console.log('pressed')}>
+      <TouchableOpacity style={[styles.lineRow, {backgroundColor: 'white' }]} onPress={() => openModal2(item.costType, true, item.key)}>
         <FontAwesome5 
           style={styles.lineIcon} 
           size={20} 
@@ -206,12 +218,12 @@ const EstimatorScreen = () => {
 
         <View style={styles.estimatorSheet}>
 
-        <View style={styles.headerRow}>
-          <Text style={[styles.lineName, styles.headerItem, { marginLeft: 10}]}>Item</Text>
-          <Text style={[styles.lineCost, styles.headerItem, { textAlign: 'center'}]}>Cost</Text>
-          <Text style={[styles.lineMultiplier, styles.headerItem]}>Qty</Text>
-          <Text style={[styles.lineTotal, styles.headerItem]}>Total</Text>
-        </View>
+          <View style={styles.headerRow}>
+            <Text style={[styles.lineName, styles.headerItem, { marginLeft: 10}]}>Item</Text>
+            <Text style={[styles.lineCost, styles.headerItem, { textAlign: 'center'}]}>Cost</Text>
+            <Text style={[styles.lineMultiplier, styles.headerItem]}>Qty</Text>
+            <Text style={[styles.lineTotal, styles.headerItem]}>Total</Text>
+          </View>
           
           <FlatList
             data={estimatorSheet}
@@ -265,7 +277,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   estimatorSheet: {
-    marginBottom: 120
+    marginBottom: 120,
+    zIndex: 1
   },
   
   // Modals
