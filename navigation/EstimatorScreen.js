@@ -24,7 +24,7 @@ const EstimatorScreen = () => {
     lineTotal: ''
   }
 
-  const [form, setForm] = useState(blankFormData)
+  const [ form, setForm ] = useState(blankFormData)
   const [ switchValue, setSwitchValue ] = useState(false)
 
   const setFormState = (obj) => {
@@ -37,8 +37,8 @@ const EstimatorScreen = () => {
     })
   }
 
-  let totalCost = estimatorSheet.reduce(function(previousValue, currentValue) 
-  { return previousValue + +currentValue.lineTotal }, 0)
+  let totalCost = estimatorSheet.reduce(function(previousValue, currentValue) {return previousValue + +currentValue.lineTotal }, 0)
+
 
   // Modal Control
   const closedModals = {
@@ -54,10 +54,11 @@ const EstimatorScreen = () => {
   }
 
   const [ isEdit, setIsEdit ] = useState(false)
+  const [ currentKey, setCurrentKey ] = useState(null)
 
   const openModal2 = (value, edit, key) => {
     setIsEdit(edit)
-    // let currentLineIndex = estimatorSheet.findIndex(lineKey => lineKey.key === key)
+    setCurrentKey(key)
     let lineData = estimatorSheet.find(lineKey => lineKey.key === key)
     setForm(edit ? lineData : blankFormData)
     setFormState({costType: value})
@@ -65,21 +66,41 @@ const EstimatorScreen = () => {
   }
 
   const saveModal2 = () => { 
+    let copiedEstimatorSheet = estimatorSheet
+    let currentLineIndex = estimatorSheet.findIndex(lineKey => lineKey.key === currentKey)
+    copiedEstimatorSheet[currentLineIndex] = {
+      key: currentKey,
+      costType: form.costType,
+      name: form.name,  
+      cost: form.cost,
+      multiplier: switchValue ? '1' : form.multiplier,
+      lineTotal: form.cost * (switchValue ? '1' : form.multiplier)
+    }
     isEdit ?
-      console.log('isEdit:', isEdit)
+      setEstimatorSheet(copiedEstimatorSheet)
       :    
       setEstimatorSheet(previousState => [...previousState, { 
         key: Date.now(),
         costType: form.costType,
         name: form.name,  
         cost: form.cost,
-        multiplier: switchValue ? 1 : form.multiplier,
-        lineTotal: form.cost * (switchValue ? 1 : form.multiplier)
+        multiplier: switchValue ? '1' : form.multiplier,
+        lineTotal: form.cost * (switchValue ? '1' : form.multiplier)
       }])
     setModalVisible({ modal1: false, modal2: false, modal3: false})
   }
 
+  const openModal3 = () => {
+    setModalVisible({ modal1: false, modal2: false, modal3: true})
+  }
+
   const closeModal = () => {
+    setModalVisible(closedModals)
+  }
+
+  const clearSheet = () => {
+    setForm(blankFormData)
+    setEstimatorSheet([])
     setModalVisible(closedModals)
   }
 
@@ -157,6 +178,25 @@ const EstimatorScreen = () => {
       </View>
     </>
 
+  // --- Modal 3 (Confirm Clear Form) ---
+  const modal3Content =
+  <>
+    <View style={styles.contentBox}>
+      <View style={styles.costModalButtonsBox}>
+          <Text style={styles.modalHeading}>Clear Estimate?</Text>
+      </View>
+    </View>
+    
+    <View style={{flexDirection: 'row'}}>
+      <View style={{flex: 1}}> 
+        <IconButtonHSmall pressFunction={clearSheet} title="Yes" icon="eraser" bgcolor="steelblue" textcolor="white"/>
+      </View>
+      <View style={{flex: 1}}> 
+        <IconButtonHSmall pressFunction={closeModal} title="No" icon="ban" bgcolor="maroon" textcolor="white"/>
+       </View>
+    </View>
+  </>
+
   // Flatlist Content 
   const getEstimates = (item) => {
     let currentIcon
@@ -201,7 +241,7 @@ const EstimatorScreen = () => {
           {Boolean(item.multiplier > 1) ? Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.cost) : '' }
         </Text>
         <Text style={styles.lineMultiplier}>
-          {Boolean(item.multiplier > 1) ? Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.multiplier) : '' }
+          {Boolean(item.multiplier > 1) ? item.multiplier : '' }
         </Text>
         <Text style={styles.lineTotal}>{Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(item.lineTotal)}</Text>
       </TouchableOpacity>
@@ -239,7 +279,7 @@ const EstimatorScreen = () => {
         <BottomTab3 
           button1icon='eraser'
           button1text='Clear Form'
-          // button1function={openEmployeeModal}
+          button1function={openModal3}
           button2icon='edit'
           button2text='Add Line'
           button2function={openModal1}
@@ -264,6 +304,15 @@ const EstimatorScreen = () => {
           screenWidth={width}
           closeModalButton={closeModal}
           modalContent={modal2Content}
+        /> 
+
+        {/* --- Modal 3 --- */}
+        <ModalCenterBG
+          modalVisible={modalVisible.modal3}
+          modalOnRequestClose={closeModal}
+          screenWidth={width}
+          closeModalButton={closeModal}
+          modalContent={modal3Content}
         /> 
 
 
@@ -334,6 +383,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd'
   },
   headerItem: {
+    justifyContent: 'center',
+    alignContent: 'center',
     paddingVertical: 5,
     paddingLeft: 5,
     textAlign: 'left'
@@ -344,7 +395,9 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   lineName: {
-    alignSelf: 'flex-start',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
     fontSize: 18,
     flex: 4,
     paddingLeft: 5
@@ -357,16 +410,22 @@ const styles = StyleSheet.create({
     minWidth: 30
   },
   lineCost: {
+    justifyContent: 'center',
+    alignContent: 'center',
     alignSelf: 'center',
     fontSize: 18,
     flex: 2
   },
   lineMultiplier: {
+    justifyContent: 'center',
+    alignContent: 'center',
     alignSelf: 'center',
     fontSize: 18,
     flex: 1
   },
   lineTotal: {
+    justifyContent: 'center',
+    alignContent: 'center',
     alignSelf: 'center',
     alignContent: 'center',
     justifyContent: 'center',
