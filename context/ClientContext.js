@@ -60,10 +60,10 @@ export const { Context, Provider } = createDataContext(
     contactDate: '10/10/2023', 
     phone:'123-456-7890', 
     email:'test@gmail.com', 
-    address: '1234 Admiral Way', 
+    address: '6539 3rd Ave NW', 
     unitNumber:'1', 
     city:'Seattle', 
     usState:'WA', 
-    zip:'98231' 
+    zip:'98117', 
   }]
 )

@@ -60,11 +60,11 @@ export const { Context, Provider } = createDataContext(
     employeeName: 'Adam Ivelia', 
     phone:'123-456-0000', 
     email:'adam@gmail.com', 
-    address: '1234 Admiral Way', 
+    address: '6539 3rd Ave NW', 
     unitNumber:'1', 
     city:'Seattle', 
     usState:'WA', 
-    zip:'98231', 
+    zip:'98117', 
     wage: '30'
   },
   {
@@ -72,11 +72,11 @@ export const { Context, Provider } = createDataContext(
     employeeName: 'Brandon Johnson', 
     phone:'987-654-3210', 
     email:'brandon@gmail.com', 
-    address: '4321 Admiral Lane', 
+    address: '18601 57th Pl W', 
     unitNumber:'1', 
-    city:'Everett', 
+    city:'Lynwood', 
     usState:'WA', 
-    zip:'98238', 
+    zip:'98037', 
     wage: '25'
   },
   {

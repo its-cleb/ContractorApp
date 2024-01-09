@@ -25,7 +25,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   // Modal
   const { width } = useWindowDimensions()
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modal1Visible, setModal1Visible] = useState(false)
+  const [modal2Visible, setModal2Visible] = useState(false)
 
   // Determine Originating Page
   const fromHome = route.params.fromHome
@@ -40,7 +41,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     const currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     employeeNumbers.push(currentEmployee[0].phone.replace(/[^\w ]/g, ''))
     employeeEmails.push(currentEmployee[0].email)
-    console.log(employeeEmails)
     
     return (
       <Text style={styles.projectTextRight}>
@@ -54,8 +54,43 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     navigation.pop()
   }
 
-  // Modal 1 Content
   const modal1Content = 
+  <>
+    <View style={styles.modalContainer}>
+      <View style={[globalStyles.formRow]}>
+        <Text style={styles.textCenterBlack}>Navigate</Text>
+      </View>
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonVLarge
+            pressFunction={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query${encodedAddress}`)} 
+            title='Google Maps'
+            icon={'map-marker-alt'} 
+            color='green' 
+            bgcolor='rgba(0,128,0,0.05)'
+            border={true}
+            size={34}
+          />
+        </View>
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonVLarge
+            pressFunction={() => Linking.openURL(encodeURI(`mailto:${employeeEmails}?cc=${Platform.OS === "ios" ? "&" : "?"}subject=Project&body=${message}`))} 
+            title='Apple Maps'
+            iconType='FontAwesome' 
+            icon={'map-pin'} 
+            color='navy' 
+            bgcolor='rgba(0,0,128,0.05)'
+            border={true}
+            size={34}
+          />
+        </View>     
+      </View>
+    </View>
+  </>
+
+  // Modal 2 Content
+  const modal2Content = 
   <>
     <View style={styles.modalContainer}>
       <View style={[globalStyles.formRow]}>
@@ -69,7 +104,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             title='Text Workers'
             icon={'sms'} 
             color='green' 
-            bgcolor='white'
+            bgcolor='rgba(0,128,0,0.05)'
             border={true}
             size={34}
           />
@@ -81,7 +116,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             iconType='FontAwesome' 
             icon={'envelope'} 
             color='navy' 
-            bgcolor='white'
+            bgcolor='rgba(0,0,128,0.05)'
             border={true}
             size={34}
           />
@@ -92,7 +127,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             title='Add to Calendar' 
             icon={'calendar-alt'} 
             color='firebrick' 
-            bgcolor='white'
+            bgcolor='rgba(178,34,34,0.05)'
             border={true}
             size={34}
           />
@@ -101,11 +136,14 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     </View>
   </>
 
+  const address = currentClient[0].address.concat(unitNumber, currentClient[0].city, ' ', currentClient[0].zip)
+  const encodedAddress = '='.concat(encodeURIComponent(address))
 
+  console.log('https://www.google.com/maps/search/?api=1&query'+encodedAddress)
   const message = 
 `Project Date: ${project.date}
 Client: ${currentClient[0].clientName}
-Address: ${currentClient[0].address}${unitNumber}, ${currentClient[0].city}, ${currentClient[0].zip}
+Address: ${address}
 Tasks: ${project.tasks}
 `
 
@@ -169,19 +207,28 @@ Tasks: ${project.tasks}
         }
         button2icon='map-marker-alt'
         button2text='Navigate'
-        // button2function={}
+        button2function={() => setModal1Visible(true)}
         button3icon='share-square'
         button3text='Send'
-        button3function={() => setModalVisible(true)}
+        button3function={() => setModal2Visible(true)}
       />
 
-      {/* Modal 1 (Employee List) */}
+      {/* Modal 1 (Navigate) */}
       <ModalCenterBG
-        modalVisible={modalVisible}
-        modalOnRequestClose={() => setModalVisible(false)}
+        modalVisible={modal1Visible}
+        modalOnRequestClose={() => setModal1Visible(false)}
         screenWidth={width}
-        closeModalButton={() => setModalVisible(false)}
+        closeModalButton={() => setModal1Visible(false)}
         modalContent={modal1Content}
+      /> 
+
+      {/* Modal 2 (Share Project) */}
+      <ModalCenterBG
+        modalVisible={modal2Visible}
+        modalOnRequestClose={() => setModal2Visible(false)}
+        screenWidth={width}
+        closeModalButton={() => setModal2Visible(false)}
+        modalContent={modal2Content}
       /> 
 
     </>
