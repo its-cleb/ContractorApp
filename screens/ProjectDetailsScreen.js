@@ -58,7 +58,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   <>
     <View style={styles.modalContainer}>
       <View style={[globalStyles.formRow]}>
-        <Text style={styles.textCenterBlack}>Navigate</Text>
+        <Text style={styles.textCenterBlack}>Navigate to Project Location</Text>
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
@@ -73,18 +73,22 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
             size={34}
           />
         </View>
-        <View style={{alignSelf: 'stretch', flex: 1}}>
-          <IconButtonVLarge
-            pressFunction={() => Linking.openURL(encodeURI(`mailto:${employeeEmails}?cc=${Platform.OS === "ios" ? "&" : "?"}subject=Project&body=${message}`))} 
-            title='Apple Maps'
-            iconType='FontAwesome' 
-            icon={'map-pin'} 
-            color='navy' 
-            bgcolor='rgba(0,0,128,0.05)'
-            border={true}
-            size={34}
-          />
-        </View>     
+        {Platform.OS === "ios" ?
+          <View style={{alignSelf: 'stretch', flex: 1}}>
+            <IconButtonVLarge
+              pressFunction={() => Linking.openURL('https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240109T231500Z%2F20240109T234500Z ')} 
+              title='Apple Maps'
+              iconType='FontAwesome' 
+              icon={'map-pin'} 
+              color='navy' 
+              bgcolor='rgba(0,0,128,0.05)'
+              border={true}
+              size={34}
+            />
+          </View>
+          :
+          ''
+        }  
       </View>
     </View>
   </>
@@ -139,7 +143,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const address = currentClient[0].address.concat(unitNumber, currentClient[0].city, ' ', currentClient[0].zip)
   const encodedAddress = '='.concat(encodeURIComponent(address))
 
-  console.log('https://www.google.com/maps/search/?api=1&query'+encodedAddress)
   const message = 
 `Project Date: ${project.date}
 Client: ${currentClient[0].clientName}
