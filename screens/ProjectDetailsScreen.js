@@ -27,6 +27,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   const { width } = useWindowDimensions()
   const [modal1Visible, setModal1Visible] = useState(false)
   const [modal2Visible, setModal2Visible] = useState(false)
+  const [modal3Visible, setModal3Visible] = useState(false)
 
   // Determine Originating Page
   const fromHome = route.params.fromHome
@@ -140,6 +141,45 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     </View>
   </>
 
+  const modal3Content = 
+  <>
+    <View style={styles.modalContainer}>
+      <View style={[globalStyles.formRow]}>
+        <Text style={styles.textCenterBlack}>Navigate to Project Location</Text>
+      </View>
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonVLarge
+            pressFunction={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query${encodedAddress}`)} 
+            title='Google Maps'
+            icon={'map-marker-alt'} 
+            color='green' 
+            bgcolor='rgba(0,128,0,0.05)'
+            border={true}
+            size={34}
+          />
+        </View>
+        {Platform.OS === "ios" ?
+          <View style={{alignSelf: 'stretch', flex: 1}}>
+            <IconButtonVLarge
+              pressFunction={() => Linking.openURL('https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240109T231500Z%2F20240109T234500Z ')} 
+              title='Apple Maps'
+              iconType='FontAwesome' 
+              icon={'map-pin'} 
+              color='navy' 
+              bgcolor='rgba(0,0,128,0.05)'
+              border={true}
+              size={34}
+            />
+          </View>
+          :
+          ''
+        }  
+      </View>
+    </View>
+  </>
+
   const address = currentClient[0].address.concat(unitNumber, currentClient[0].city, ' ', currentClient[0].zip)
   const encodedAddress = '='.concat(encodeURIComponent(address))
 
@@ -232,6 +272,15 @@ Tasks: ${project.tasks}
         screenWidth={width}
         closeModalButton={() => setModal2Visible(false)}
         modalContent={modal2Content}
+      /> 
+
+      {/* Modal 3 (Calendar) */}
+      <ModalCenterBG
+        modalVisible={modal3Visible}
+        modalOnRequestClose={() => setModal3Visible(false)}
+        screenWidth={width}
+        closeModalButton={() => setModal3Visible(false)}
+        modalContent={modal3Content}
       /> 
 
     </>
