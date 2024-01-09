@@ -6,6 +6,7 @@ import { Context as EmployeeContext} from '../context/EmployeeContext'
 import DeleteButton from '../components/DeleteButton'
 import StackHeader from '../components/StackHeader'
 import BottomTab3 from '../components/BottomTab3'
+import * as Linking from 'expo-linking'
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
 
@@ -19,12 +20,17 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const employees = useContext(EmployeeContext)
 
+  // Determine Originating Page
   const fromHome = route.params.fromHome
   const fromClient = route.params.fromClient
+
+  let employeeNumbers = []
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
+    employeeNumbers.push(currentEmployee[0].phone.replace(/[^\w ]/g, ''))
+    
     return (
       <Text style={styles.projectTextRight}>
         {currentEmployee[0].employeeName}
@@ -36,6 +42,13 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     deleteProject(currentProject)
     navigation.pop()
   }
+
+  const SMSmessage = 
+`Project Date: ${project.date}
+Client: ${currentClient[0].clientName}
+Address: ${currentClient[0].address}, ${currentClient[0].address}, ${currentClient[0].unit}, ${currentClient[0].city}, ${currentClient[0].zip}
+Tasks: ${project.tasks}
+`
 
   return (  
     <>
@@ -100,6 +113,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         // button2function={}
         button3icon='sms'
         button3text='Send'
+        button3function={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${SMSmessage}`))}
       /> 
     </>
   ) 

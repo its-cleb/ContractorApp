@@ -70,7 +70,7 @@ export const { Context, Provider } = createDataContext(
   {
     employeeID: '00002',
     employeeName: 'Brandon Johnson', 
-    phone:'123-456-0000', 
+    phone:'987-654-3210', 
     email:'adam@gmail.com', 
     address: '1234 Admiral Way', 
     unitNumber:'1', 

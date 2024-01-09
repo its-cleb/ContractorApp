@@ -6,7 +6,7 @@ import ModalCenterBG from '../components/ModalCenterBG'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import { FontAwesome5 } from '@expo/vector-icons'
-
+import * as Linking from 'expo-linking'
 
 const EstimatorScreen = () => {
 
@@ -14,7 +14,7 @@ const EstimatorScreen = () => {
 
   const [ estimatorSheet, setEstimatorSheet ] = useState([])
 
-  // Form Control
+  // --- Form Control
   const blankFormData = {
     key: '',
     costType: '',
@@ -40,7 +40,7 @@ const EstimatorScreen = () => {
   let totalCost = estimatorSheet.reduce(function(previousValue, currentValue) {return previousValue + +currentValue.lineTotal }, 0)
 
 
-  // Modal Control
+  // --- Modal Control
   const closedModals = {
     modal1: false,
     modal2: false,
@@ -285,7 +285,7 @@ const EstimatorScreen = () => {
           button2function={openModal1}
           button3icon='envelope'
           button3text='Email'
-          // button3function={saveProject}
+          button3function={() => Linking.openURL(`sms:1234567890?body=${test}`)}
         /> 
 
         {/* --- Modal 1 --- */}
