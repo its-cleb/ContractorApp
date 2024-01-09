@@ -65,18 +65,18 @@ export const { Context, Provider } = createDataContext(
     city:'Seattle', 
     usState:'WA', 
     zip:'98231', 
-    wage: '25'
+    wage: '30'
   },
   {
     employeeID: '00002',
     employeeName: 'Brandon Johnson', 
     phone:'987-654-3210', 
-    email:'adam@gmail.com', 
-    address: '1234 Admiral Way', 
+    email:'brandon@gmail.com', 
+    address: '4321 Admiral Lane', 
     unitNumber:'1', 
-    city:'Seattle', 
+    city:'Everett', 
     usState:'WA', 
-    zip:'98231', 
+    zip:'98238', 
     wage: '25'
   },
   {

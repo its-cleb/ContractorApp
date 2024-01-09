@@ -1,9 +1,12 @@
-import React, { useContext } from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import React, { useState, useContext, useEffect } from 'react'
+import { View, Text, FlatList, useWindowDimensions, StyleSheet } from 'react-native'
 import { Context as ProjectContext} from '../context/ProjectContext'
 import { Context as ClientContext} from '../context/ClientContext'
 import { Context as EmployeeContext} from '../context/EmployeeContext'
+import { globalStyles } from '../styles/globalstyles'
+import IconButtonVLarge from '../components/IconButtonV'
 import DeleteButton from '../components/DeleteButton'
+import ModalCenterBG from '../components/ModalCenterBG'
 import StackHeader from '../components/StackHeader'
 import BottomTab3 from '../components/BottomTab3'
 import * as Linking from 'expo-linking'
@@ -20,16 +23,24 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const employees = useContext(EmployeeContext)
 
+  // Modal
+  const { width } = useWindowDimensions()
+  const [modalVisible, setModalVisible] = useState(false)
+
   // Determine Originating Page
   const fromHome = route.params.fromHome
   const fromClient = route.params.fromClient
 
   let employeeNumbers = []
+  let employeeEmails = []
+  let unitNumber = Boolean(currentClient[0].unitNumber === undefined) ? '' : (', ' + currentClient[0].unitNumber)
 
   // Employee Flatlist content function
   const getEmployees = (item) => {
     const currentEmployee = employees.state.filter((employeeState) => employeeState.employeeID === item )
     employeeNumbers.push(currentEmployee[0].phone.replace(/[^\w ]/g, ''))
+    employeeEmails.push(currentEmployee[0].email)
+    console.log(employeeEmails)
     
     return (
       <Text style={styles.projectTextRight}>
@@ -43,10 +54,58 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     navigation.pop()
   }
 
-  const SMSmessage = 
+  // Modal 1 Content
+  const modal1Content = 
+  <>
+    <View style={styles.modalContainer}>
+      <View style={[globalStyles.formRow]}>
+        <Text style={styles.textCenterBlack}>Share Project</Text>
+      </View>
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonVLarge
+            pressFunction={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${message}`))} 
+            title='Text Workers'
+            icon={'sms'} 
+            color='green' 
+            bgcolor='white'
+            border={true}
+            size={34}
+          />
+        </View>
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonVLarge
+            pressFunction={() => Linking.openURL(encodeURI(`mailto:${employeeEmails}?cc=${Platform.OS === "ios" ? "&" : "?"}subject=Project&body=${message}`))} 
+            title='Email Workers'
+            iconType='FontAwesome' 
+            icon={'envelope'} 
+            color='navy' 
+            bgcolor='white'
+            border={true}
+            size={34}
+          />
+        </View>     
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonVLarge
+            pressFunction={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${message}`))} 
+            title='Add to Calendar' 
+            icon={'calendar-alt'} 
+            color='firebrick' 
+            bgcolor='white'
+            border={true}
+            size={34}
+          />
+        </View>
+      </View>
+    </View>
+  </>
+
+
+  const message = 
 `Project Date: ${project.date}
 Client: ${currentClient[0].clientName}
-Address: ${currentClient[0].address}, ${currentClient[0].address}, ${currentClient[0].unit}, ${currentClient[0].city}, ${currentClient[0].zip}
+Address: ${currentClient[0].address}${unitNumber}, ${currentClient[0].city}, ${currentClient[0].zip}
 Tasks: ${project.tasks}
 `
 
@@ -111,10 +170,20 @@ Tasks: ${project.tasks}
         button2icon='map-marker-alt'
         button2text='Navigate'
         // button2function={}
-        button3icon='sms'
+        button3icon='share-square'
         button3text='Send'
-        button3function={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${SMSmessage}`))}
+        button3function={() => setModalVisible(true)}
+      />
+
+      {/* Modal 1 (Employee List) */}
+      <ModalCenterBG
+        modalVisible={modalVisible}
+        modalOnRequestClose={() => setModalVisible(false)}
+        screenWidth={width}
+        closeModalButton={() => setModalVisible(false)}
+        modalContent={modal1Content}
       /> 
+
     </>
   ) 
 }
@@ -165,6 +234,27 @@ const styles = StyleSheet.create({
   },
   flexOne: {
     flex: 1,
+  },
+  contentBox: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    flex: 1,
+    zIndex: 1
+  },
+  textCenterBlack: {
+    fontWeight: 'bold', 
+    fontSize: 16,
+    paddingBottom: 5,
+    marginTop: -10
+  },
+
+  // Modals
+  modalContainer: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    width: '100%',
+    alignSelf: 'stretch',
   },
 })
 
