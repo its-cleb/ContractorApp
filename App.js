@@ -3,7 +3,6 @@ import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView, DrawerI
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import { Text } from 'react-native'
 
 import HomeScreen from './navigation/HomeScreen'
 import EstimatorScreen from './navigation/EstimatorScreen'

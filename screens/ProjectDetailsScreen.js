@@ -50,6 +50,11 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     )
   }
   
+  const openModal3 = () => {
+    setModal2Visible(false)
+    setModal3Visible(true)
+  }
+
   const deleteProjectNavBack = () => {
     deleteProject(currentProject)
     navigation.pop()
@@ -77,7 +82,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         {Platform.OS === "ios" ?
           <View style={{alignSelf: 'stretch', flex: 1}}>
             <IconButtonVLarge
-              pressFunction={() => Linking.openURL('https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240109T231500Z%2F20240109T234500Z ')} 
+              pressFunction={() => Linking.openURL(`http://maps.apple.com/?q${encodedAddress}`)} 
               title='Apple Maps'
               iconType='FontAwesome' 
               icon={'map-pin'} 
@@ -128,7 +133,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         </View>     
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonVLarge
-            pressFunction={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${message}`))} 
+            pressFunction={openModal3} 
             title='Add to Calendar' 
             icon={'calendar-alt'} 
             color='firebrick' 
@@ -145,15 +150,15 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   <>
     <View style={styles.modalContainer}>
       <View style={[globalStyles.formRow]}>
-        <Text style={styles.textCenterBlack}>Navigate to Project Location</Text>
+        <Text style={styles.textCenterBlack}>Add Project to Calendar</Text>
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonVLarge
             pressFunction={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query${encodedAddress}`)} 
-            title='Google Maps'
-            icon={'map-marker-alt'} 
+            title='Google Calendar'
+            icon={'google'} 
             color='green' 
             bgcolor='rgba(0,128,0,0.05)'
             border={true}
@@ -163,10 +168,9 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         {Platform.OS === "ios" ?
           <View style={{alignSelf: 'stretch', flex: 1}}>
             <IconButtonVLarge
-              pressFunction={() => Linking.openURL('https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240109T231500Z%2F20240109T234500Z ')} 
-              title='Apple Maps'
-              iconType='FontAwesome' 
-              icon={'map-pin'} 
+              pressFunction={() => Linking.openURL('https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240109T231500Z%2F20240109T234500Z')} 
+              title='ICS'
+              icon={'calendar-alt'} 
               color='navy' 
               bgcolor='rgba(0,0,128,0.05)'
               border={true}
