@@ -4,6 +4,7 @@ import { Context as ProjectContext} from '../context/ProjectContext'
 import { Context as ClientContext} from '../context/ClientContext'
 import { Context as EmployeeContext} from '../context/EmployeeContext'
 import { globalStyles } from '../styles/globalstyles'
+import useGoogleCalendarLink from '../hooks/GoogleCalendarLink'
 import IconButtonVLarge from '../components/IconButtonV'
 import DeleteButton from '../components/DeleteButton'
 import ModalCenterBG from '../components/ModalCenterBG'
@@ -51,6 +52,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   }
   
   const openModal3 = () => {
+    test = useGoogleCalendarLink(project.title, project.tasks, address, currentClient[0].clientName, project.date, null)
+    console.log(test)
     setModal2Visible(false)
     setModal3Visible(true)
   }
@@ -205,7 +208,11 @@ Tasks: ${project.tasks}
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Start Date:</Text>
-          <Text style={styles.projectTextRight}>{project.date}</Text>
+          <Text style={styles.projectTextRight}>{
+              // Intl.DateTimeFormat('en-US').format()
+                project.date
+            }
+          </Text>
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Status:</Text>

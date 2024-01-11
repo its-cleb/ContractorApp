@@ -283,7 +283,7 @@ const ProjectForm = ({ isAdd, nav, clientID, payload, fromHome }) => {
                   autoCorrect={false} 
                   style={globalStyles.formFieldInput} 
                   editable={false} 
-                  value={form.date}
+                  value={Intl.DateTimeFormat('en-US').format(form.date)}
                   onPressIn={toggleDatePicker}
                   onChangeText={(text) => setFormState('date', text)}
                 ></TextInput>
