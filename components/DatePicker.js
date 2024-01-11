@@ -52,8 +52,7 @@ const DatePicker = props => {
 
       if (Platform.OS === 'android') {
         toggleDatePicker()
-        // setNewDate(Intl.DateTimeFormat('en-US').format(currentDate))
-        setNewDate(currentDate.toISOString())
+        setNewDate(Intl.DateTimeFormat('en-US').format(currentDate))
       }
     } else {
       toggleDatePicker()
@@ -61,8 +60,7 @@ const DatePicker = props => {
   }
 
   const confirmIOSDate = () => {
-    // setNewDate(Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'numeric', day: 'numeric'}).format(date))
-    setNewDate(date.toISOString())
+    setNewDate(Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'numeric', day: 'numeric'}).format(date))
     toggleDatePicker()
   }
 

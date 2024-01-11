@@ -52,8 +52,8 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   }
   
   const openModal3 = () => {
-    test = useGoogleCalendarLink(project.title, project.tasks, address, currentClient[0].clientName, project.date, null)
-    console.log(test)
+    test = useGoogleCalendarLink(project.title, currentClient[0].clientName, project.tasks, address,  project.date, null)
+    console.log('link:', test)
     setModal2Visible(false)
     setModal3Visible(true)
   }
