@@ -52,8 +52,6 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
   }
   
   const openModal3 = () => {
-    test = useGoogleCalendarLink(project.title, currentClient[0].clientName, project.tasks, address,  project.date, null)
-    console.log('link:', test)
     setModal2Visible(false)
     setModal3Visible(true)
   }
@@ -159,7 +157,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonVLarge
-            pressFunction={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query${encodedAddress}`)} 
+            pressFunction={() => Linking.openURL(getCalendarLink)} 
             title='Google Calendar'
             icon={'google'} 
             color='green' 
@@ -187,7 +185,14 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     </View>
   </>
 
-  const address = currentClient[0].address.concat(unitNumber, currentClient[0].city, ' ', currentClient[0].zip)
+  // Assemble data for Email/Text/Calendar links
+  const address = currentClient[0].address.concat(
+    Boolean(unitNumber === '') ? '' : (unitNumber, ', '),
+    currentClient[0].city, ' ', 
+    currentClient[0].usState, ' ', 
+    currentClient[0].zip
+  )
+
   const encodedAddress = '='.concat(encodeURIComponent(address))
 
   const message = 
@@ -196,6 +201,7 @@ Client: ${currentClient[0].clientName}
 Address: ${address}
 Tasks: ${project.tasks}
 `
+  const getCalendarLink = useGoogleCalendarLink(project.title, currentClient[0].clientName, project.tasks, address,  project.date, null)
 
   return (  
     <>
@@ -208,10 +214,7 @@ Tasks: ${project.tasks}
         </View>
         <View style={styles.projectRow}>
           <Text style={[styles.projectTextBold, styles.flexOne]}>Start Date:</Text>
-          <Text style={styles.projectTextRight}>{
-              // Intl.DateTimeFormat('en-US').format()
-                project.date
-            }
+          <Text style={styles.projectTextRight}>{project.date}
           </Text>
         </View>
         <View style={styles.projectRow}>

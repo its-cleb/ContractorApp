@@ -61,7 +61,7 @@ export const { Context, Provider } = createDataContext(
     phone:'123-456-7890', 
     email:'test@gmail.com', 
     address: '6539 3rd Ave NW', 
-    unitNumber:'1', 
+    unitNumber:'', 
     city:'Seattle', 
     usState:'WA', 
     zip:'98117', 
