@@ -25,8 +25,20 @@ function Caption(props) {
 }
 
 function Field(props) {
-  isNumeric = Boolean(props.numeric === undefined) ? false : true   
+  let isNumeric = Boolean(props.numeric === undefined) ? false : true
+  let hasPressIn = Boolean(props.pressIn === undefined) ? false : true
+
   return (
+    hasPressIn ? 
+    <TextInput 
+      autoCorrect={false} 
+      style={styles.field}
+      value={props.value}
+      onPressIn={props.pressIn}
+      keyboardType={isNumeric ? "numeric" : "default"}
+      onChangeText={props.press}>
+    </TextInput>
+    :
     <TextInput 
       autoCorrect={false} 
       style={styles.field}

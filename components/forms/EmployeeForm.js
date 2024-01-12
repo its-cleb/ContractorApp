@@ -4,6 +4,7 @@ import { View, Text, TextInput, Keyboard, Platform, KeyboardAvoidingView, Toucha
 import { globalStyles } from '../../styles/globalstyles'
 import IconButtonHSmall from '../IconButtonHSmall'
 import { Context } from '../../context/EmployeeContext'
+import { Row, Column, Caption, Field } from '../Form'
 
 const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
   
@@ -59,6 +60,13 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
   }
   
   // --- Form Inputs ---
+  const [ form, setForm ] = useState(company)
+  const setFormState = (key, value) => {
+    setForm(prev => ({
+      ...prev,
+      [key]: value
+    }))
+  }
   const [ employeeName, setEmployeeName ] = useState(employeeValues.employeeName)
   const [ phone, setPhone ] = useState(employeeValues.phone)
   const [ email, setEmail ] = useState(employeeValues.email)
@@ -79,96 +87,96 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 3 }]}>
-              <Text style={globalStyles.formFieldCaption}>Employee Name</Text>
+          <Row>
+            <Column flex={3}>
+              <Caption>Employee Name</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 value={employeeName}
                 onChangeText={text => setEmployeeName(text)}></TextInput>
-            </View>
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>Wage</Text>
+            </Column>
+            <Column flex={1}>
+              <Caption>Wage</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 keyboardType="numeric"
                 value={wage}
                 onChangeText={text => setWage(text)}></TextInput>
-            </View>
-          </View>
+            </Column>
+          </Row>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Text style={globalStyles.formFieldCaption}>Phone</Text>
+          <Row>
+            <Column flex={2}>
+              <Caption>Phone</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput} 
                 keyboardType="numeric"
                 value={phone}
                 onChangeText={text => setPhone(text)}></TextInput>
-            </View>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 3 }]}>
-              <Text style={globalStyles.formFieldCaption}>Email</Text>
+            <Column flex={3}>
+              <Caption>Email</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 value={email}
                 onChangeText={text => setEmail(text)}></TextInput>
-            </View>
-          </View>
+            </Column>
+          </Row>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Text style={globalStyles.formFieldCaption}>Address</Text>
+          <Row>
+            <Column flex={2}>
+              <Caption>Address</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 value={address}
                 onChangeText={text => setAddress(text)}></TextInput>
-            </View>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>Unit</Text>
+            <Column flex={1}>
+              <Caption>Unit</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 value={unitNumber}
                 onChangeText={text => setUnitNumber(text)}></TextInput>
-            </View>
-          </View>
+            </Column>
+          </Row>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>City</Text>
+          <Row>
+            <Column flex={1}>
+              <Caption>City</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 value={city}
                 onChangeText={text => setCity(text)}></TextInput>
-            </View>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>State</Text>
+            <Column flex={1}>
+              <Caption>State</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput}
                 value={usState}
                 onChangeText={text => setUsState(text)}></TextInput>
-            </View>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>ZIP</Text>
+            <Column flex={1}>
+              <Caption>ZIP</Caption>
               <TextInput 
                 autoCorrect={false} 
                 style={globalStyles.formFieldInput} 
                 keyboardType="numeric"
                 value={zip}
                 onChangeText={text => setZip(text)}></TextInput>
-            </View>
-          </View>
+            </Column>
+          </Row>
 
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10, paddingTop: 10}}>
             {controlButtons}

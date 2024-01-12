@@ -4,6 +4,7 @@ import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingV
 import { globalStyles } from '../../styles/globalstyles'
 import IconButtonHSmall from '../IconButtonHSmall'
 import { Context } from '../../context/CompanyContext'
+import { Row, Column, Caption, Field } from '../Form'
 
 const CompanyForm = (props) => {
   
@@ -39,88 +40,53 @@ const CompanyForm = (props) => {
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 3 }]}>
-              <Text style={globalStyles.formFieldCaption}>Company Name</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.companyName}
-                onChangeText={(text) => setFormState('companyName', text)}></TextInput>
-            </View>
-            
-          </View>
+          <Row>
+            <Column flex={3}>
+              <Caption>Company Name</Caption>
+              <Field value={form.companyName} press={(text) => setFormState('companyName', text)}/>
+            </Column>
+          </Row>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Text style={globalStyles.formFieldCaption}>Phone</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput} 
-                keyboardType="numeric"
-                value={form.phone}
-                onChangeText={(text) => setFormState('phone', text)}></TextInput>
-            </View>
+          <Row>
+            <Column flex={2}>
+              <Caption>Phone</Caption>
+              <Field value={form.phone} press={(text) => setFormState('phone', text)}/>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 3 }]}>
-              <Text style={globalStyles.formFieldCaption}>Email</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.email}
-                onChangeText={(text) => setFormState('email', text)}></TextInput>
-            </View>
-          </View>
+            <Column flex={3}>
+              <Caption>Email</Caption>
+              <Field value={form.email} press={(text) => setFormState('email', text)}/>
+            </Column>
+          </Row>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 2 }]}>
-              <Text style={globalStyles.formFieldCaption}>Address</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.address}
-                onChangeText={(text) => setFormState('address', text)}></TextInput>
-            </View>
+          <Row>
+            <Column flex={2}>
+              <Caption>Address</Caption>
+              <Field value={form.address} press={(text) => setFormState('address', text)}/>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>Unit</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.unitNumber}
-                onChangeText={(text) => setFormState('unitNumber', text)}></TextInput>
-            </View>
-          </View>
+            <Column flex={1}>
+              <Caption>Unit</Caption>
+              <Field value={form.unitNumber} press={(text) => setFormState('unitNumber', text)}/>
+            </Column>
+          </Row>
 
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>City</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.city}
-                onChangeText={(text) => setFormState('city', text)}></TextInput>
-            </View>
+          <Row>
+            <Column flex={1}>
+              <Caption>City</Caption>
+              <Field value={form.city} press={(text) => setFormState('city', text)}/>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>State</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.usState}
-                onChangeText={(text) => setFormState('usState', text)}></TextInput>
-            </View>
+            <Column flex={1}>
+              <Caption>State</Caption>
+              <Field value={form.usState} press={(text) => setFormState('usState', text)}/>
+            </Column>
 
-            <View style={[globalStyles.formColumn, { flex: 1 }]}>
-              <Text style={globalStyles.formFieldCaption}>ZIP</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput} 
-                keyboardType="numeric"
-                value={form.zip}
-                onChangeText={(text) => setFormState('zip', text)}></TextInput>
-            </View>
-          </View>
+            <Column flex={1}>
+              <Caption>ZIP</Caption>
+              <Field value={form.zip} numeric={true} press={(text) => setFormState('zip', text)}/>
+            </Column>
+          </Row>
 
           <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
             <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { View, Text, TextInput, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { View, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { globalStyles } from '../../styles/globalstyles'
 import IconButtonHSmall from '../IconButtonHSmall'
 import DatePicker from '../DatePicker'
@@ -78,14 +78,7 @@ const ClientForm = ({ initialValues, nav, payload, isAdd }) => {
             <Column flex={2}>
               <Pressable onPress={toggleDatePicker}>
                 <Caption>Date of Contact</Caption>
-                <TextInput 
-                  autoCorrect={false} 
-                  style={globalStyles.formFieldInput} 
-                  editable={false} 
-                  value={form.contactDate}
-                  onPressIn={toggleDatePicker}
-                  onChangeText={(text) => setFormState('contactDate', text)}
-                ></TextInput>
+                <Field value={form.contactDate} pressIn={toggleDatePicker} press={(text) => setFormState('contactDate', text)}/>
               </Pressable>
             </Column>
           </Row>
@@ -98,61 +91,36 @@ const ClientForm = ({ initialValues, nav, payload, isAdd }) => {
 
             <Column flex={3}>
               <Caption>Email</Caption>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.email}
-                onChangeText={(text) => setFormState('email', text)}></TextInput>
+              <Field value={form.email} press={(text) => setFormState('email', text)}/>
             </Column>
           </Row>
 
           <Row>
             <Column flex={2}>
               <Caption>Address</Caption>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.address}
-                onChangeText={(text) => setFormState('address', text)}></TextInput>
+              <Field value={form.address} press={(text) => setFormState('address', text)}/>
             </Column>
 
             <Column flex={1}>
               <Caption>Unit</Caption>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.unitNumber}
-                onChangeText={(text) => setFormState('unitNumber', text)}></TextInput>
+              <Field value={form.unitNumber} press={(text) => setFormState('unitNumber', text)}/>
             </Column>
           </Row>
 
           <Row>
             <Column flex={1}>
               <Caption>City</Caption>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.city}
-                onChangeText={(text) => setFormState('city', text)}></TextInput>
+              <Field value={form.city} press={(text) => setFormState('city', text)}/>
             </Column>
 
             <Column flex={1}>
               <Caption>State</Caption>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.usState}
-                onChangeText={(text) => setFormState('usState', text)}></TextInput>
+              <Field value={form.usState} press={(text) => setFormState('usState', text)}/>
             </Column>
 
             <Column flex={1}>
               <Caption>ZIP</Caption>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput} 
-                keyboardType="numeric"
-                value={form.zip}
-                onChangeText={(text) => setFormState('zip', text)}></TextInput>
+              <Field value={form.zip} numeric={true} press={(text) => setFormState('zip', text)}/>
             </Column>
           </Row>
 
