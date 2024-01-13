@@ -13,6 +13,8 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
   // Get props from parent component
   const navigation = navProp
   const employeeID = payloadProp
+  const isAdd = initialValues ? true : false
+  console.log(initialValues)
 
   // Declare default values if AddEmployee was the parent
   const defaultEmployeeValues = { 
@@ -27,7 +29,17 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
     zip:'', 
     wage: ''
   }
- 
+
+  // const [ form, setForm ] = useState(company)
+  
+  // const setFormState = (key, value) => {
+  //   setForm(prev => ({
+  //     ...prev,
+  //     [key]: value
+  //   }))
+  // }
+
+  
   // Check if parent element passed initialValues prop
   if (initialValues === undefined) {
     employeeValues = defaultEmployeeValues
@@ -59,14 +71,7 @@ const EmployeeForm = ({ initialValues, navProp, payloadProp }) => {
     </>
   }
   
-  // --- Form Inputs ---
-  const [ form, setForm ] = useState(company)
-  const setFormState = (key, value) => {
-    setForm(prev => ({
-      ...prev,
-      [key]: value
-    }))
-  }
+
   const [ employeeName, setEmployeeName ] = useState(employeeValues.employeeName)
   const [ phone, setPhone ] = useState(employeeValues.phone)
   const [ email, setEmail ] = useState(employeeValues.email)
