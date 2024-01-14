@@ -1,17 +1,22 @@
 import React from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 
-function Row(props) {    
+function Row(props) {
+  let hasMargin = Boolean(props.marginB === undefined) ? false : true
+  let hasStyles = Boolean(props.addStyles === undefined) ? false : true
+
   return (
-    <View style={styles.row}>
+    <View style={[styles.row, hasStyles ? props.addStyles : '', hasMargin ? { marginBottom:  props.marginB } : '']}>
       {props.children}
     </View>
   )
 }
 
 function Column(props) {    
+  let hasStyles = Boolean(props.addStyles === undefined) ? false : true
+
   return (
-    <View style={[styles.column, { flex: props.flex }]}>
+    <View style={[styles.column, hasStyles ? props.addStyles : '', { flex: props.flex }]}>
       {props.children}
     </View>
   )
