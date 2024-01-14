@@ -7,28 +7,28 @@ import IconButtonHContent from '../components/IconButtonHContent'
 const CompanyScreen = ({ navigation }) => {
 
   const { state } = useContext(CompanyContext)
-  console.log(state)
+
   return (
     <>
       <DrawerHeader title="Company" />
 
       <View style={styles.companyContainer}>
         <View style={styles.companyHeader}>
-          <Text style={styles.companyTextHeader}>{state[0].companyName}</Text>
+          <Text style={styles.companyTextHeader}>{state.companyName}</Text>
         </View>
         <View style={styles.companyRow}>
           <Text style={[styles.companyTextBold, styles.flexOne]}>Phone:</Text>
-          <Text style={styles.companyTextRight}>{state[0].phone}</Text>
+          <Text style={styles.companyTextRight}>{state.phone}</Text>
         </View>
         <View style={styles.companyRow}>
           <Text style={[styles.companyTextBold, styles.flexOne]}>Email:</Text>
-          <Text style={styles.companyTextRight}>{state[0].email}</Text>
+          <Text style={styles.companyTextRight}>{state.email}</Text>
         </View>
         <View style={styles.companyRow}>
           <Text style={[styles.companyTextBold]}>Address:</Text>
           <View style={styles.flexOne}>
-            <Text style={styles.companyTextRight}>{state[0].address}, {state[0].unitNumber}</Text>
-            <Text style={styles.companyTextRight}>{state[0].city}, {state[0].usState} {state[0].zip}</Text>
+            <Text style={styles.companyTextRight}>{state.address}, {state.unitNumber}</Text>
+            <Text style={styles.companyTextRight}>{state.city}, {state.usState} {state.zip}</Text>
           </View>  
         </View>
       </View>

@@ -3,8 +3,7 @@ import createDataContext from './createDataContext'
 const companyReducer = (state, action) => {
   switch (action.type) {
     case 'edit_company':
-      return state.map(() => {
-        return action.payload})
+      return action.payload
     default:
       return state
   }
@@ -22,7 +21,7 @@ const editCompany = dispatch => {
 export const { Context, Provider } = createDataContext(
   companyReducer, 
   { editCompany },
-  [{
+  {
     companyName: 'Stark Industries', 
     phone:'123-456-7890', 
     email:'starkindustries@gmail.com', 
@@ -31,5 +30,5 @@ export const { Context, Provider } = createDataContext(
     city:'Manhattan', 
     usState:'NY', 
     zip:'28548' 
-  }]
+  }
 )

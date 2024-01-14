@@ -64,7 +64,7 @@ const ClientFormScreen = ({ route, navigation }) => {
     <>
       <StackHeader title={isAdd ? 'Add Client' : 'Edit Client'} navFunction={() => navigation.pop()}/>
 
-      <Pressable onPress={keyboardDismiss} style={globalStyles.pressableBox}>
+       <Pressable onPress={keyboardDismiss} style={globalStyles.pressableBox}>
 
         <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
 
