@@ -348,13 +348,6 @@ const styles = StyleSheet.create({
   flexOne: {
     flex: 1,
   },
-  contentBox: {
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    flex: 1,
-    zIndex: 1
-  },
   textCenterBlack: {
     fontWeight: 'bold', 
     fontSize: 16,

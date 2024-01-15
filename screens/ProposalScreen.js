@@ -5,6 +5,8 @@ import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCenterBG from '../components/ModalCenterBG'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
+import { Row, Column, Caption, Field } from '../components/Form'
+
 import { Context } from '../context/ProposalContext'
 
 // Scoped variables for line items
@@ -154,25 +156,23 @@ const ProposalScreen = ({ route, navigation }) => {
   const modal2Content = 
     <>
       <View style={styles.contentBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 5 }]}>
-            <Text style={globalStyles.formFieldCaption}>{modal2isPhase ? 'Phase' : 'Line Item'}</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={modal2isPhase ? form.phaseName : form.lineItem}
-              onChangeText={text => modal2isPhase ? setFormState({phaseName: text}) : setFormState({lineItem: text})}></TextInput>
-          </View>
-          <View style={[globalStyles.formColumn, { flex: modal2isPhase ? 3 : 2 }]}>
-            <Text style={globalStyles.formFieldCaption}>{modal2isPhase ? 'Date' : 'Cost'}</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              keyboardType={modal2isPhase ? "default" : "numeric"}
-              value={modal2isPhase ? form.phaseDate : form.cost}
-              onChangeText={text => modal2isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}></TextInput>
-          </View>
-        </View>
+        <Row>
+          <Column flex={5}>
+            <Caption>{modal2isPhase ? 'Phase' : 'Line Item'}</Caption>
+            <Field 
+              value={modal2isPhase ? form.phaseName : form.lineItem} 
+              press={text => modal2isPhase ? setFormState({phaseName: text}) : setFormState({lineItem: text})}
+            />
+          </Column>
+          <Column flex={modal2isPhase ? 3 : 2 }>
+            <Caption>{modal2isPhase ? 'Date' : 'Cost'}</Caption>
+            <Field 
+              value={modal2isPhase ? form.phaseDate : form.cost} 
+              numeric={modal2isPhase ? false : true} 
+              press={text => modal2isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}
+            />
+          </Column>
+        </Row>
       </View>
       <IconButtonHSmall 
         pressFunction={addLine} 
@@ -187,25 +187,24 @@ const ProposalScreen = ({ route, navigation }) => {
   const modal3Content = 
     <>
       <View style={styles.contentBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 5 }]}>
-            <Text style={globalStyles.formFieldCaption}>{modal3isPhase ? 'Phase' : 'Line Item'}</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={modal3isPhase ? form.phaseName : form.lineItem}
-              onChangeText={text => modal3isPhase ? setFormState({phaseName: text}) : setFormState({lineItem: text})}></TextInput>
-          </View>
-          <View style={[globalStyles.formColumn, { flex: modal3isPhase ? 3 : 2  }]}>
-            <Text style={globalStyles.formFieldCaption}>{modal3isPhase ? 'Date' : 'Cost'}</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              keyboardType="numeric"
-              value={modal3isPhase ? form.phaseDate : form.cost}
-              onChangeText={text => modal3isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}></TextInput>
-          </View>
-        </View>
+        <Row>
+          <Column flex={5}>
+            <Caption>{modal3isPhase ? 'Phase' : 'Line Item'}</Caption>
+            <Field 
+              value={modal3isPhase ? form.phaseName : form.lineItem} 
+              numeric={true} 
+              press={text => modal3isPhase ? setFormState({phaseName: text}) : setFormState({lineItem: text})}
+            />
+          </Column>
+          <Column flex={modal3isPhase ? 3 : 2  }>
+            <Caption>{modal3isPhase ? 'Date' : 'Cost'}</Caption>
+            <Field 
+              value={modal3isPhase ? form.phaseDate : form.cost} 
+              numeric={true} 
+              press={text => modal3isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}
+            />
+          </Column>
+        </Row>
       </View>
       <IconButtonHSmall 
         pressFunction={() => editLine(modal3isPhase ? true : false)} 
@@ -234,16 +233,12 @@ const ProposalScreen = ({ route, navigation }) => {
   const modal4Content = 
     <>
       <View style={styles.contentBox}>
-        <View style={globalStyles.formRow}>
-          <View style={[globalStyles.formColumn, { flex: 1 }]}>
-            <Text style={globalStyles.formFieldCaption}>{isAdd ? 'Add Project Description' : 'Edit Project Description'}</Text>
-            <TextInput 
-              autoCorrect={false} 
-              style={globalStyles.formFieldInput}
-              value={form.description}
-              onChangeText={text => setFormState({description: text})}></TextInput>
-          </View>
-        </View>
+        <Row>
+          <Column flex={1}>
+            <Caption>{isAdd ? 'Add Project Description' : 'Edit Project Description'}</Caption>
+            <Field value={form.description} press={(text) => setFormState({description: text})}/>
+          </Column>
+        </Row>
       </View>
       <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
     </>

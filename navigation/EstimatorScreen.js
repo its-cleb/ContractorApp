@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, Switch, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
+import { View, Text, StyleSheet, Switch, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
 import BottomTab3 from '../components/BottomTab3'
 import ModalCenterBG from '../components/ModalCenterBG'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { Row, Column, Caption, Field } from '../components/Form'
 import * as Linking from 'expo-linking'
 
 const EstimatorScreen = () => {
@@ -38,7 +38,6 @@ const EstimatorScreen = () => {
   }
 
   let totalCost = estimatorSheet.reduce(function(previousValue, currentValue) {return previousValue + +currentValue.lineTotal }, 0)
-
 
   // --- Modal Control
   const closedModals = {
@@ -129,47 +128,34 @@ const EstimatorScreen = () => {
             :
             <Text style={styles.modalHeading}>Add {form.costType} Expense</Text>
           }
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 3 }]}>
-              <Text style={globalStyles.formFieldCaption}>Line Title</Text>
-              <TextInput 
-                autoCorrect={false} 
-                style={globalStyles.formFieldInput}
-                value={form.name}
-                onChangeText={text => setFormState({name: text})}></TextInput>
-            </View>
-            <View style={[globalStyles.formColumn, { flex: 2, alignItems: 'center', justifyContent: 'flex-end'}]}>
-              <Text style={globalStyles.formFieldCaption}>Flat Fee</Text>
+          <Row>
+            <Column flex={3}>
+              <Caption>Line Title</Caption>
+              <Field value={form.name} press={(text) => setFormState({name: text})}/>
+            </Column>
+
+            <Column flex={2} addStyles={{alignItems: 'center', justifyContent: 'flex-end'}}>
+              <Caption>Flat Fee</Caption>
               <Switch 
                 onValueChange={(value) => setSwitchValue(value)}
                 value={switchValue}
               />
-            </View>
-          </View>
-          <View style={globalStyles.formRow}>
-            <View style={[globalStyles.formColumn, { flex: 3 }]}>
-              <Text style={globalStyles.formFieldCaption}>Cost</Text>
-              <TextInput 
-                autoCorrect={false}
-                keyboardType='numeric'
-                style={globalStyles.formFieldInput}
-                value={form.cost}
-                onChangeText={text => setFormState({cost: text})}></TextInput>
-            </View>
+            </Column>
+          </Row>
+          <Row>
+            <Column flex={3}>
+              <Caption>Cost</Caption>
+              <Field value={form.cost} numeric={true} press={(text) => setFormState({cost: text})}/>
+            </Column>
             {switchValue ?
               ''
               : 
-              <View style={[globalStyles.formColumn, { flex: 2 }]}>
-                <Text style={globalStyles.formFieldCaption}># of Vehicles</Text>
-                <TextInput 
-                  autoCorrect={false}
-                  keyboardType='numeric'
-                  style={globalStyles.formFieldInput}
-                  value={form.multiplier}
-                  onChangeText={text => setFormState({multiplier: text})}></TextInput>
-              </View>
+              <Column flex={2}>
+                <Caption># of Items</Caption>
+                <Field value={form.multiplier} numeric={true} press={(text) => setFormState({multiplier: text})}/>
+              </Column>
             } 
-          </View>
+          </Row>
           <Text style={styles.itemTotal}>
             Line Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(form.cost * (switchValue ? 1 : form.multiplier))}
             </Text>

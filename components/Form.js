@@ -1,5 +1,18 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { StyleSheet, Pressable, Keyboard, Platform, KeyboardAvoidingView, View, Text, TextInput } from 'react-native'
+
+function Form(props) {
+  let hasStyles = Boolean(props.addStyles === undefined) ? false : true
+
+  return (
+    <Pressable onPress={() => Keyboard.dismiss()} style={{flex: 1}}>
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={[styles.form, hasStyles ? props.addStyles : '']}>
+        {props.children}
+      </KeyboardAvoidingView>
+    </Pressable>
+    
+  )
+}
 
 function Row(props) {
   let hasMargin = Boolean(props.marginB === undefined) ? false : true
@@ -40,6 +53,7 @@ function Field(props) {
       style={styles.field}
       value={props.value}
       onPressIn={props.pressIn}
+      inputMode='none'
       keyboardType={isNumeric ? "numeric" : "default"}
       onChangeText={props.press}>
     </TextInput>
@@ -55,6 +69,13 @@ function Field(props) {
 }
 
 const styles = StyleSheet.create({
+  form: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    flex: 1,
+    zIndex: 1
+  },
   row: {
     flexDirection: 'row',
     gap: 10,
@@ -90,4 +111,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export { Row, Column, Caption, Field } 
+export { Form, Row, Column, Caption, Field } 
