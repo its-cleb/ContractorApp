@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import IconButtonHSmall from '../components/IconButtonHSmall'
-import { ModalBG, ModalBox } from '../components/Modal'
+import { ModalBG, ModalBox, ModalRow } from '../components/Modal'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
 import { Row, Column, Caption, Field } from '../components/Form'
@@ -144,18 +144,18 @@ const ProposalScreen = ({ route, navigation }) => {
 
   // --- Modal 1 (Select Line Item Type) ---
   const modal1Content =
-    <View style={styles.contentBox}>
-      <View style={styles.lineSelectionButtonsBox}>
+    <ModalBox>
+      <ModalRow padT={10}>
         <IconButtonHSmall pressFunction={() => openModal2(true)} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/> 
         <IconButtonHSmall pressFunction={() => openModal2(false)} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
-      </View>
-    </View>
+      </ModalRow>
+    </ModalBox>
 
   // --- Modal 2 (Add Line Item) ---
   const modal2Content = 
     <>
-      <View style={styles.contentBox}>
-        <Row>
+      <ModalBox>
+        <Row addStyles={{paddingTop: 10}}>
           <Column flex={5}>
             <Caption>{modal2isPhase ? 'Phase' : 'Line Item'}</Caption>
             <Field 
@@ -171,10 +171,9 @@ const ProposalScreen = ({ route, navigation }) => {
               press={text => modal2isPhase ? setFormState({phaseDate: text}) : setFormState({cost: text})}
             />
           </Column>
-        </Row>
-
-        
-      </View>
+        </Row>        
+      </ModalBox>
+      
       <IconButtonHSmall 
         pressFunction={addLine} 
         title={modal2isPhase ? 'Add Phase' : 'Add Line Item'} 
@@ -187,8 +186,8 @@ const ProposalScreen = ({ route, navigation }) => {
   // --- Modal 3 (Edit/Delete Line Item) ---
   const modal3Content = 
     <>
-      <View style={styles.contentBox}>
-        <Row>
+      <ModalBox>
+        <Row addStyles={{paddingTop: 10}}>
           <Column flex={5}>
             <Caption>{modal3isPhase ? 'Phase' : 'Line Item'}</Caption>
             <Field 
@@ -206,7 +205,7 @@ const ProposalScreen = ({ route, navigation }) => {
             />
           </Column>
         </Row>
-      </View>
+      </ModalBox>
       <IconButtonHSmall 
         pressFunction={() => editLine(modal3isPhase ? true : false)} 
         title='Save Edit' 

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Switch, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
 import BottomTab3 from '../components/BottomTab3'
-import { ModalBG, ModalBox } from '../components/Modal'
+import { ModalBG, ModalBox, ModalRow } from '../components/Modal'
 import DrawerHeader from '../components/DrawerHeader'
-import IconButtonHSmall from '../components/IconButtonHSmall'
 import { IconButtonH } from '../components/Button'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Row, Column, Caption, Field } from '../components/Form'
@@ -108,22 +107,22 @@ const EstimatorScreen = () => {
   const modal1Content =
   <>
     <ModalBox>
-      <View style={styles.costModalButtonsBox}>
-        <Text style={styles.modalHeading}>Add Cost</Text>
-        <IconButtonHSmall pressFunction={() => openModal2('Materials', false)} title="Materials" icon="box" bgcolor="darkred" textcolor="white"/> 
-        <IconButtonHSmall pressFunction={() => openModal2('Labor', false)} title="Labor" icon="hammer" bgcolor="darkgoldenrod" textcolor="white"/>
-        <IconButtonHSmall pressFunction={() => openModal2('Mobilization', false)} title="Mobilization" icon="truck" bgcolor="darkolivegreen" textcolor="white"/>
-        <IconButtonHSmall pressFunction={() => openModal2('Travel', false)} title="Travel" icon="plane" bgcolor="teal" textcolor="white"/>
-        <IconButtonHSmall pressFunction={() => openModal2('Misc', false)} title="Misc" icon="plus" bgcolor="slategray" textcolor="white"/>
-      </View>
+      <Text style={[styles.modalHeading, {flexDirection: 'column'}]}>Add Cost</Text>
+      <ModalRow>
+        <IconButtonH pressFunction={() => openModal2('Materials', false)} title="Materials" icon="box" bgcolor="darkred" textcolor="white"/> 
+        <IconButtonH pressFunction={() => openModal2('Labor', false)} title="Labor" icon="hammer" bgcolor="darkgoldenrod" textcolor="white"/>
+        <IconButtonH pressFunction={() => openModal2('Mobilization', false)} title="Mobilization" icon="truck" bgcolor="darkolivegreen" textcolor="white"/>
+        <IconButtonH pressFunction={() => openModal2('Travel', false)} title="Travel" icon="plane" bgcolor="teal" textcolor="white"/>
+        <IconButtonH pressFunction={() => openModal2('Misc', false)} title="Misc" icon="plus" bgcolor="slategray" textcolor="white"/>
+      </ModalRow>
     </ModalBox>
   </>
 
   // --- Modal 2 (Add/Edit Line) ---
   const modal2Content =
   <>
-    <View style={styles.contentBox}>
-      <View style={styles.costModalButtonsBox}>
+    <ModalBox>
+
         {isEdit ?
           <Text style={styles.modalHeading}>Edit Expense</Text>
           :
@@ -158,33 +157,34 @@ const EstimatorScreen = () => {
           } 
         </Row>
 
-        <View style={{alignSelf: 'stretch', marginHorizontal: -10}}>
+        <View style={{alignSelf: 'stretch'}}>
           <Text style={styles.itemTotal}>
             Line Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(form.cost * (switchValue ? 1 : form.multiplier))}
           </Text>
-          <IconButtonHSmall pressFunction={saveModal2} title={isEdit ? "Save Line Item" : "Add Line Item"} icon="save" bgcolor="steelblue" textcolor="white"/>
+          <IconButtonH pressFunction={saveModal2} title={isEdit ? "Save Line Item" : "Add Line Item"} icon="save" bgcolor="steelblue" textcolor="white"/>
         </View>
-      </View>
-    </View>
+
+    </ModalBox>
   </>
 
   // --- Modal 3 (Confirm Clear Form) ---
   const modal3Content =
   <>
-    <View style={styles.contentBox}>
+    <ModalBox>
       <View style={styles.costModalButtonsBox}>
           <Text style={styles.modalHeading}>Clear Estimate?</Text>
       </View>
-    </View>
+
     
-    <View style={{flexDirection: 'row'}}>
-      <View style={{flex: 1}}> 
-        <IconButtonHSmall pressFunction={clearSheet} title="Yes" icon="eraser" bgcolor="steelblue" textcolor="white"/>
+      <View style={{flexDirection: 'row', gap: 10, marginTop: 10}}>
+        <View style={{flex: 1}}> 
+          <IconButtonH pressFunction={clearSheet} title="Yes" icon="eraser" bgcolor="steelblue" textcolor="white"/>
+        </View>
+        <View style={{flex: 1}}> 
+          <IconButtonH pressFunction={closeModal} title="No" icon="ban" bgcolor="maroon" textcolor="white"/>
+        </View>
       </View>
-      <View style={{flex: 1}}> 
-        <IconButtonHSmall pressFunction={closeModal} title="No" icon="ban" bgcolor="maroon" textcolor="white"/>
-      </View>
-    </View>
+    </ModalBox>
   </>
 
   // Flatlist Content 
@@ -331,7 +331,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     alignSelf: 'center',
-    marginTop: -20,
     marginBottom: 10
   },
 
@@ -342,8 +341,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   costModalButtonsBox: {
-    marginBottom: -10,
-    marginTop: 10,
     width: '100%'
   },
 

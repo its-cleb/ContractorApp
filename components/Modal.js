@@ -62,6 +62,22 @@ function ModalBox(props) {
   )
 }
 
+function ModalRow(props){
+  let hasPadT = Boolean(props.padT !== undefined)
+  let hasPadB = Boolean(props.padB !== undefined)
+
+  return(
+    <View style={{
+      flexDirection: 'row',
+      paddingTop: hasPadT ? props.padT : 0,
+      paddingBottom: hasPadB ? props.padB : 0
+    }}>
+      <View style={{flex: 1}}>
+        {props.children}
+      </View>
+    </View>
+  )
+}
 const styles = StyleSheet.create({
   componentContainer: {
     position: 'absolute',
@@ -104,4 +120,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export { ModalBG, ModalBox } 
+export { ModalBG, ModalBox, ModalRow } 

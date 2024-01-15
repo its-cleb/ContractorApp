@@ -86,10 +86,17 @@ function IconButtonH(props) {
       onPress={props.pressFunction} 
       style={[styles.touchableOpacity, { 
         backgroundColor: `${props.bgcolor}`, 
-        flexDirection: 'row' 
+        flexDirection: 'row',
+        alignSelf: 'stretch',
+        paddingVertical: hasPadV ? props.padV : 10,
+        paddingHorizontal: hasPadH ? props.padH : 5,
+        marginVertical: hasMarginV ? props.marginV : 10,
+        marginHorizontal: hasMarginH ? props.marginH : 0,
+        marginTop: hasMarginT ? props.marginT : 10,
+        marginBottom: hasMarginB ? props.marginB : 0
       }]}> 
       <FontAwesome5 style={styles.buttonIcon} name={props.icon} size={16} color={props.textcolor} />
-      <Text style={{ color: `${props.textcolor}`, fontSize: 16}}>{props.title}</Text>
+      <Text style={{ color: `${props.textcolor}`, fontSize: 16, marginLeft: 10}}>{props.title}</Text>
     </TouchableOpacity>
   )
 }
