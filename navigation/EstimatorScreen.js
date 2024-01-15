@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Switch, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
 import BottomTab3 from '../components/BottomTab3'
-import ModalCenterBG from '../components/ModalCenterBG'
+import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -118,51 +118,54 @@ const EstimatorScreen = () => {
     </View>
   </>
 
-    // --- Modal 2 (Add/Edit Line) ---
-    const modal2Content =
-    <>
-      <View style={styles.contentBox}>
-        <View style={styles.costModalButtonsBox}>
-          {isEdit ?
-            <Text style={styles.modalHeading}>Edit Expense</Text>
-            :
-            <Text style={styles.modalHeading}>Add {form.costType} Expense</Text>
-          }
-          <Row>
-            <Column flex={3}>
-              <Caption>Line Title</Caption>
-              <Field value={form.name} press={(text) => setFormState({name: text})}/>
-            </Column>
+  // --- Modal 2 (Add/Edit Line) ---
+  const modal2Content =
+  <>
+    <View style={styles.contentBox}>
+      <View style={styles.costModalButtonsBox}>
+        {isEdit ?
+          <Text style={styles.modalHeading}>Edit Expense</Text>
+          :
+          <Text style={styles.modalHeading}>Add {form.costType} Expense</Text>
+        }
+        <Row>
+          <Column flex={3}>
+            <Caption>Line Title</Caption>
+            <Field value={form.name} press={(text) => setFormState({name: text})}/>
+          </Column>
 
-            <Column flex={2} addStyles={{alignItems: 'center', justifyContent: 'flex-end'}}>
-              <Caption>Flat Fee</Caption>
-              <Switch 
-                onValueChange={(value) => setSwitchValue(value)}
-                value={switchValue}
-              />
+          <Column flex={2} addStyles={{alignItems: 'center', justifyContent: 'flex-end'}}>
+            <Caption>Flat Fee</Caption>
+            <Switch 
+              onValueChange={(value) => setSwitchValue(value)}
+              value={switchValue}
+            />
+          </Column>
+        </Row>
+        <Row>
+          <Column flex={3}>
+            <Caption>Cost</Caption>
+            <Field value={form.cost} numeric={true} press={(text) => setFormState({cost: text})}/>
+          </Column>
+          {switchValue ?
+            ''
+            : 
+            <Column flex={2}>
+              <Caption># of Items</Caption>
+              <Field value={form.multiplier} numeric={true} press={(text) => setFormState({multiplier: text})}/>
             </Column>
-          </Row>
-          <Row>
-            <Column flex={3}>
-              <Caption>Cost</Caption>
-              <Field value={form.cost} numeric={true} press={(text) => setFormState({cost: text})}/>
-            </Column>
-            {switchValue ?
-              ''
-              : 
-              <Column flex={2}>
-                <Caption># of Items</Caption>
-                <Field value={form.multiplier} numeric={true} press={(text) => setFormState({multiplier: text})}/>
-              </Column>
-            } 
-          </Row>
+          } 
+        </Row>
+
+        <View style={{alignSelf: 'stretch', marginHorizontal: -10}}>
           <Text style={styles.itemTotal}>
             Line Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(form.cost * (switchValue ? 1 : form.multiplier))}
-            </Text>
+          </Text>
           <IconButtonHSmall pressFunction={saveModal2} title={isEdit ? "Save Line Item" : "Add Line Item"} icon="save" bgcolor="steelblue" textcolor="white"/>
         </View>
       </View>
-    </>
+    </View>
+  </>
 
   // --- Modal 3 (Confirm Clear Form) ---
   const modal3Content =
@@ -179,7 +182,7 @@ const EstimatorScreen = () => {
       </View>
       <View style={{flex: 1}}> 
         <IconButtonHSmall pressFunction={closeModal} title="No" icon="ban" bgcolor="maroon" textcolor="white"/>
-       </View>
+      </View>
     </View>
   </>
 
@@ -237,7 +240,6 @@ const EstimatorScreen = () => {
   // ----- | Main Return | -----
   return (
     <>
-      
       <View style={styles.pageContainer}> 
 
         <DrawerHeader title="Estimator" />
@@ -259,8 +261,8 @@ const EstimatorScreen = () => {
           <View style={styles.totalBar}>
             <Text style={styles.totalText}>Total: {Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(totalCost)}</Text>
           </View>
+
         </View>    
-      
 
         <BottomTab3 
           button1icon='eraser'
@@ -300,7 +302,6 @@ const EstimatorScreen = () => {
           closeModalButton={closeModal}
           modalContent={modal3Content}
         /> 
-
 
       </View>
     </>

@@ -21,7 +21,7 @@ import { MaterialIcons } from '@expo/vector-icons'
   /> 
 */}
 
-const ModalCenterBG = props => {
+function ModalCenterBG(props) {
   return (
     <View style={[styles.componentContainer, {zIndex: props.modalVisible ? 10 : 0 }]}>
       <View style={props.modalVisible ? styles.modalBG : ''}></View>
@@ -49,6 +49,14 @@ const ModalCenterBG = props => {
         </Modal>
       </View>
 
+    </View>
+  )
+}
+
+function ModalBox(props) {
+  return (
+    <View style={styles.modalContainer}>
+      {props.children}
     </View>
   )
 }
@@ -83,7 +91,13 @@ const styles = StyleSheet.create({
   closeButton: {
     alignSelf: 'flex-end',
     margin: 5
-  }
+  },
+  modalContainer: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    width: '100%',
+    alignSelf: 'stretch',
+  },
 })
 
-export default ModalCenterBG
+export { ModalCenterBG, ModalBox } 

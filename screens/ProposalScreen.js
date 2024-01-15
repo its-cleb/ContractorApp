@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import IconButtonHSmall from '../components/IconButtonHSmall'
-import ModalCenterBG from '../components/ModalCenterBG'
+import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
 import { Row, Column, Caption, Field } from '../components/Form'
@@ -172,6 +172,8 @@ const ProposalScreen = ({ route, navigation }) => {
             />
           </Column>
         </Row>
+
+        
       </View>
       <IconButtonHSmall 
         pressFunction={addLine} 

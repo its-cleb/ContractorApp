@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
-import { globalStyles } from '../styles/globalstyles'
 import { useNavigation } from '@react-navigation/native'
 
   // Component Usage
@@ -24,10 +23,10 @@ const IconButtonVLarge = props => {
 
     switch(props.iconType) {
       case 'FontAwesome':
-        iconType = <FontAwesome style={globalStyles.buttonIcon} name={props.icon} size={props.size} color={props.color} />
+        iconType = <FontAwesome style={styles.buttonIcon} name={props.icon} size={props.size} color={props.color} />
         break
       default:
-        iconType = <FontAwesome5 style={globalStyles.buttonIcon} name={props.icon} size={props.size} color={props.color} />
+        iconType = <FontAwesome5 style={styles.buttonIcon} name={props.icon} size={props.size} color={props.color} />
     }
     return iconType
   }
@@ -35,7 +34,7 @@ const IconButtonVLarge = props => {
 
   return (
     <TouchableOpacity 
-      style={[globalStyles.touchableOpacityButton, 
+      style={[styles.touchableOpacityButton, 
         {backgroundColor: `${props.bgcolor}`, borderColor: `${props.color}`, borderWidth: hasBorder ? 2 : 0}]} 
       onPress={props.pressFunction}
     > 
@@ -50,7 +49,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignContent: 'center',
     fontWeight: 500
-  }
+  },
+  touchableOpacityButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "steelblue",
+    borderRadius: 5,
+    marginVertical: 5,
+    padding: 10
+  },
+  buttonIcon: {
+    margin: 10,
+  },
 })
 
 export default IconButtonVLarge

@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, Switch, FlatList, StyleSheet } from 'react-native'
 import BottomTab3 from '../components/BottomTab3'
 import DatePicker from '../components/DatePicker'
-import ModalCenterBG from '../components/ModalCenterBG'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import StackHeader from '../components/StackHeader'
+import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { Context as ProjectContext } from '../context/ProjectContext'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
@@ -194,7 +194,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
   // --- Modal 1 Content (Add Employee)
   const modal1content = 
     <>
-      <View style={styles.modalContainer}>
+      <ModalBox>
         <Row>
           <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Available Employees</Text>
         </Row>
@@ -208,13 +208,13 @@ const ProjectFormScreen = ({ route, navigation }) => {
             <View style={[styles.blankRow, {flex: 1}]}><Text style={styles.textCenter}>None</Text></View>
           }
         </Row>
-      </View>
+      </ModalBox>
     </>
 
   // --- Modal 2 Content (Task)
   const modal2content =
   <>
-    <View style={styles.modalContainer}>
+    <ModalBox>
       <Row>
         <Column flex={5} addStyles={{ paddingHorizontal: 10}}>
           <Caption>{isEdit ? 'Edit Task' : 'Add Task'}</Caption>
@@ -244,13 +244,13 @@ const ProjectFormScreen = ({ route, navigation }) => {
         </View>
         : ''
       }
-    </View>
+    </ModalBox>
   </>
 
   // --- Modal 3 Content (Remove Employee)
   const modal3content =
   <>
-    <View style={styles.modalContainer}>
+    <ModalBox>
       <Row>
         <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Selected Employee</Text>
       </Row>
@@ -267,7 +267,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
         />
       </View>
 
-    </View>
+    </ModalBox>
   </>
 
   return (
