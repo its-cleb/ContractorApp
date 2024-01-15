@@ -5,9 +5,9 @@ import { Context as ClientContext} from '../context/ClientContext'
 import { Context as EmployeeContext} from '../context/EmployeeContext'
 import { globalStyles } from '../styles/globalstyles'
 import useGoogleCalendarLink from '../hooks/GoogleCalendarLink'
-import IconButtonVLarge from '../components/IconButtonV'
 import DeleteButton from '../components/DeleteButton'
-import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
+import { ModalBG, ModalBox } from '../components/Modal'
+import { IconButtonV } from '../components/Button'
 import StackHeader from '../components/StackHeader'
 import BottomTab3 from '../components/BottomTab3'
 import * as Linking from 'expo-linking'
@@ -63,14 +63,14 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
 
   const modal1Content = 
   <>
-    <View style={styles.modalContainer}>
+    <ModalBox>
       <View style={[globalStyles.formRow]}>
         <Text style={styles.textCenterBlack}>Navigate to Project Location</Text>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
+      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
-          <IconButtonVLarge
+          <IconButtonV
             pressFunction={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query${encodedAddress}`)} 
             title='Google Maps'
             icon={'map-marker-alt'} 
@@ -82,7 +82,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         </View>
         {Platform.OS === "ios" ?
           <View style={{alignSelf: 'stretch', flex: 1}}>
-            <IconButtonVLarge
+            <IconButtonV
               pressFunction={() => Linking.openURL(`http://maps.apple.com/?q${encodedAddress}`)} 
               title='Apple Maps'
               iconType='FontAwesome' 
@@ -91,28 +91,29 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
               bgcolor='rgba(0,0,128,0.05)'
               border={true}
               size={34}
+              marginV={0}
             />
           </View>
           :
-          ''
+          null
         }  
       </View>
-    </View>
+    </ModalBox>
   </>
 
   // Modal 2 Content
   const modal2Content = 
   <>
-    <View style={styles.modalContainer}>
+    <ModalBox>
       <View style={[globalStyles.formRow]}>
         <Text style={styles.textCenterBlack}>Share Project</Text>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
+      <View style={{flexDirection: 'row', justifyContent: 'space-around', gap: 10}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
-          <IconButtonVLarge
+          <IconButtonV
             pressFunction={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${message}`))} 
-            title='Text Workers'
+            title={`Text \n Workers`}
             icon={'sms'} 
             color='green' 
             bgcolor='rgba(0,128,0,0.05)'
@@ -121,42 +122,42 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           />
         </View>
         <View style={{alignSelf: 'stretch', flex: 1}}>
-          <IconButtonVLarge
+          <IconButtonV
             pressFunction={() => Linking.openURL(encodeURI(`mailto:${employeeEmails}?cc=${Platform.OS === "ios" ? "&" : "?"}subject=Project&body=${message}`))} 
-            title='Email Workers'
+            title={`Email \n Workers`}
             iconType='FontAwesome' 
             icon={'envelope'} 
             color='navy' 
             bgcolor='rgba(0,0,128,0.05)'
             border={true}
-            size={34}
+            size={36}
           />
         </View>     
         <View style={{alignSelf: 'stretch', flex: 1}}>
-          <IconButtonVLarge
+          <IconButtonV
             pressFunction={openModal3} 
-            title='Add to Calendar' 
+            title={`Add to \n Calendar`}
             icon={'calendar-alt'} 
             color='firebrick' 
             bgcolor='rgba(178,34,34,0.05)'
             border={true}
-            size={34}
+            size={35}
           />
         </View>
       </View>
-    </View>
+    </ModalBox>
   </>
 
   const modal3Content = 
   <>
-    <View style={styles.modalContainer}>
+    <ModalBox>
       <View style={[globalStyles.formRow]}>
         <Text style={styles.textCenterBlack}>Add Project to Calendar</Text>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}> 
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
-          <IconButtonVLarge
+          <IconButtonV
             pressFunction={() => Linking.openURL(getCalendarLink)} 
             title='Google Calendar'
             icon={'google'} 
@@ -168,7 +169,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         </View>
         {Platform.OS === "ios" ?
           <View style={{alignSelf: 'stretch', flex: 1}}>
-            <IconButtonVLarge
+            <IconButtonV
               pressFunction={() => Linking.openURL('https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20240109T231500Z%2F20240109T234500Z')} 
               title='ICS'
               icon={'calendar-alt'} 
@@ -182,7 +183,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           ''
         }  
       </View>
-    </View>
+    </ModalBox>
   </>
 
   // Assemble data for Email/Text/Calendar links
@@ -271,7 +272,7 @@ Tasks: ${project.tasks}
       />
 
       {/* Modal 1 (Navigate) */}
-      <ModalCenterBG
+      <ModalBG
         modalVisible={modal1Visible}
         modalOnRequestClose={() => setModal1Visible(false)}
         screenWidth={width}
@@ -280,7 +281,7 @@ Tasks: ${project.tasks}
       /> 
 
       {/* Modal 2 (Share Project) */}
-      <ModalCenterBG
+      <ModalBG
         modalVisible={modal2Visible}
         modalOnRequestClose={() => setModal2Visible(false)}
         screenWidth={width}
@@ -289,7 +290,7 @@ Tasks: ${project.tasks}
       /> 
 
       {/* Modal 3 (Calendar) */}
-      <ModalCenterBG
+      <ModalBG
         modalVisible={modal3Visible}
         modalOnRequestClose={() => setModal3Visible(false)}
         screenWidth={width}
@@ -355,13 +356,6 @@ const styles = StyleSheet.create({
     marginTop: -10
   },
 
-  // Modals
-  modalContainer: {
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    width: '100%',
-    alignSelf: 'stretch',
-  },
 })
 
 export default ProjectDetailsScreen

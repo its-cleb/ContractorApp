@@ -12,7 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
   const [modalVisible, setModalVisible] = useState(closedModals)
 
-  <ModalCenterBG
+  <ModalBG
     modalVisible={modal1}
     modalOnRequestClose={}
     screenWidth={}
@@ -21,19 +21,20 @@ import { MaterialIcons } from '@expo/vector-icons'
   /> 
 */}
 
-function ModalCenterBG(props) {
+function ModalBG(props) {
   return (
     <View style={[styles.componentContainer, {zIndex: props.modalVisible ? 10 : 0 }]}>
+      
       <View style={props.modalVisible ? styles.modalBG : ''}></View>
 
-      <View style={styles.modalBox}>
+      <View style={styles.modal}>
         <Modal 
           animationType='slide'
           transparent={true} 
           visible={props.modalVisible}
           onRequestClose={() => props.modalOnRequestClose}
         >
-          <View style={styles.modalBox}>
+          <View style={styles.modalContainer}>
             <View style={[styles.modalContent, { width: props.screenWidth-40 }]}>
 
               {/* Close Button */}
@@ -55,7 +56,7 @@ function ModalCenterBG(props) {
 
 function ModalBox(props) {
   return (
-    <View style={styles.modalContainer}>
+    <View style={styles.modalBox}>
       {props.children}
     </View>
   )
@@ -74,7 +75,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: 100
   },
-  modalBox: {
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -83,21 +89,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20,
-    padding: 5,
-    paddingBottom: 20,
+    padding: 10,
     borderRadius: 5,
   },
   closeButton: {
     alignSelf: 'flex-end',
-    margin: 5
+    marginBottom: -10,
   },
-  modalContainer: {
+  modalBox: {
+    flexDirection: 'column',
     alignItems: 'center',
-    paddingHorizontal: 10,
     width: '100%',
     alignSelf: 'stretch',
   },
 })
 
-export { ModalCenterBG, ModalBox } 
+export { ModalBG, ModalBox } 

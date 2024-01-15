@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import IconButtonHSmall from '../components/IconButtonHSmall'
-import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
+import { ModalBG, ModalBox } from '../components/Modal'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
 import { Row, Column, Caption, Field } from '../components/Form'
@@ -285,7 +285,7 @@ const ProposalScreen = ({ route, navigation }) => {
         />
 
         {/* --- Modal 1 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal1}
           modalOnRequestClose={closeModal}
           screenWidth={width}
@@ -294,7 +294,7 @@ const ProposalScreen = ({ route, navigation }) => {
         /> 
 
         {/* --- Modal 2 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal2}
           modalOnRequestClose={closeModal}
           screenWidth={width}
@@ -303,7 +303,7 @@ const ProposalScreen = ({ route, navigation }) => {
         /> 
 
         {/* --- Modal 3 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal3}
           modalOnRequestClose={closeModal}
           screenWidth={width}
@@ -312,7 +312,7 @@ const ProposalScreen = ({ route, navigation }) => {
         /> 
 
         {/* --- Modal 4 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal4}
           modalOnRequestClose={closeModal}
           screenWidth={width}

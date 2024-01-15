@@ -4,7 +4,7 @@ import BottomTab3 from '../components/BottomTab3'
 import DatePicker from '../components/DatePicker'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import StackHeader from '../components/StackHeader'
-import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
+import { ModalBG, ModalBox } from '../components/Modal'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { Context as ProjectContext } from '../context/ProjectContext'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
@@ -351,7 +351,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
       /> 
 
       {/* Modal 1 (Employee List) */}
-      <ModalCenterBG
+      <ModalBG
         modalVisible={modalVisible.modal1}
         modalOnRequestClose={closeModal}
         screenWidth={width}
@@ -360,7 +360,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
       /> 
 
       {/* Modal 2 (Task List) */}
-      <ModalCenterBG
+      <ModalBG
         modalVisible={modalVisible.modal2}
         modalOnRequestClose={closeModal}
         screenWidth={width}
@@ -369,7 +369,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
       /> 
 
       {/* Modal 3 (Task List) */}
-      <ModalCenterBG
+      <ModalBG
         modalVisible={modalVisible.modal3}
         modalOnRequestClose={closeModal}
         screenWidth={width}

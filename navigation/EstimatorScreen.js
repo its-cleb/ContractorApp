@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Switch, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
 import BottomTab3 from '../components/BottomTab3'
-import { ModalCenterBG, ModalBox } from '../components/ModalCenterBG'
+import { ModalBG, ModalBox } from '../components/Modal'
 import DrawerHeader from '../components/DrawerHeader'
 import IconButtonHSmall from '../components/IconButtonHSmall'
+import { IconButtonH } from '../components/Button'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Row, Column, Caption, Field } from '../components/Form'
 import * as Linking from 'expo-linking'
@@ -106,7 +107,7 @@ const EstimatorScreen = () => {
   // --- Modal 1 (Select Cost Type) ---
   const modal1Content =
   <>
-    <View style={styles.contentBox}>
+    <ModalBox>
       <View style={styles.costModalButtonsBox}>
         <Text style={styles.modalHeading}>Add Cost</Text>
         <IconButtonHSmall pressFunction={() => openModal2('Materials', false)} title="Materials" icon="box" bgcolor="darkred" textcolor="white"/> 
@@ -115,7 +116,7 @@ const EstimatorScreen = () => {
         <IconButtonHSmall pressFunction={() => openModal2('Travel', false)} title="Travel" icon="plane" bgcolor="teal" textcolor="white"/>
         <IconButtonHSmall pressFunction={() => openModal2('Misc', false)} title="Misc" icon="plus" bgcolor="slategray" textcolor="white"/>
       </View>
-    </View>
+    </ModalBox>
   </>
 
   // --- Modal 2 (Add/Edit Line) ---
@@ -277,7 +278,7 @@ const EstimatorScreen = () => {
         /> 
 
         {/* --- Modal 1 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal1}
           modalOnRequestClose={closeModal}
           screenWidth={width}
@@ -286,7 +287,7 @@ const EstimatorScreen = () => {
         />
 
         {/* --- Modal 2 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal2}
           modalOnRequestClose={closeModal}
           screenWidth={width}
@@ -295,7 +296,7 @@ const EstimatorScreen = () => {
         /> 
 
         {/* --- Modal 3 --- */}
-        <ModalCenterBG
+        <ModalBG
           modalVisible={modalVisible.modal3}
           modalOnRequestClose={closeModal}
           screenWidth={width}

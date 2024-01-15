@@ -60,38 +60,38 @@ export const globalStyles = StyleSheet.create({
   },
 
   // Form Styling
-  // formRow: {
-  //   flexDirection: 'row',
-  //   gap: 10,
-  //   paddingBottom: 8
-  // },
-  // formColumn: {
-  // },
-  // formFieldCaption: {
-  //   alignContent: 'flex-start',
-  //   marginBottom: 1,
-  //   fontWeight: 'bold'
-  // },
-  // formFieldInput: {
-  //   borderRadius: 3,
-  //   borderStyle: 'solid',
-  //   borderWidth: 1,
-  //   borderColor: '#999999',
-  //   backgroundColor: '#eeeeee',
-  //   paddingVertical: Platform.OS === 'ios' ? 10 : 6,
-  //   paddingHorizontal: 12,
-  //   color: 'black'
-  // },
-  // formFieldInputMultiline: {
-  //   borderRadius: 3,
-  //   borderStyle: 'solid',
-  //   borderWidth: 1,
-  //   borderColor: '#999999',
-  //   backgroundColor: '#eeeeee',
-  //   paddingTop: Platform.OS === 'ios' ? 10 : 16,
-  //   paddingHorizontal: 12,
-  //   minHeight: 80,
-  //   textAlignVertical: 'top'
-  // },
+  formRow: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingBottom: 8
+  },
+  formColumn: {
+  },
+  formFieldCaption: {
+    alignContent: 'flex-start',
+    marginBottom: 1,
+    fontWeight: 'bold'
+  },
+  formFieldInput: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#999999',
+    backgroundColor: '#eeeeee',
+    paddingVertical: Platform.OS === 'ios' ? 10 : 6,
+    paddingHorizontal: 12,
+    color: 'black'
+  },
+  formFieldInputMultiline: {
+    borderRadius: 3,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#999999',
+    backgroundColor: '#eeeeee',
+    paddingTop: Platform.OS === 'ios' ? 10 : 16,
+    paddingHorizontal: 12,
+    minHeight: 80,
+    textAlignVertical: 'top'
+  },
 
 })
