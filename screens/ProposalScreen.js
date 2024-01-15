@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, Text, TextInput, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
+import { View, Text, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import ModalCenterBG from '../components/ModalCenterBG'
 import BottomTab3 from '../components/BottomTab3'

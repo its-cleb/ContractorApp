@@ -5,7 +5,7 @@ function Form(props) {
   let hasStyles = Boolean(props.addStyles === undefined) ? false : true
 
   return (
-    <Pressable onPress={() => Keyboard.dismiss()} style={{flex: 1}}>
+    <Pressable onPress={() => Keyboard.dismiss()} style={{flex: 1, zIndex: 1}}>
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={[styles.form, hasStyles ? props.addStyles : '']}>
         {props.children}
       </KeyboardAvoidingView>
@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 20,
     flex: 1,
-    zIndex: 1
   },
   row: {
     flexDirection: 'row',

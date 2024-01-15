@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { View, Keyboard, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
-import { globalStyles } from '../styles/globalstyles'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import StackHeader from '../components/StackHeader'
-import { Row, Column, Caption, Field } from '../components/Form'
+import { Form, Row, Column, Caption, Field } from '../components/Form'
 
 const EmployeeFormScreen = ({ route, navigation }) => {
 
@@ -51,10 +50,6 @@ const EmployeeFormScreen = ({ route, navigation }) => {
     navigation.pop()
   }
 
-  const keyboardDismiss = () => {
-    Keyboard.dismiss()
-  }
-
   // Change buttons based on page
   let controlButtons =
   isAdd ?
@@ -71,80 +66,67 @@ const EmployeeFormScreen = ({ route, navigation }) => {
     <>
       <StackHeader title={isAdd ? 'Add Employee' : 'Edit Employee'} navFunction={() => navigation.pop()}/>
 
-      <TouchableWithoutFeedback onPress={keyboardDismiss} style={globalStyles.pressableBox}>
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
+      <Form>
+        <Row>
+          <Column flex={3}>
+            <Caption>Employee Name</Caption>
+            <Field value={form.employeeName} press={(text) => setFormState('employeeName', text)}/>
+          </Column>
 
-          <Row>
-            <Column flex={3}>
-              <Caption>Employee Name</Caption>
-              <Field value={form.employeeName} press={(text) => setFormState('employeeName', text)}/>
-            </Column>
+          <Column flex={1}>
+            <Caption>Wage</Caption>
+            <Field value={form.wage} numeric={true} press={(text) => setFormState('wage', text)}/>
+          </Column>
+        </Row>
 
-            <Column flex={1}>
-              <Caption>Wage</Caption>
-              <Field value={form.wage} numeric={true} press={(text) => setFormState('wage', text)}/>
-            </Column>
-          </Row>
+        <Row>
+          <Column flex={2}>
+            <Caption>Phone</Caption>
+            <Field value={form.phone} numeric={true} press={(text) => setFormState('phone', text)}/>
+          </Column>
 
-          <Row>
-            <Column flex={2}>
-              <Caption>Phone</Caption>
-              <Field value={form.phone} numeric={true} press={(text) => setFormState('phone', text)}/>
-            </Column>
+          <Column flex={3}>
+            <Caption>Email</Caption>
+            <Field value={form.email} press={(text) => setFormState('email', text)}/>
+          </Column>
+        </Row>
 
-            <Column flex={3}>
-              <Caption>Email</Caption>
-              <Field value={form.email} press={(text) => setFormState('email', text)}/>
-            </Column>
-          </Row>
+        <Row>
+          <Column flex={2}>
+            <Caption>Address</Caption>
+            <Field value={form.address} press={(text) => setFormState('address', text)}/>
+          </Column>
 
-          <Row>
-            <Column flex={2}>
-              <Caption>Address</Caption>
-              <Field value={form.address} press={(text) => setFormState('address', text)}/>
-            </Column>
+          <Column flex={1}>
+            <Caption>Unit</Caption>
+            <Field value={form.unitNumber} press={(text) => setFormState('unitNumber', text)}/>
+          </Column>
+        </Row>
 
-            <Column flex={1}>
-              <Caption>Unit</Caption>
-              <Field value={form.unitNumber} press={(text) => setFormState('unitNumber', text)}/>
-            </Column>
-          </Row>
+        <Row>
+          <Column flex={1}>
+            <Caption>City</Caption>
+            <Field value={form.city} press={(text) => setFormState('city', text)}/>
+          </Column>
 
-          <Row>
-            <Column flex={1}>
-              <Caption>City</Caption>
-              <Field value={form.city} press={(text) => setFormState('city', text)}/>
-            </Column>
+          <Column flex={1}>
+            <Caption>State</Caption>
+            <Field value={form.usState} press={(text) => setFormState('usState', text)}/>
+          </Column>
 
-            <Column flex={1}>
-              <Caption>State</Caption>
-              <Field value={form.usState} press={(text) => setFormState('usState', text)}/>
-            </Column>
+          <Column flex={1}>
+            <Caption>ZIP</Caption>
+            <Field value={form.zip} press={(text) => setFormState('zip', text)}/>
+          </Column>
+        </Row>
 
-            <Column flex={1}>
-              <Caption>ZIP</Caption>
-              <Field value={form.zip} press={(text) => setFormState('zip', text)}/>
-            </Column>
-          </Row>
-
-          <View style={{ alignSelf: 'stretch', marginHorizontal: -10, paddingTop: 10}}>
-            {controlButtons}
-          </View>    
-       
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+        <View style={{ alignSelf: 'stretch', marginHorizontal: -10, paddingTop: 10}}>
+          {controlButtons}
+        </View>    
+      
+      </Form>
     </>
   ) 
 }
-
-const styles = StyleSheet.create({
-  contentBox: {
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    flex: 1,
-  },
-
-})
 
 export default EmployeeFormScreen

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Modal, View, KeyboardAvoidingView, StyleSheet } from 'react-native'
-import ModalCloseButton from './ModalCloseButton'
+import { Modal, View, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 // --- Component Usage --- 
 {/* 
@@ -35,14 +35,18 @@ const ModalCenterBG = props => {
         >
           <View style={styles.modalBox}>
             <View style={[styles.modalContent, { width: props.screenWidth-40 }]}>
-              <ModalCloseButton pressFunction={props.closeModalButton} />
+
+              {/* Close Button */}
+              <TouchableOpacity onPress={props.closeModalButton} style={styles.closeButton}> 
+                <MaterialIcons name="close" size={30} color="black" />
+              </TouchableOpacity>
+
               <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} >
                 {props.modalContent}
               </KeyboardAvoidingView>
             </View>  
           </View>
         </Modal>
-        
       </View>
 
     </View>
@@ -76,7 +80,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderRadius: 5,
   },
-
+  closeButton: {
+    alignSelf: 'flex-end',
+    margin: 5
+  }
 })
 
 export default ModalCenterBG

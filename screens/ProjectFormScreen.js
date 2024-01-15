@@ -5,7 +5,7 @@ import DatePicker from '../components/DatePicker'
 import ModalCenterBG from '../components/ModalCenterBG'
 import IconButtonHSmall from '../components/IconButtonHSmall'
 import StackHeader from '../components/StackHeader'
-import { Row, Column, Caption, Field } from '../components/Form'
+import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { Context as ProjectContext } from '../context/ProjectContext'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
 
@@ -278,12 +278,11 @@ const ProjectFormScreen = ({ route, navigation }) => {
         <Text style={styles.validationText}>Project must have Title and Date to be saved</Text>
       </View>
 
-      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -500} style={styles.contentBox}>
-
+      <Form>
         <Row marginB={5}>
           <Column flex={5}>
             <Caption>Project Title</Caption>
-            <Field value={form.title} pressIn={toggleDatePicker} press={(text) => setFormState('title', text)}/>
+            <Field value={form.title} press={(text) => setFormState('title', text)}/>
           </Column>
           <Column flex={2}>
             <Pressable onPress={toggleDatePicker}>
@@ -335,7 +334,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
           </Column>
         </Row>
 
-      </KeyboardAvoidingView>
+      </Form>
 
       <DatePicker getDate={getDate} data={form.date} show={showDatePicker} />
 
@@ -382,13 +381,6 @@ const ProjectFormScreen = ({ route, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  contentBox: {
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    flex: 1,
-    zIndex: 1
-  },
   validationBox: {
     padding: 5,
     backgroundColor: 'rgba(255,34,34,0.2)'

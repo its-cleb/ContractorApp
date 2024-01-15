@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, Pressable, Platform, Keyboard, KeyboardAvoidingView, StyleSheet } from 'react-native'
-import { globalStyles } from '../styles/globalstyles'
+import { View, Pressable, Keyboard } from 'react-native'
 import { Context } from '../context/ClientContext'
 import StackHeader from '../components/StackHeader'
 import IconButtonHSmall from '../components/IconButtonHSmall'

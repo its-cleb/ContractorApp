@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, FlatList, useWindowDimensions, StyleSheet } from 'react-native'
 import { Context as ProjectContext} from '../context/ProjectContext'
 import { Context as ClientContext} from '../context/ClientContext'
