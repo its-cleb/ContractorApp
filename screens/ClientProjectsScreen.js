@@ -1,8 +1,8 @@
 import { React } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import StackHeader from '../components/StackHeader'
 import ProjectsFlatlist from '../components/flatlists/ProjectsFlatlist'
-import IconButtonHContent from '../components/IconButtonHContent'
+import { IconButtonH } from '../components/Button'
 
 
 const ClientProjectsScreen = ({ route, navigation }) => {
@@ -22,13 +22,14 @@ const ClientProjectsScreen = ({ route, navigation }) => {
           client
         />
  
-        <View style={styles.addProjectButton}>
-          <IconButtonHContent 
+        <View style={styles.addButton}>
+          <IconButtonH
             pressFunction={() => navigation.navigate('ClientProjectForm', { isAdd: true, clientID, payload: ''})} 
             title="Add New Project" 
             icon="plus" 
             bgcolor="#00000000" 
             textcolor="steelblue"
+            isBig
           />
         </View>
       </View>
@@ -48,13 +49,13 @@ const styles = StyleSheet.create({
     width: '70%',
     textAlign: 'center'
   },
-  addProjectButton: {
+  addButton: {
     backgroundColor: '#fafafa',
     position: 'absolute',
     alignItems: 'center',
     width: '100%',
     bottom: 0,
-    paddingBottom: 10,
+    paddingBottom: 15,
   }
 })
 

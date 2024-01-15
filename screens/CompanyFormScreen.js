@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { View, Keyboard } from 'react-native'
-import IconButtonHSmall from '../components/IconButtonHSmall'
+import { View } from 'react-native'
 import StackHeader from '../components/StackHeader'
 import { Context } from '../context/CompanyContext'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
+import { IconButtonH } from '../components/Button'
 
 const CompanyFormScreen = ({ navigation }) => {
 
@@ -77,8 +77,8 @@ const CompanyFormScreen = ({ navigation }) => {
         </Row>
 
         <View style={{ alignSelf: 'stretch', marginHorizontal: -10}}>
-          <IconButtonHSmall pressFunction={saveCompanyBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-          <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+          <IconButtonH pressFunction={saveCompanyBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' marginH={10} />
+          <IconButtonH pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' marginH={10} />
         </View>    
 
       </Form>

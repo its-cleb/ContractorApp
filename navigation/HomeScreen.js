@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import IconButtonNavigate from '../components/IconButtonNavigate'
+import { IconButtonV } from '../components/Button'
 import DrawerHeader from '../components/DrawerHeader'
 import ProjectsFlatlist from '../components/flatlists/ProjectsFlatlist'
 import { globalStyles } from '../styles/globalstyles'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
   return (
     <>
@@ -20,13 +20,46 @@ const HomeScreen = () => {
 
       <View style={styles.flexBox}>
         <View style={styles.flexItem}>
-          <IconButtonNavigate navpage="Estimator" title="Estimator" icon="calculator" bgcolor="firebrick" /> 
+          <IconButtonV
+            pressFunction={() => navigation.navigate('Estimator')} 
+            title='Estimator'
+            icon={'calculator'} 
+            color='white' 
+            bgcolor='firebrick'
+            border={true}
+            size={24}
+            padV={10}
+            textSize={18}
+            addStyles={{minHeight: 90}}
+          />
         </View>
         <View style={styles.flexItem}>
-          <IconButtonNavigate navpage="ClientsStack" title="Clients" icon="tools" bgcolor="steelblue" /> 
+          <IconButtonV
+            pressFunction={() => navigation.navigate('ClientsStack')} 
+            title='Clients'
+            icon={'tools'} 
+            color='white' 
+            bgcolor='steelblue'
+            border={true}
+            size={28}
+            padV={10}
+            textSize={18}
+            addStyles={{minHeight: 90}}
+          />
         </View>
-        <View style={styles.flexItem}>
-         <IconButtonNavigate navpage="Employees" title="Employees" icon="users" bgcolor="chocolate" /> 
+        <View style={styles.flexItem}>          
+          <IconButtonV
+            pressFunction={() => navigation.navigate('Employees')} 
+            title='Employees'
+            icon={'users'} 
+            color='white' 
+            bgcolor='chocolate'
+            border={true}
+            size={28}
+            padV={10}
+            textSize={18}
+            addStyles={{minHeight: 90}}
+          />
         </View>
      </View>
     </>
@@ -35,12 +68,13 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   projectsContainer: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     marginTop: -15
   },
   flexBox: {
     flexDirection: 'row',
-    padding: 5,
+    padding: 10,
+    gap: 10
   },
   flexItem: {
     flex: 1

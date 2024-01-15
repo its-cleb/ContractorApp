@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, useWindowDimensions, TouchableOpacity, FlatList } from 'react-native'
-import IconButtonHSmall from '../components/IconButtonHSmall'
+import { IconButtonH, IconButtonV } from '../components/Button'
 import { ModalBG, ModalBox, ModalRow } from '../components/Modal'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
 import { Row, Column, Caption, Field } from '../components/Form'
-
 import { Context } from '../context/ProposalContext'
 
 // Scoped variables for line items
@@ -146,8 +145,8 @@ const ProposalScreen = ({ route, navigation }) => {
   const modal1Content =
     <ModalBox>
       <ModalRow padT={10}>
-        <IconButtonHSmall pressFunction={() => openModal2(true)} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/> 
-        <IconButtonHSmall pressFunction={() => openModal2(false)} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
+        <IconButtonH pressFunction={() => openModal2(true)} title="Add Phase" icon="plus" bgcolor="steelblue" textcolor="white"/> 
+        <IconButtonH pressFunction={() => openModal2(false)} title="Add Line Item" icon="plus" bgcolor="chocolate" textcolor="white"/>
       </ModalRow>
     </ModalBox>
 
@@ -174,7 +173,7 @@ const ProposalScreen = ({ route, navigation }) => {
         </Row>        
       </ModalBox>
       
-      <IconButtonHSmall 
+      <IconButtonH 
         pressFunction={addLine} 
         title={modal2isPhase ? 'Add Phase' : 'Add Line Item'} 
         icon={modal2isPhase ? 'indent' : 'list'} 
@@ -206,41 +205,63 @@ const ProposalScreen = ({ route, navigation }) => {
           </Column>
         </Row>
       </ModalBox>
-      <IconButtonHSmall 
-        pressFunction={() => editLine(modal3isPhase ? true : false)} 
-        title='Save Edit' 
-        icon='edit' 
-        textcolor='white' 
-        bgcolor='steelblue' 
-      />
-      <IconButtonHSmall 
-        pressFunction={moveToTopButton} 
-        title='Move to Top' 
-        icon='level-up-alt' 
-        textcolor='white' 
-        bgcolor='chocolate' 
-      />
-      <IconButtonHSmall 
-        pressFunction={deleteLineItem} 
-        title='Delete Line Item' 
-        icon='backspace' 
-        textcolor='white' 
-        bgcolor='maroon' 
-      />
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-around', gap: 10}}> 
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonV
+            pressFunction={() => editLine(modal3isPhase ? true : false)} 
+            title={`Save\nEdit`}
+            icon={'save'} 
+            color='green' 
+            bgcolor='rgba(0,128,0,0.05)'
+            border={true}
+            size={24}
+            padV={10}
+            addStyles={{minHeight: 90}}
+          />
+        </View>
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonV
+            pressFunction={moveToTopButton} 
+            title={`Move\nto Top`}
+            icon={'level-up-alt'} 
+            color='navy' 
+            bgcolor='rgba(0,0,128,0.05)'
+            border={true}
+            size={24}
+            padV={10}
+            addStyles={{minHeight: 90}}
+          />
+        </View>     
+        <View style={{alignSelf: 'stretch', flex: 1}}>
+          <IconButtonV
+            pressFunction={deleteLineItem} 
+            title={`Delete\nLine`}
+            icon={'backspace'} 
+            color='firebrick' 
+            bgcolor='rgba(178,34,34,0.05)'
+            border={true}
+            size={24}
+            padV={10}
+            addStyles={{minHeight: 90}}
+          />
+        </View>
+      </View>
     </>
 
   // --- Modal 4 (Save Proposal) ---
   const modal4Content = 
     <>
-      <View style={styles.contentBox}>
+      <ModalBox>
         <Row>
-          <Column flex={1}>
+          <Column flex={1} addStyles={{paddingTop: 10}}>
             <Caption>{isAdd ? 'Add Project Description' : 'Edit Project Description'}</Caption>
             <Field value={form.description} press={(text) => setFormState({description: text})}/>
           </Column>
         </Row>
-      </View>
-      <IconButtonHSmall pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
+      </ModalBox>
+
+      <IconButtonH pressFunction={saveProposal} title='Save Proposal' icon='save' textcolor='white' bgcolor='steelblue' />
     </>
 
   // ---------- | Main Return | ----------

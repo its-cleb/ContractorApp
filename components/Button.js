@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, KeyboardAvoidingView, StyleSheet } from 'react-native'
-import { MaterialIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 
   //  <IconButtonV
   //    pressFunction={} 
@@ -14,7 +14,7 @@ import { MaterialIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
   //    padH={}
   //    marginV={}
   //    marginH={}
-  //    marginB=
+  //    marginB={}
   //  />
 
 function IconButtonV(props) {
@@ -31,6 +31,8 @@ function IconButtonV(props) {
     return iconType
   }
 
+  let hasStyles = Boolean(props.addStyles !== undefined)
+  let hasTextSize = Boolean(props.textSize !== undefined)
   let hasPadV = Boolean(props.padV !== undefined)
   let hasPadH = Boolean(props.padH !== undefined)
   let hasMarginV = Boolean(props.marginV !== undefined)
@@ -41,7 +43,7 @@ function IconButtonV(props) {
   return (
     <TouchableOpacity 
       onPress={props.pressFunction}
-      style={[styles.touchableOpacity, {
+      style={[styles.touchableOpacity, hasStyles ? props.addStyles : '', {
         backgroundColor: `${props.bgcolor}`, 
         borderColor: `${props.color}`, 
         borderWidth: props.border ? 2 : 0,
@@ -53,7 +55,7 @@ function IconButtonV(props) {
         marginBottom: hasMarginB ? props.marginB : 0
       }]}> 
       {getIcon()}
-      <Text style={[styles.title, {color: `${props.color}`}]}>{props.title}</Text>
+      <Text style={[styles.title, {fontSize: hasTextSize ? props.textSize : 15, color: `${props.color}`}]}>{props.title}</Text>
     </TouchableOpacity>
   )
 }
@@ -70,16 +72,16 @@ function IconButtonV(props) {
   //    padH={}
   //    marginV={}
   //    marginH={}
-  //    marginB=
+  //    marginB={}
   //  />
 function IconButtonH(props) {
-  
+  let isBig = Boolean(props.isBig !== undefined)
   let hasPadV = Boolean(props.padV !== undefined)
   let hasPadH = Boolean(props.padH !== undefined)
-  let hasMarginV = Boolean(props.MarginV !== undefined)
-  let hasMarginH = Boolean(props.MarginH !== undefined)
-  let hasMarginT = Boolean(props.MarginT !== undefined)
-  let hasMarginB = Boolean(props.MarginB !== undefined)
+  let hasMarginV = Boolean(props.marginV !== undefined)
+  let hasMarginH = Boolean(props.marginH !== undefined)
+  let hasMarginT = Boolean(props.marginT !== undefined)
+  let hasMarginB = Boolean(props.marginB !== undefined)
 
   return (
     <TouchableOpacity 
@@ -90,13 +92,22 @@ function IconButtonH(props) {
         alignSelf: 'stretch',
         paddingVertical: hasPadV ? props.padV : 10,
         paddingHorizontal: hasPadH ? props.padH : 5,
+        marginLeft: isBig ? -15 : undefined,
         marginVertical: hasMarginV ? props.marginV : 10,
         marginHorizontal: hasMarginH ? props.marginH : 0,
         marginTop: hasMarginT ? props.marginT : 10,
-        marginBottom: hasMarginB ? props.marginB : 0
-      }]}> 
-      <FontAwesome5 style={styles.buttonIcon} name={props.icon} size={16} color={props.textcolor} />
-      <Text style={{ color: `${props.textcolor}`, fontSize: 16, marginLeft: 10}}>{props.title}</Text>
+        marginBottom: hasMarginB ? props.marginB : 0,
+        
+    }]}> 
+      <FontAwesome5 style={styles.buttonIcon} name={props.icon} size={isBig ? 24: 16} color={props.textcolor} />
+      <Text style={{ 
+        color: `${props.textcolor}`, 
+        fontSize: isBig ? 24 : 16, 
+        fontWeight: isBig ? 700: 400,
+        marginLeft: 10}}
+      >
+        {props.title}
+      </Text>
     </TouchableOpacity>
   )
 }

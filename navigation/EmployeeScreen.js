@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import DrawerHeader from '../components/DrawerHeader'
 import EmployeesFlatlist from '../components/flatlists/EmployeeFlatlist'
-import IconButtonHContent from '../components/IconButtonHContent'
+import { IconButtonH } from '../components/Button'
 
 const EmployeeScreen = ({ navigation }) => {
 
@@ -12,8 +12,16 @@ const EmployeeScreen = ({ navigation }) => {
 
       <EmployeesFlatlist />
 
-      <View style={styles.addEmployeeButton}>
-        <IconButtonHContent pressFunction={() => navigation.navigate('EmployeeForm', {isAdd:true, payload: ''})} title="Add New Employee" icon="plus" bgcolor="#00000000" textcolor="steelblue"/>
+      <View style={styles.addButton}>
+
+        <IconButtonH
+          pressFunction={() => navigation.navigate('EmployeeForm', {isAdd:true, payload: ''})} 
+          title="Add New Employee" 
+          icon="plus" 
+          bgcolor="#00000000" 
+          textcolor="steelblue"
+          isBig
+        />
       </View>
     </>
   )
@@ -23,13 +31,13 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1
   },
-  addEmployeeButton: {
+  addButton: {
     backgroundColor: '#fafafa',
     position: 'absolute',
     alignItems: 'center',
     width: '100%',
     bottom: 0,
-    paddingBottom: 10,
+    paddingBottom: 15,
   }
 }) 
 

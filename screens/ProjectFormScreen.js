@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Text, Pressable, Platform, useWindowDimensions, Keyboard, KeyboardAvoidingView, TouchableOpacity, Switch, FlatList, StyleSheet } from 'react-native'
+import { View, Text, Pressable, Platform, useWindowDimensions, Keyboard, TouchableOpacity, Switch, FlatList, StyleSheet } from 'react-native'
 import BottomTab3 from '../components/BottomTab3'
 import DatePicker from '../components/DatePicker'
-import IconButtonHSmall from '../components/IconButtonHSmall'
 import StackHeader from '../components/StackHeader'
+import { IconButtonH } from '../components/Button'
 import { ModalBG, ModalBox } from '../components/Modal'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { Context as ProjectContext } from '../context/ProjectContext'
@@ -193,37 +193,37 @@ const ProjectFormScreen = ({ route, navigation }) => {
 
   // --- Modal 1 Content (Add Employee)
   const modal1content = 
-    <>
-      <ModalBox>
-        <Row>
-          <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Available Employees</Text>
-        </Row>
-        <Row marginB={-15}> 
-          {!!unassignedEmployeeIDs.length > 0 ?
-            <FlatList 
-              data={unassignedEmployeeIDs} 
-              renderItem={({ item }) => getUnassignedEmployees(item)} 
-            />
-            :
-            <View style={[styles.blankRow, {flex: 1}]}><Text style={styles.textCenter}>None</Text></View>
-          }
-        </Row>
-      </ModalBox>
-    </>
+  <>
+    <ModalBox>
+      <Row>
+        <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5}]}>Available Employees</Text>
+      </Row>
+      <View style={{flexDirection: 'row', gap: 10}}> 
+        {!!unassignedEmployeeIDs.length > 0 ?
+          <FlatList 
+            data={unassignedEmployeeIDs} 
+            renderItem={({ item }) => getUnassignedEmployees(item)} 
+          />
+          :
+          <View style={[styles.blankRow, {flex: 1}]}><Text style={styles.textCenter}>None</Text></View>
+        }
+      </View>
+    </ModalBox>
+  </>
 
   // --- Modal 2 Content (Task)
   const modal2content =
   <>
     <ModalBox>
       <Row>
-        <Column flex={5} addStyles={{ paddingHorizontal: 10}}>
+        <Column flex={5} addStyles={{ paddingTop: 10}}>
           <Caption>{isEdit ? 'Edit Task' : 'Add Task'}</Caption>
           <Field value={form.task} press={(text) => setFormState('task', text)}/>
         </Column>
       </Row>
 
       <View style={{alignSelf: 'stretch' }}>
-        <IconButtonHSmall 
+        <IconButtonH
           pressFunction={isEdit ? editTask : addTask} 
           title={isEdit ? 'Save Edit' : 'Add Task'} 
           icon={'list'} 
@@ -234,7 +234,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
 
       { isEdit ?
         <View style={{alignSelf: 'stretch' }}>
-          <IconButtonHSmall 
+          <IconButtonH 
             pressFunction={deleteTask} 
             title='Delete Task' 
             icon={'backspace'} 
@@ -252,13 +252,13 @@ const ProjectFormScreen = ({ route, navigation }) => {
   <>
     <ModalBox>
       <Row>
-        <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5, marginTop: -10}]}>Selected Employee</Text>
+        <Text style={[styles.textCenterBlack, {fontWeight: 'bold', paddingBottom: 5}]}>Selected Employee</Text>
       </Row>
       <Row addStyles={styles.removeEmployeeRow}>
         <Text style={[styles.textCenterBlack, {paddingBottom: 5}]}>{Boolean(currentEmployee == null) ? '' : currentEmployee.employeeName}</Text>
       </Row>
       <View style={{alignSelf: 'stretch' }}>
-        <IconButtonHSmall 
+        <IconButtonH 
           pressFunction={removeEmployee} 
           title='Remove Employee' 
           icon={'backspace'} 
@@ -266,7 +266,6 @@ const ProjectFormScreen = ({ route, navigation }) => {
           bgcolor='maroon' 
         />
       </View>
-
     </ModalBox>
   </>
 
@@ -427,28 +426,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addEmployeeRow: {
-    gap: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'steelblue',
-    marginVertical: 3,
+    marginTop: 10,
     backgroundColor: 'powderblue',
     padding: 10,
-    width: '100%',
-    flex: 1,
-    alignSelf: 'stretch'
+    margin: 0
   },
   removeEmployeeRow: {
-    paddingBottom: 8,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'gray',
     borderStyle: 'dashed',
-    marginVertical: 3,
     backgroundColor: '#eeeeee',
-    marginBottom: 10,
+    marginVertical: 5,
     padding: 10,
-    marginHorizontal: 10
   },
   textLeft: {
     flex: 1,

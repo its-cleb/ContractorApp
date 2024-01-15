@@ -105,12 +105,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
   },
   closeButton: {
     alignSelf: 'flex-end',
     marginBottom: -10,
+    marginTop: -10,
+    marginRight: -10
   },
   modalBox: {
     flexDirection: 'column',

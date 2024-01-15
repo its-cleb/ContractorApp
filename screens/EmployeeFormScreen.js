@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { View } from 'react-native'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
-import IconButtonHSmall from '../components/IconButtonHSmall'
+import { IconButtonH } from '../components/Button'
 import StackHeader from '../components/StackHeader'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 
@@ -53,12 +53,12 @@ const EmployeeFormScreen = ({ route, navigation }) => {
   // Change buttons based on page
   let controlButtons =
   isAdd ?
-    controlButtons = <IconButtonHSmall pressFunction={addEmployeeBackPage} title='Add Employee' icon='plus' textcolor='white' bgcolor='steelblue' />
+    controlButtons = <IconButtonH pressFunction={addEmployeeBackPage} title='Add Employee' icon='plus' textcolor='white' bgcolor='steelblue' marginH={10} />
     :
     controlButtons = 
     <>
-      <IconButtonHSmall pressFunction={saveEmployeeBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' />
-      <IconButtonHSmall pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' />
+      <IconButtonH pressFunction={saveEmployeeBackPage} title='Save Changes' icon='save' textcolor='white' bgcolor='steelblue' marginH={10} />
+      <IconButtonH pressFunction={() => navigation.pop()} title='Discard Changes' icon='undo' textcolor='white' bgcolor='maroon' marginH={10} />
     </>
 
 

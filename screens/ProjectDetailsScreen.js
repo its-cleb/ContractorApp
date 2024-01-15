@@ -68,7 +68,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.textCenterBlack}>Navigate to Project Location</Text>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}> 
+      <View style={{flexDirection: 'row', justifyContent: 'space-around', gap: 10}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonV
             pressFunction={() => Linking.openURL(`https://www.google.com/maps/search/?api=1&query${encodedAddress}`)} 
@@ -113,35 +113,38 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonV
             pressFunction={() => Linking.openURL(encodeURI(`sms:${employeeNumbers}${Platform.OS === "ios" ? "&" : "?"}body=${message}`))} 
-            title={`Text \n Workers`}
+            title={`Text\nWorkers`}
             icon={'sms'} 
             color='green' 
             bgcolor='rgba(0,128,0,0.05)'
             border={true}
             size={34}
+            addStyles={{minHeight: 110}}
           />
         </View>
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonV
             pressFunction={() => Linking.openURL(encodeURI(`mailto:${employeeEmails}?cc=${Platform.OS === "ios" ? "&" : "?"}subject=Project&body=${message}`))} 
-            title={`Email \n Workers`}
+            title={`Email\nWorkers`}
             iconType='FontAwesome' 
             icon={'envelope'} 
             color='navy' 
             bgcolor='rgba(0,0,128,0.05)'
             border={true}
             size={36}
+            addStyles={{minHeight: 110}}
           />
         </View>     
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonV
             pressFunction={openModal3} 
-            title={`Add to \n Calendar`}
+            title={`Add to\nCalendar`}
             icon={'calendar-alt'} 
             color='firebrick' 
             bgcolor='rgba(178,34,34,0.05)'
             border={true}
             size={35}
+            addStyles={{minHeight: 110}}
           />
         </View>
       </View>
@@ -155,7 +158,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.textCenterBlack}>Add Project to Calendar</Text>
       </View>
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}> 
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', gap: 10}}> 
         <View style={{alignSelf: 'stretch', flex: 1}}>
           <IconButtonV
             pressFunction={() => Linking.openURL(getCalendarLink)} 

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Context } from '../context/EmployeeContext'
 import { Context as ProjectContext } from '../context/ProjectContext'
 import DeleteButton from '../components/DeleteButton'
-import IconButtonHSmall from '../components/IconButtonHSmall'
+import { IconButtonH } from '../components/Button'
 
 const EmployeeDetailsScreen = ({ route, navigation }) => {
 
@@ -50,9 +50,14 @@ const EmployeeDetailsScreen = ({ route, navigation }) => {
         </View>
       </View>
       
-      <View>
-        <IconButtonHSmall pressFunction={() => navigation.navigate('EmployeeForm', {isAdd:false, payload: payload})} title='Edit Employee' icon='edit' textcolor='white' bgcolor='steelblue' />
-      </View>
+      <IconButtonH 
+        pressFunction={() => navigation.navigate('EmployeeForm', {isAdd:false, payload: payload})} 
+        title='Edit Employee' 
+        icon='edit' 
+        textcolor='white'
+        bgcolor='steelblue' 
+        marginH={10}
+      />
       
     </>
   ) 

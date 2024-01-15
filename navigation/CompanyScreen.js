@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Context as CompanyContext } from '../context/CompanyContext'
 import DrawerHeader from '../components/DrawerHeader'
-import IconButtonHContent from '../components/IconButtonHContent'
+import { IconButtonH } from '../components/Button'
 
 const CompanyScreen = ({ navigation }) => {
 
@@ -33,8 +33,15 @@ const CompanyScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.addProjectButton}>
-        <IconButtonHContent pressFunction={() => navigation.navigate('CompanyForm', { isAdd: true, payload: ''})} title="Edit Company" icon="edit" bgcolor="#00000000" textcolor="steelblue"/>
+      <View style={styles.addButton}>
+        <IconButtonH 
+          pressFunction={() => navigation.navigate('CompanyForm', { isAdd: true, payload: ''})} 
+          title="Edit Company" 
+          icon="plus" 
+          bgcolor="#00000000" 
+          textcolor="steelblue"
+          isBig
+        />
       </View>
 
     </>
@@ -100,5 +107,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1
   },
+  addButton: {
+    paddingBottom: 20,
+  }
 })
 export default CompanyScreen
