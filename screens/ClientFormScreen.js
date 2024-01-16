@@ -5,7 +5,8 @@ import StackHeader from '../components/StackHeader'
 import DatePicker from '../components/DatePicker'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { IconButtonH } from '../components/Button'
-
+import useValidateForm from '../hooks/ValidateForm'
+import ValidationBox from '../components/ValidationBox'
 
 const ClientFormScreen = ({ route, navigation }) => {
 
@@ -37,13 +38,28 @@ const ClientFormScreen = ({ route, navigation }) => {
     }))
   }
 
+  // --- Validation Box
+  const [ validationBox, setValidationBox ] = useState(false)
+
   // Control Button functionality
   const saveClientBackPage = () => {
-    isAdd ? 
-      addClient(form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) 
-      : 
-      editClient(client.clientID, form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
-    navigation.pop()
+    formIsValid = useValidateForm([form.clientName])
+
+    switch(formIsValid) {
+      case true:
+        setValidationBox(false)
+        isAdd ? 
+          addClient(form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip ) 
+          : 
+          editClient(client.clientID, form.clientName, form.contactDate, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip )
+        navigation.pop()
+        break
+      case false:
+        setValidationBox(true)
+        break
+      default: 
+        console.log('error')
+    }
   }
   
   // Date Picker
@@ -60,6 +76,8 @@ const ClientFormScreen = ({ route, navigation }) => {
   return (  
     <>
       <StackHeader title={isAdd ? 'Add Client' : 'Edit Client'} navFunction={() => navigation.pop()}/>
+
+      <ValidationBox show={validationBox}>Client Name must be added to be saved</ValidationBox>
 
       <Form>
         <Row>

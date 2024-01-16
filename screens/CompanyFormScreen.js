@@ -4,6 +4,8 @@ import StackHeader from '../components/StackHeader'
 import { Context } from '../context/CompanyContext'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { IconButtonH } from '../components/Button'
+import useValidateForm from '../hooks/ValidateForm'
+import ValidationBox from '../components/ValidationBox'
 
 const CompanyFormScreen = ({ navigation }) => {
 
@@ -17,15 +19,32 @@ const CompanyFormScreen = ({ navigation }) => {
     }))
   }
 
+  // --- Validation Box
+  const [ validationBox, setValidationBox ] = useState(false)
+
   // Control Button functionality
   const saveCompanyBackPage = () => {
-    editCompany(form.companyName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip)
-    navigation.pop()
+    formIsValid = useValidateForm([form.companyName])
+
+    switch(formIsValid) {
+      case true:
+        setValidationBox(false)
+        editCompany(form.companyName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip)
+        navigation.pop()
+        break
+      case false:
+        setValidationBox(true)
+        break
+      default: 
+        console.log('error')
+    }
   }
 
   return (  
     <>
       <StackHeader title='Edit Company' navFunction={() => navigation.pop()}/>
+
+      <ValidationBox show={validationBox}>Company Name must be added to be saved</ValidationBox>
 
       <Form>
         <Row>

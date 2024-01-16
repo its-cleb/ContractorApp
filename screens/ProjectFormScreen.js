@@ -8,6 +8,8 @@ import { ModalBG, ModalBox } from '../components/Modal'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
 import { Context as ProjectContext } from '../context/ProjectContext'
 import { Context as EmployeeContext } from '../context/EmployeeContext'
+import useValidateForm from '../hooks/ValidateForm'
+import ValidationBox from '../components/ValidationBox'
 
 
 const ProjectFormScreen = ({ route, navigation }) => {
@@ -82,23 +84,27 @@ const ProjectFormScreen = ({ route, navigation }) => {
   const [ validationBox, setValidationBox ] = useState(false)
 
   // --- Form Functions
-
-  const validateForm = () => {
-    Boolean(form.title === '' || form.date === '') ?
-      setValidationBox(true)
-      :
-      saveProject()
-  }
-
   const saveProject = () => {
-    isAdd ? 
-      addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status)
-      :
-      editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status) 
-    fromHome ? 
-      navigation.navigate('ProjectDetails', { isAdd: false, projectID: projectSheet.projectID, fromHome: true }) 
-      : 
-      navigation.pop() // Needs to add change for if accessed from homeScreen
+    formIsValid = useValidateForm([form.title, form.date])
+
+    switch(formIsValid) {
+      case true:
+        setValidationBox(false)
+        isAdd ? 
+          addProject(Date.now(), projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status)
+          :
+          editProject(projectSheet.projectID, projectSheet.clientID, projectSheet.proposalID, form.title, projectSheet.employees, projectSheet.tasks, form.date, form.status) 
+        fromHome ? 
+          navigation.navigate('ProjectDetails', { isAdd: false, projectID: projectSheet.projectID, fromHome: true }) 
+          : 
+          navigation.pop() // Needs to add change for if accessed from homeScreen
+        break
+      case false:
+        setValidationBox(true)
+        break
+      default: 
+        console.log('error')
+    }
   }
 
   const addTask = () => {
@@ -273,9 +279,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
     <>
       <StackHeader title={isAdd ? 'Add Project' : 'Edit Project'} navFunction={() => navigation.pop()} />
 
-      <View style={[styles.validationBox, {display: validationBox ? 'flex' : 'none' }]}>
-        <Text style={styles.validationText}>Project must have Title and Date to be saved</Text>
-      </View>
+      <ValidationBox show={validationBox}>Project must have Title and Date to be saved</ValidationBox>
 
       <Form>
         <Row marginB={5}>
@@ -346,7 +350,7 @@ const ProjectFormScreen = ({ route, navigation }) => {
         button2function={() => openTaskModal(false)}
         button3icon='save'
         button3text='Save'
-        button3function={validateForm}
+        button3function={saveProject}
       /> 
 
       {/* Modal 1 (Employee List) */}
@@ -380,14 +384,6 @@ const ProjectFormScreen = ({ route, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  validationBox: {
-    padding: 5,
-    backgroundColor: 'rgba(255,34,34,0.2)'
-  },
-  validationText: {
-    textAlign: 'center',
-    color: 'maroon'
-  },
   statusRow: {
     flexDirection: 'row',
     gap: 10,

@@ -4,6 +4,8 @@ import { Context as EmployeeContext } from '../context/EmployeeContext'
 import { IconButtonH } from '../components/Button'
 import StackHeader from '../components/StackHeader'
 import { Form, Row, Column, Caption, Field } from '../components/Form'
+import useValidateForm from '../hooks/ValidateForm'
+import ValidationBox from '../components/ValidationBox'
 
 const EmployeeFormScreen = ({ route, navigation }) => {
 
@@ -40,14 +42,29 @@ const EmployeeFormScreen = ({ route, navigation }) => {
     }))
   }
   
+  // --- Validation Box
+  const [ validationBox, setValidationBox ] = useState(false)
+
   // Control Button functionality
   const addEmployeeBackPage = () => {
     addEmployee(form.employeeName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip, form.wage)
     navigation.pop()
   }
   const saveEmployeeBackPage = () => {
-    editEmployee(employeeID, form.employeeName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip, form.wage)
-    navigation.pop()
+    formIsValid = useValidateForm([form.employeeName])
+
+    switch(formIsValid) {
+      case true:
+        setValidationBox(false)
+        editEmployee(employeeID, form.employeeName, form.phone, form.email, form.address, form.unitNumber, form.city, form.usState, form.zip, form.wage)
+        navigation.pop()
+        break
+      case false:
+        setValidationBox(true)
+        break
+      default: 
+        console.log('error')
+    }
   }
 
   // Change buttons based on page
@@ -65,6 +82,8 @@ const EmployeeFormScreen = ({ route, navigation }) => {
   return (  
     <>
       <StackHeader title={isAdd ? 'Add Employee' : 'Edit Employee'} navFunction={() => navigation.pop()}/>
+
+      <ValidationBox show={validationBox}>Employee Name must be added to be saved</ValidationBox>
 
       <Form>
         <Row>
