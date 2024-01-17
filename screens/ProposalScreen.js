@@ -5,14 +5,22 @@ import { ModalBG, ModalBox, ModalRow } from '../components/Modal'
 import BottomTab3 from '../components/BottomTab3'
 import StackHeader from '../components/StackHeader'
 import { Row, Column, Caption, Field } from '../components/Form'
-import { Context } from '../context/ProposalContext'
+import { Context as ProposalContext} from '../context/ProposalContext'
+import { Context as CompanyContext} from '../context/CompanyContext'
+import { Context as ClientContext } from '../context/ClientContext'
+import { printToFileAsync } from 'expo-print'
+import { shareAsync } from 'expo-sharing'
 
 // Scoped variables for line items
 let currentLineIndex = 0
 
 const ProposalScreen = ({ route, navigation }) => {
   
-  const { state, addProposal, editProposal, deleteProposal } = useContext(Context)
+  const { state, addProposal, editProposal, deleteProposal } = useContext(ProposalContext)
+  const company = useContext(CompanyContext)
+  const clients = useContext(ClientContext)
+
+  console.log(company.state.companyName)
   
   const { width } = useWindowDimensions()
 
@@ -139,6 +147,51 @@ const ProposalScreen = ({ route, navigation }) => {
     } else {
     navigation.pop()
     }
+  }
+
+  // --- Assemble data for PDF ---
+  const address1 = company.state.address.concat(
+    Boolean(company.state.unitNumber === '') ? '' : (company.state.unitNumber, ', ')
+  )
+  
+  const address2 = company.state.city.concat(company.state.usState, ' ', company.state.zip)
+    
+  const header = 
+`
+<div id="header" style="flex-direction: row;">
+  <div style="flex: 1, background-color: red;">
+    <h3>From</h3>  
+    <p>${company.state.companyName}
+      <br>${address1}
+      <br>${address2}
+    </p>
+  </div>
+  <div style="flex: 1;">
+    <h3>From</h3>  
+    <p>${company.state.companyName}
+      <br>${address1}
+      <br>${address2}
+    </p>
+  </div>
+</div>
+`
+
+  const html = 
+`
+<html>
+  <body>
+    ${header}
+  </body>
+</html>
+`
+  
+// Send PDF
+  const sendPDF = async () => {
+    const file = await printToFileAsync({
+      html: html,
+      base64: false
+    })
+    await shareAsync(file.uri) 
   }
 
   // --- Modal 1 (Select Line Item Type) ---
@@ -302,6 +355,7 @@ const ProposalScreen = ({ route, navigation }) => {
           button2function={openSaveProposal}
           button3icon='envelope'
           button3text='Send'
+          button3function={sendPDF}
         />
 
         {/* --- Modal 1 --- */}
